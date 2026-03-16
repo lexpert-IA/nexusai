@@ -193,7 +193,7 @@
             color: var(--text-secondary);
             margin-bottom: 2rem;
             opacity: 0;
-            animation: fadeInUp 0.8s 0.2s forwards;
+            animation: fadeInUp 0.8s 0.3s forwards;
         }
 
         .badge-dot {
@@ -204,39 +204,82 @@
             animation: pulse-dot 2s ease-in-out infinite;
         }
 
-        .hero h1 {
+        .hero-title {
             font-family: 'Space Grotesk', sans-serif;
             font-size: clamp(3rem, 7vw, 5.5rem);
             font-weight: 800;
             line-height: 1.05;
             letter-spacing: -2px;
             max-width: 900px;
-            opacity: 0;
-            animation: fadeInUp 0.8s 0.4s forwards;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .gradient-text {
+        .title-line {
+            display: block;
+            overflow: hidden;
+        }
+
+        .title-line .char {
+            display: inline-block;
+            opacity: 0;
+            filter: blur(12px);
+            transform: translateY(60px) rotateX(-40deg);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .title-line .char.revealed {
+            opacity: 1;
+            filter: blur(0px);
+            transform: translateY(0) rotateX(0deg);
+        }
+
+        .title-line .char.space {
+            width: 0.3em;
+        }
+
+        .gradient-text .char.revealed {
             background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2), var(--gradient-3));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .hero p {
+        /* Subtitle word-by-word reveal */
+        .hero-subtitle {
             font-size: 1.2rem;
             color: var(--text-secondary);
             max-width: 560px;
             margin: 1.5rem auto 2.5rem;
             font-weight: 400;
+        }
+
+        .hero-subtitle .word {
+            display: inline-block;
             opacity: 0;
-            animation: fadeInUp 0.8s 0.6s forwards;
+            filter: blur(8px);
+            transform: translateY(20px);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .hero-subtitle .word.revealed {
+            opacity: 1;
+            filter: blur(0px);
+            transform: translateY(0);
         }
 
         .hero-buttons {
             display: flex;
             gap: 1rem;
             opacity: 0;
-            animation: fadeInUp 0.8s 0.8s forwards;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 2.5s;
+        }
+
+        .hero-buttons.revealed {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .hero-visual {
@@ -909,8 +952,12 @@
             <span class="badge-dot"></span>
             Écosystèmes IA — Nouvelle Génération
         </div>
-        <h1>L'intelligence<br>artificielle<br><span class="gradient-text">à votre échelle.</span></h1>
-        <p>Des écosystèmes IA complets, conçus sur-mesure pour transformer chaque domaine de votre activité. De l'audit à la mise en production.</p>
+        <h1 class="hero-title" id="heroTitle">
+            <span class="title-line" data-line="0">L'intelligence</span>
+            <span class="title-line" data-line="1">artificielle</span>
+            <span class="title-line gradient-text" data-line="2">à votre échelle.</span>
+        </h1>
+        <p class="hero-subtitle" id="heroSubtitle">Des écosystèmes IA complets, conçus sur-mesure pour transformer chaque domaine de votre activité. De l'audit à la mise en production.</p>
         <div class="hero-buttons">
             <a href="#contact" class="btn-primary magnetic-btn">Découvrir nos solutions →</a>
             <a href="#domaines" class="btn-secondary magnetic-btn">Explorer les domaines</a>
@@ -1311,6 +1358,77 @@
                 }
             });
         });
+
+        // ════════════════════════════════════════════════
+        // ── CINEMATIC TEXT ANIMATIONS ──
+        // ════════════════════════════════════════════════
+        (function() {
+            // Split title lines into characters
+            const lines = document.querySelectorAll('.title-line');
+            lines.forEach(line => {
+                const text = line.textContent;
+                line.textContent = '';
+                [...text].forEach(char => {
+                    const span = document.createElement('span');
+                    span.className = 'char' + (char === ' ' ? ' space' : '');
+                    span.textContent = char === ' ' ? '\u00A0' : char;
+                    line.appendChild(span);
+                });
+            });
+
+            // Split subtitle into words
+            const subtitle = document.getElementById('heroSubtitle');
+            const words = subtitle.textContent.trim().split(/\s+/);
+            subtitle.textContent = '';
+            words.forEach(word => {
+                const span = document.createElement('span');
+                span.className = 'word';
+                span.textContent = word + ' ';
+                subtitle.appendChild(span);
+            });
+
+            // Sequential reveal after loader
+            setTimeout(() => {
+                let delay = 0;
+                const baseDelay = 400; // wait for loader
+
+                // Line 0 chars
+                lines[0].querySelectorAll('.char').forEach((char, i) => {
+                    setTimeout(() => char.classList.add('revealed'), baseDelay + i * 40);
+                    delay = baseDelay + i * 40;
+                });
+                delay += 200;
+
+                // Line 1 chars
+                const line1Start = delay;
+                lines[1].querySelectorAll('.char').forEach((char, i) => {
+                    setTimeout(() => char.classList.add('revealed'), line1Start + i * 40);
+                    delay = line1Start + i * 40;
+                });
+                delay += 200;
+
+                // Line 2 chars (gradient)
+                const line2Start = delay;
+                lines[2].querySelectorAll('.char').forEach((char, i) => {
+                    setTimeout(() => char.classList.add('revealed'), line2Start + i * 45);
+                    delay = line2Start + i * 45;
+                });
+                delay += 300;
+
+                // Subtitle words
+                const subStart = delay;
+                subtitle.querySelectorAll('.word').forEach((word, i) => {
+                    setTimeout(() => word.classList.add('revealed'), subStart + i * 60);
+                    delay = subStart + i * 60;
+                });
+
+                // Buttons
+                setTimeout(() => {
+                    document.querySelector('.hero-buttons').classList.add('revealed');
+                }, delay + 200);
+
+            }, 600);
+        })();
 
         // ════════════════════════════════════════════════
         // ── GAME CHANGER: Three.js Neural Network 3D ──
