@@ -2054,10 +2054,11 @@
             <div class="pricing-card">
                 <div class="pricing-badge unique">Paiement unique</div>
                 <div class="pricing-label">Starter</div>
-                <div class="pricing-old-price">4 900€</div>
-                <div class="pricing-price">2 490€</div>
+                <div class="pricing-old-price">990€</div>
+                <div class="pricing-price">497€</div>
                 <ul class="pricing-features">
                     <li>Jusqu'à 3 agents IA</li>
+                    <li>1 modèle IA inclus (GPT / Claude)</li>
                     <li>1 domaine métier</li>
                     <li>Dashboard analytique</li>
                     <li>Support email 6 mois</li>
@@ -2072,10 +2073,12 @@
             <div class="pricing-card featured">
                 <div class="pricing-badge popular">Le plus choisi</div>
                 <div class="pricing-label">Premium</div>
-                <div class="pricing-old-price">12 900€</div>
-                <div class="pricing-price">6 990€</div>
+                <div class="pricing-old-price">1 790€</div>
+                <div class="pricing-price">897€</div>
                 <ul class="pricing-features">
                     <li>Jusqu'à 12 agents IA</li>
+                    <li>3 modèles IA inclus (GPT, Claude, Mistral)</li>
+                    <li>Assets spécialisés par domaine</li>
                     <li>3 domaines métier</li>
                     <li>API & intégrations custom</li>
                     <li>Support prioritaire 12 mois</li>
@@ -2095,6 +2098,8 @@
                 <div class="pricing-price">Sur devis</div>
                 <ul class="pricing-features">
                     <li>Agents IA illimités</li>
+                    <li>Tous modèles IA du marché</li>
+                    <li>Assets spécialisés illimités</li>
                     <li>Tous domaines métier</li>
                     <li>Infrastructure dédiée</li>
                     <li>Architecte IA dédié</li>
@@ -2150,7 +2155,7 @@
             </div>
 
             <div class="roi-cta" id="roiCta" style="display:none;">
-                <p>Avec l'offre Premium à 6 990€, votre investissement est rentabilisé en <span class="savings-highlight" id="roiPaybackCta"></span></p>
+                <p>Avec l'offre Premium à 897€, votre investissement est rentabilisé en <span class="savings-highlight" id="roiPaybackCta"></span></p>
                 <a href="#contact" class="btn-primary magnetic-btn">Démarrer maintenant →</a>
             </div>
         </div>
@@ -2490,8 +2495,8 @@
                 document.getElementById('roiSavingsMonth').textContent = formatK(Math.round(monthlySavings));
                 document.getElementById('roiSavingsYear').textContent = formatK(Math.round(yearlySavings));
 
-                // Payback on Premium plan (6990€)
-                const premiumPrice = 6990;
+                // Payback on Premium plan (897€)
+                const premiumPrice = 897;
                 const paybackMonths = premiumPrice / monthlySavings;
 
                 let paybackText;
@@ -3199,17 +3204,19 @@
         })();
     </script>
     <!-- ══════════════════════════════════════ -->
-    <!-- CRISP CHAT — Replace YOUR_CRISP_ID   -->
+    <!-- TAWK.TO LIVE CHAT (gratuit, pas de compte requis pour le widget par défaut)  -->
+    <!-- Pour personnaliser: créer un compte sur tawk.to et remplacer le propertyId + widgetId -->
     <!-- ══════════════════════════════════════ -->
     <script type="text/javascript">
-        window.$crisp=[];
-        window.CRISP_WEBSITE_ID="YOUR_CRISP_ID";
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
         (function(){
-            var d=document;
-            var s=d.createElement("script");
-            s.src="https://client.crisp.chat/l.js";
-            s.async=1;
-            d.getElementsByTagName("head")[0].appendChild(s);
+            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+            s1.async=true;
+            // PLACEHOLDER: Remplace par ton propertyId/widgetId depuis tawk.to
+            s1.src='https://embed.tawk.to/YOUR_TAWK_PROPERTY_ID/YOUR_TAWK_WIDGET_ID';
+            s1.charset='UTF-8';
+            s1.setAttribute('crossorigin','*');
+            s0.parentNode.insertBefore(s1,s0);
         })();
     </script>
 
