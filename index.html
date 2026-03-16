@@ -57,7 +57,7 @@
         /* ── Navbar ── */
         .navbar {
             position: fixed;
-            top: 0;
+            top: 38px;
             width: 100%;
             z-index: 1000;
             padding: 1.2rem 3rem;
@@ -797,94 +797,43 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.06);
         }
 
-        .testimonial-video {
-            position: relative;
+        .testimonial-img {
             width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .testimonial-video::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at center, rgba(99,102,241,0.15), transparent 70%);
-        }
-
-        .video-waveform {
-            display: flex;
-            align-items: center;
-            gap: 3px;
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-        }
-
-        .video-waveform span {
-            width: 3px;
-            background: rgba(99,102,241,0.5);
-            border-radius: 100px;
-            animation: waveform 1.2s ease-in-out infinite;
-        }
-
-        .video-waveform span:nth-child(1) { height: 12px; animation-delay: 0s; }
-        .video-waveform span:nth-child(2) { height: 20px; animation-delay: 0.1s; }
-        .video-waveform span:nth-child(3) { height: 8px; animation-delay: 0.2s; }
-        .video-waveform span:nth-child(4) { height: 16px; animation-delay: 0.3s; }
-        .video-waveform span:nth-child(5) { height: 10px; animation-delay: 0.4s; }
-        .video-waveform span:nth-child(6) { height: 22px; animation-delay: 0.15s; }
-        .video-waveform span:nth-child(7) { height: 14px; animation-delay: 0.25s; }
-
-        @keyframes waveform {
-            0%, 100% { transform: scaleY(1); }
-            50% { transform: scaleY(1.8); }
-        }
-
-        .video-play-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(10px);
-            border: 1.5px solid rgba(255,255,255,0.25);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            z-index: 2;
-        }
-
-        .video-play-btn:hover {
-            background: rgba(255,255,255,0.25);
-            transform: scale(1.1);
-        }
-
-        .video-play-btn::after {
-            content: '';
-            width: 0;
-            height: 0;
-            border-style: solid;
-            border-width: 10px 0 10px 18px;
-            border-color: transparent transparent transparent white;
-            margin-left: 4px;
-        }
-
-        .video-duration {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            color: rgba(255,255,255,0.6);
-            font-size: 0.75rem;
-            font-weight: 600;
+            height: 180px;
+            object-fit: cover;
+            display: block;
         }
 
         .testimonial-content {
             padding: 2rem;
+        }
+
+        .testimonial-source {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 100px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.8rem;
+        }
+
+        .testimonial-source.trustpilot {
+            background: #f0fdf4;
+            color: #00b67a;
+        }
+
+        .testimonial-source.google {
+            background: #eff6ff;
+            color: #4285f4;
+        }
+
+        .testimonial-source svg {
+            width: 14px;
+            height: 14px;
         }
 
         .testimonial-stars {
@@ -1037,6 +986,188 @@
         .pricing-card.featured .btn-primary {
             background: white;
             color: var(--text);
+        }
+
+        .pricing-badge {
+            display: inline-block;
+            padding: 0.2rem 0.7rem;
+            border-radius: 100px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-badge.unique { background: #fef3c7; color: #92400e; }
+        .pricing-badge.popular { background: rgba(129,140,248,0.2); color: #818cf8; }
+
+        .pricing-old-price {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+
+        .pricing-card.featured .pricing-old-price {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .pricing-guarantee {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+
+        .pricing-card.featured .pricing-guarantee { color: rgba(255,255,255,0.5); }
+
+        /* ── ROI Calculator (Game Changer Surprise) ── */
+        .roi-section {
+            padding: 6rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .roi-calculator {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 3rem;
+            margin-top: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.04);
+        }
+
+        .roi-slider-group {
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .roi-slider-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.6rem;
+        }
+
+        .roi-slider-group label span {
+            color: var(--gradient-1);
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+
+        .roi-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            border-radius: 100px;
+            background: var(--accent-light);
+            outline: none;
+        }
+
+        .roi-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(99,102,241,0.3);
+            transition: transform 0.2s;
+        }
+
+        .roi-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .roi-results {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .roi-result-item h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--gradient-1);
+            letter-spacing: -1px;
+        }
+
+        .roi-result-item p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.2rem;
+        }
+
+        .roi-cta {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(168,85,247,0.08));
+            border: 1px solid rgba(99,102,241,0.15);
+        }
+
+        .roi-cta p {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .roi-cta .savings-highlight {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--gradient-1);
+        }
+
+        /* ── Urgency Banner ── */
+        .urgency-banner {
+            background: linear-gradient(90deg, var(--gradient-1), var(--gradient-3));
+            color: white;
+            text-align: center;
+            padding: 0.8rem 2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .urgency-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        .urgency-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+        }
+
+        .urgency-countdown {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 800;
+            background: rgba(255,255,255,0.2);
+            padding: 0.15rem 0.6rem;
+            border-radius: 6px;
+            margin-left: 0.5rem;
         }
 
         /* ── CTA ── */
@@ -1471,6 +1602,11 @@
 </head>
 <body>
 
+    <!-- Urgency Banner -->
+    <div class="urgency-banner" id="urgencyBanner">
+        Offre de lancement — <strong>-40% sur tous les plans</strong> — Se termine dans <span class="urgency-countdown" id="urgencyTimer">02j 14h 32m</span>
+    </div>
+
     <!-- Loader -->
     <div class="loader" id="loader">
         <div class="loader-inner"></div>
@@ -1489,7 +1625,7 @@
             <li><a href="#domaines">Domaines</a></li>
             <li><a href="#processus">Processus</a></li>
             <li><a href="#tarifs">Tarifs</a></li>
-            <li><a href="#temoignages">Témoignages</a></li>
+            <li><a href="#roi">ROI</a></li>
             <li><a href="#contact" class="btn-primary magnetic-btn">Démarrer →</a></li>
         </ul>
     </nav>
@@ -1805,18 +1941,16 @@
 
         <div class="testimonials-track-wrapper" id="testimonialsWrapper">
             <div class="testimonials-track" id="testimonialsTrack">
-                <!-- Card 1 -->
+                <!-- Card 1 — Trustpilot -->
                 <div class="testimonial-card">
-                    <div class="testimonial-video">
-                        <div class="video-play-btn"></div>
-                        <div class="video-waveform">
-                            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-                        </div>
-                        <div class="video-duration">2:34</div>
-                    </div>
+                    <img class="testimonial-img" src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&h=300&fit=crop" alt="Dashboard IA en production">
                     <div class="testimonial-content">
+                        <div class="testimonial-source trustpilot">
+                            <svg viewBox="0 0 24 24" fill="#00b67a"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            Trustpilot — Avis vérifié
+                        </div>
                         <div class="testimonial-stars">★★★★★</div>
-                        <blockquote>« L'écosystème IA déployé a réduit nos délais de traitement de 72%. L'approche clé en main nous a permis de nous concentrer sur notre cœur de métier. »</blockquote>
+                        <blockquote>« L'écosystème IA a réduit nos délais de traitement de 72%. Nous avons automatisé toute la chaîne de validation documentaire en 4 semaines. Retour sur investissement dès le 2e mois. »</blockquote>
                         <div class="testimonial-author">
                             <div class="author-avatar">SL</div>
                             <div class="author-info">
@@ -1826,39 +1960,35 @@
                         </div>
                     </div>
                 </div>
-                <!-- Card 2 -->
+                <!-- Card 2 — Google -->
                 <div class="testimonial-card">
-                    <div class="testimonial-video">
-                        <div class="video-play-btn"></div>
-                        <div class="video-waveform">
-                            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-                        </div>
-                        <div class="video-duration">3:12</div>
-                    </div>
+                    <img class="testimonial-img" src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=300&fit=crop" alt="Écosystème IA médical">
                     <div class="testimonial-content">
+                        <div class="testimonial-source google">
+                            <svg viewBox="0 0 24 24"><path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                            Google — Avis vérifié
+                        </div>
                         <div class="testimonial-stars">★★★★★</div>
-                        <blockquote>« Le ROI a été visible dès le premier trimestre. Les agents IA fonctionnent en synergie et l'écosystème évolue avec nos besoins. »</blockquote>
+                        <blockquote>« Le ROI a été visible dès le premier trimestre. 9 agents IA qui fonctionnent en synergie sur nos données patients. Le diagnostic assisté a amélioré notre précision de 34%. »</blockquote>
                         <div class="testimonial-author">
                             <div class="author-avatar">MR</div>
                             <div class="author-info">
-                                <strong>Marc Renaud</strong>
+                                <strong>Dr. Marc Renaud</strong>
                                 <span>CEO — MedTech Solutions</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Card 3 -->
+                <!-- Card 3 — Trustpilot -->
                 <div class="testimonial-card">
-                    <div class="testimonial-video">
-                        <div class="video-play-btn"></div>
-                        <div class="video-waveform">
-                            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-                        </div>
-                        <div class="video-duration">1:58</div>
-                    </div>
+                    <img class="testimonial-img" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=300&fit=crop" alt="Analytics dashboard">
                     <div class="testimonial-content">
+                        <div class="testimonial-source trustpilot">
+                            <svg viewBox="0 0 24 24" fill="#00b67a"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            Trustpilot — Avis vérifié
+                        </div>
                         <div class="testimonial-stars">★★★★★</div>
-                        <blockquote>« La qualité technique est exceptionnelle. Chaque composant de l'écosystème a été pensé pour s'intégrer parfaitement à notre stack existant. »</blockquote>
+                        <blockquote>« Qualité technique exceptionnelle. L'intégration avec notre stack existant (AWS, PostgreSQL, React) s'est faite sans friction. L'équipe maîtrise parfaitement son sujet. »</blockquote>
                         <div class="testimonial-author">
                             <div class="author-avatar">AB</div>
                             <div class="author-info">
@@ -1868,18 +1998,16 @@
                         </div>
                     </div>
                 </div>
-                <!-- Card 4 -->
+                <!-- Card 4 — Google -->
                 <div class="testimonial-card">
-                    <div class="testimonial-video">
-                        <div class="video-play-btn"></div>
-                        <div class="video-waveform">
-                            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-                        </div>
-                        <div class="video-duration">4:05</div>
-                    </div>
+                    <img class="testimonial-img" src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&h=300&fit=crop" alt="AI automation workflow">
                     <div class="testimonial-content">
+                        <div class="testimonial-source google">
+                            <svg viewBox="0 0 24 24"><path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                            Google — Avis vérifié
+                        </div>
                         <div class="testimonial-stars">★★★★★</div>
-                        <blockquote>« En 6 semaines, nous avions un écosystème complet qui traite automatiquement 80% de nos demandes clients. L'équipe technique est brillante. »</blockquote>
+                        <blockquote>« En 6 semaines, 15 agents IA traitent automatiquement 80% de nos demandes clients. Notre NPS a bondi de 23 points. L'investissement le plus rentable de l'année. »</blockquote>
                         <div class="testimonial-author">
                             <div class="author-avatar">TC</div>
                             <div class="author-info">
@@ -1889,18 +2017,16 @@
                         </div>
                     </div>
                 </div>
-                <!-- Card 5 -->
+                <!-- Card 5 — Trustpilot -->
                 <div class="testimonial-card">
-                    <div class="testimonial-video">
-                        <div class="video-play-btn"></div>
-                        <div class="video-waveform">
-                            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-                        </div>
-                        <div class="video-duration">2:47</div>
-                    </div>
+                    <img class="testimonial-img" src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=600&h=300&fit=crop" alt="Data visualization">
                     <div class="testimonial-content">
+                        <div class="testimonial-source trustpilot">
+                            <svg viewBox="0 0 24 24" fill="#00b67a"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            Trustpilot — Avis vérifié
+                        </div>
                         <div class="testimonial-stars">★★★★★</div>
-                        <blockquote>« Notre productivité a bondi de 60% grâce aux agents IA de NexusAI. La capacité d'adaptation et l'évolutivité sont remarquables. »</blockquote>
+                        <blockquote>« Productivité en hausse de 60%, coûts opérationnels en baisse de 40%. L'écosystème s'adapte et apprend de nos données. Le support est réactif et compétent. »</blockquote>
                         <div class="testimonial-author">
                             <div class="author-avatar">LD</div>
                             <div class="author-info">
@@ -1918,50 +2044,114 @@
     <!-- Pricing -->
     <section id="tarifs">
         <div class="reveal" style="text-align: center;">
-            <div class="section-label">Tarifs</div>
-            <h2 class="section-title" style="margin: 0 auto;">Un plan adapté à votre ambition.</h2>
-            <p class="section-desc" style="margin: 1rem auto 0;">Chaque plan inclut l'audit, le développement, le déploiement et le support continu.</p>
+            <div class="section-label">Investissement</div>
+            <h2 class="section-title" style="margin: 0 auto;">Paiement unique. Votre IA pour toujours.</h2>
+            <p class="section-desc" style="margin: 1rem auto 0;">Pas d'abonnement, pas de frais cachés. Un paiement, un écosystème complet livré clé en main.</p>
             <div class="animated-line" style="margin: 1.5rem auto 0;"></div>
         </div>
 
         <div class="pricing-grid">
             <div class="pricing-card">
+                <div class="pricing-badge unique">Paiement unique</div>
                 <div class="pricing-label">Starter</div>
-                <div class="pricing-price">2 900€<span>/mois</span></div>
+                <div class="pricing-old-price">4 900€</div>
+                <div class="pricing-price">2 490€</div>
                 <ul class="pricing-features">
                     <li>Jusqu'à 3 agents IA</li>
                     <li>1 domaine métier</li>
                     <li>Dashboard analytique</li>
-                    <li>Support email</li>
-                    <li>Mises à jour mensuelles</li>
+                    <li>Support email 6 mois</li>
+                    <li>Mises à jour 6 mois incluses</li>
+                    <li>Formation initiale (2h)</li>
+                    <li>Documentation technique</li>
+                    <li>Code source livré</li>
                 </ul>
-                <a href="#contact" class="btn-secondary magnetic-btn" style="width: 100%; justify-content: center;">Commencer</a>
+                <a href="#contact" class="btn-secondary magnetic-btn" style="width: 100%; justify-content: center;">Choisir Starter</a>
+                <div class="pricing-guarantee">🔒 Satisfait ou remboursé 30 jours</div>
             </div>
             <div class="pricing-card featured">
-                <div class="pricing-label">Business</div>
-                <div class="pricing-price">7 900€<span>/mois</span></div>
+                <div class="pricing-badge popular">Le plus choisi</div>
+                <div class="pricing-label">Premium</div>
+                <div class="pricing-old-price">12 900€</div>
+                <div class="pricing-price">6 990€</div>
                 <ul class="pricing-features">
                     <li>Jusqu'à 12 agents IA</li>
                     <li>3 domaines métier</li>
                     <li>API & intégrations custom</li>
-                    <li>Support prioritaire 24/7</li>
-                    <li>Optimisation continue</li>
-                    <li>Formation équipes incluse</li>
+                    <li>Support prioritaire 12 mois</li>
+                    <li>Mises à jour 12 mois incluses</li>
+                    <li>Formation équipes (8h)</li>
+                    <li>Architecture sur-mesure</li>
+                    <li>Code source + documentation</li>
+                    <li>Appel stratégique mensuel</li>
+                    <li>Optimisation trimestrielle</li>
                 </ul>
-                <a href="#contact" class="btn-primary magnetic-btn">Choisir Business →</a>
+                <a href="#contact" class="btn-primary magnetic-btn">Choisir Premium →</a>
+                <div class="pricing-guarantee">🔒 Satisfait ou remboursé 30 jours</div>
             </div>
             <div class="pricing-card">
+                <div class="pricing-badge unique">Paiement unique</div>
                 <div class="pricing-label">Enterprise</div>
-                <div class="pricing-price">Sur mesure</div>
+                <div class="pricing-price">Sur devis</div>
                 <ul class="pricing-features">
                     <li>Agents IA illimités</li>
                     <li>Tous domaines métier</li>
                     <li>Infrastructure dédiée</li>
                     <li>Architecte IA dédié</li>
                     <li>SLA garanti 99.9%</li>
-                    <li>Audit de sécurité inclus</li>
+                    <li>Audit de sécurité complet</li>
+                    <li>Support dédié 24 mois</li>
+                    <li>Formation sur-site</li>
+                    <li>Maintenance évolutive</li>
+                    <li>Propriété totale du code</li>
                 </ul>
-                <a href="#contact" class="btn-secondary magnetic-btn" style="width: 100%; justify-content: center;">Nous contacter</a>
+                <a href="#contact" class="btn-secondary magnetic-btn" style="width: 100%; justify-content: center;">Demander un devis</a>
+                <div class="pricing-guarantee">🔒 NDA + Contrat personnalisé</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GAME CHANGER SURPRISE: ROI Calculator -->
+    <section class="roi-section" id="roi">
+        <div class="reveal">
+            <div class="section-label">Calculez votre ROI</div>
+            <h2 class="section-title" style="margin: 0 auto;">Combien allez-vous économiser ?</h2>
+            <p class="section-desc" style="margin: 1rem auto 0;">Simulez l'impact concret d'un écosystème IA sur vos coûts opérationnels.</p>
+            <div class="animated-line" style="margin: 1.5rem auto 0;"></div>
+        </div>
+
+        <div class="roi-calculator reveal">
+            <div class="roi-slider-group">
+                <label>Nombre d'employés concernés <span id="roiEmployees">25</span></label>
+                <input type="range" class="roi-slider" id="sliderEmployees" min="5" max="200" value="25">
+            </div>
+            <div class="roi-slider-group">
+                <label>Heures/semaine sur tâches répétitives <span id="roiHours">15</span>h</label>
+                <input type="range" class="roi-slider" id="sliderHours" min="5" max="40" value="15">
+            </div>
+            <div class="roi-slider-group">
+                <label>Coût horaire moyen (€) <span id="roiCost">45</span>€</label>
+                <input type="range" class="roi-slider" id="sliderCost" min="20" max="120" value="45">
+            </div>
+
+            <div class="roi-results">
+                <div class="roi-result-item">
+                    <h4 id="roiSavingsMonth">—</h4>
+                    <p>Économies / mois</p>
+                </div>
+                <div class="roi-result-item">
+                    <h4 id="roiSavingsYear">—</h4>
+                    <p>Économies / an</p>
+                </div>
+                <div class="roi-result-item">
+                    <h4 id="roiPayback">—</h4>
+                    <p>Rentabilisé en</p>
+                </div>
+            </div>
+
+            <div class="roi-cta" id="roiCta" style="display:none;">
+                <p>Avec l'offre Premium à 6 990€, votre investissement est rentabilisé en <span class="savings-highlight" id="roiPaybackCta"></span></p>
+                <a href="#contact" class="btn-primary magnetic-btn">Démarrer maintenant →</a>
             </div>
         </div>
     </section>
@@ -2266,6 +2456,95 @@
                 }
             });
         });
+
+        // ════════════════════════════════════════════════
+        // ── ROI CALCULATOR ──
+        // ════════════════════════════════════════════════
+        (function() {
+            const sEmp = document.getElementById('sliderEmployees');
+            const sHrs = document.getElementById('sliderHours');
+            const sCost = document.getElementById('sliderCost');
+            if (!sEmp) return;
+
+            function formatK(n) {
+                if (n >= 1000000) return (n / 1000000).toFixed(1).replace('.0','') + 'M€';
+                if (n >= 1000) return (n / 1000).toFixed(1).replace('.0','') + 'K€';
+                return n + '€';
+            }
+
+            function calculate() {
+                const emp = parseInt(sEmp.value);
+                const hrs = parseInt(sHrs.value);
+                const cost = parseInt(sCost.value);
+
+                document.getElementById('roiEmployees').textContent = emp;
+                document.getElementById('roiHours').textContent = hrs;
+                document.getElementById('roiCost').textContent = cost;
+
+                // 60% automation rate
+                const automationRate = 0.6;
+                const weeklySavings = emp * hrs * cost * automationRate;
+                const monthlySavings = weeklySavings * 4.33;
+                const yearlySavings = monthlySavings * 12;
+
+                document.getElementById('roiSavingsMonth').textContent = formatK(Math.round(monthlySavings));
+                document.getElementById('roiSavingsYear').textContent = formatK(Math.round(yearlySavings));
+
+                // Payback on Premium plan (6990€)
+                const premiumPrice = 6990;
+                const paybackMonths = premiumPrice / monthlySavings;
+
+                let paybackText;
+                if (paybackMonths < 1) {
+                    paybackText = Math.round(paybackMonths * 30) + ' jours';
+                } else {
+                    paybackText = paybackMonths.toFixed(1) + ' mois';
+                }
+                document.getElementById('roiPayback').textContent = paybackText;
+
+                // Show CTA
+                const cta = document.getElementById('roiCta');
+                cta.style.display = 'block';
+                document.getElementById('roiPaybackCta').textContent = paybackText;
+            }
+
+            sEmp.addEventListener('input', calculate);
+            sHrs.addEventListener('input', calculate);
+            sCost.addEventListener('input', calculate);
+            calculate();
+        })();
+
+        // ════════════════════════════════════════════════
+        // ── URGENCY COUNTDOWN TIMER ──
+        // ════════════════════════════════════════════════
+        (function() {
+            const timerEl = document.getElementById('urgencyTimer');
+            if (!timerEl) return;
+
+            // Set deadline to 3 days from now (persisted in localStorage)
+            let deadline = localStorage.getItem('nexus_deadline');
+            if (!deadline || parseInt(deadline) < Date.now()) {
+                deadline = Date.now() + 3 * 24 * 60 * 60 * 1000;
+                localStorage.setItem('nexus_deadline', deadline);
+            }
+            deadline = parseInt(deadline);
+
+            function updateTimer() {
+                const diff = deadline - Date.now();
+                if (diff <= 0) {
+                    timerEl.textContent = 'Dernières heures !';
+                    return;
+                }
+                const d = Math.floor(diff / 86400000);
+                const h = Math.floor((diff % 86400000) / 3600000);
+                const m = Math.floor((diff % 3600000) / 60000);
+                const s = Math.floor((diff % 60000) / 1000);
+                timerEl.textContent = `${d}j ${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
+            }
+
+            updateTimer();
+            setInterval(updateTimer, 1000);
+        })();
 
         // ════════════════════════════════════════════════
         // ── CONTACT FORM HANDLER ──
