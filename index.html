@@ -6,6 +6,9 @@
     <title>NexusAI — Écosystèmes IA Complets</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js"></script>
     <style>
         *, *::before, *::after {
             margin: 0;
@@ -436,8 +439,8 @@
         .domain-card:hover::before { opacity: 1; }
 
         .domain-icon {
-            width: 56px;
-            height: 56px;
+            width: 60px;
+            height: 60px;
             border-radius: 16px;
             background: var(--accent-light);
             display: flex;
@@ -446,14 +449,18 @@
             font-size: 1.5rem;
             margin-bottom: 1.5rem;
             transition: all 0.4s;
+            overflow: hidden;
+        }
+
+        .domain-icon lottie-player {
+            width: 48px;
+            height: 48px;
         }
 
         .domain-card:hover .domain-icon {
             background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
-            transform: scale(1.05);
+            transform: scale(1.08);
         }
-
-        .domain-card:hover .domain-icon svg { color: white; }
 
         .domain-card h3 {
             font-family: 'Space Grotesk', sans-serif;
@@ -1067,6 +1074,98 @@
             margin: 0 auto 2.5rem;
         }
 
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ── Contact Form ── */
+        .contact-form-wrapper {
+            max-width: 640px;
+            margin: 4rem auto 0;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            padding: 3rem;
+            text-align: left;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.04);
+        }
+
+        .form-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .form-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-row { grid-template-columns: 1fr; }
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            border: 1.5px solid var(--border);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            background: #fafafa;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--gradient-1);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(99,102,241,0.08);
+        }
+
+        .form-group textarea { resize: vertical; }
+
+        .form-submit {
+            width: 100%;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+
+        .form-note {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
         /* ── Footer ── */
         footer {
             border-top: 1px solid var(--border);
@@ -1276,17 +1375,15 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ── Scroll reveal ── */
+        /* ── Scroll reveal (GSAP-driven) ── */
         .reveal {
             opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(50px);
         }
 
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        /* Parallax layers */
+        .parallax-slow { will-change: transform; }
+        .parallax-fast { will-change: transform; }
 
         /* ── Responsive ── */
         @media (max-width: 768px) {
@@ -1463,37 +1560,49 @@
 
         <div class="domains-grid">
             <div class="domain-card">
-                <div class="domain-icon">🏥</div>
+                <div class="domain-icon">
+                    <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_pk5mpw6j.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                </div>
                 <h3>Santé & Médical</h3>
                 <p>Diagnostic assisté, analyse d'imagerie, gestion de parcours patients et prédiction épidémiologique.</p>
                 <span class="domain-tag">12 agents IA</span>
             </div>
             <div class="domain-card">
-                <div class="domain-icon">💰</div>
+                <div class="domain-icon">
+                    <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_06a6pf9i.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                </div>
                 <h3>Finance & Assurance</h3>
                 <p>Détection de fraude, scoring crédit, trading algorithmique et conformité réglementaire automatisée.</p>
                 <span class="domain-tag">9 agents IA</span>
             </div>
             <div class="domain-card">
-                <div class="domain-icon">🛒</div>
+                <div class="domain-icon">
+                    <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_ysas4vcp.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                </div>
                 <h3>E-Commerce & Retail</h3>
                 <p>Recommandations personnalisées, pricing dynamique, gestion de stock prédictive et chatbots intelligents.</p>
                 <span class="domain-tag">15 agents IA</span>
             </div>
             <div class="domain-card">
-                <div class="domain-icon">🎓</div>
+                <div class="domain-icon">
+                    <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_swnrn2oy.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                </div>
                 <h3>Éducation & Formation</h3>
                 <p>Tutorat adaptatif, création de contenu, évaluation automatique et parcours d'apprentissage sur-mesure.</p>
                 <span class="domain-tag">8 agents IA</span>
             </div>
             <div class="domain-card">
-                <div class="domain-icon">🏗️</div>
+                <div class="domain-icon">
+                    <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_iorpbol0.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                </div>
                 <h3>Immobilier & Construction</h3>
                 <p>Estimation automatisée, analyse de marché, gestion locative intelligente et optimisation énergétique.</p>
                 <span class="domain-tag">7 agents IA</span>
             </div>
             <div class="domain-card">
-                <div class="domain-icon">⚖️</div>
+                <div class="domain-icon">
+                    <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_gkgqj2yq.json" background="transparent" speed="1" loop autoplay></lottie-player>
+                </div>
                 <h3>Juridique & Compliance</h3>
                 <p>Analyse de contrats, recherche jurisprudentielle, veille réglementaire et rédaction assistée.</p>
                 <span class="domain-tag">6 agents IA</span>
@@ -1556,7 +1665,7 @@
     </section>
 
     <!-- Stats Section -->
-    <div class="stats-section reveal">
+    <div class="stats-section reveal" id="statsSection">
         <div>
             <div class="section-label" style="color: #818cf8;">En chiffres</div>
             <h2 class="section-title" style="color: white; max-width: 500px;">Des résultats mesurables, dès le premier mois.</h2>
@@ -1857,14 +1966,76 @@
         </div>
     </section>
 
-    <!-- CTA -->
+    <!-- CTA + Calendly + Tally Form -->
     <section class="cta-section" id="contact">
         <h2 class="reveal">Prêt à déployer votre <span class="gradient-text">écosystème IA</span> ?</h2>
         <p class="reveal">Réservez un appel stratégique gratuit de 30 minutes avec l'un de nos architectes IA.</p>
-        <div class="reveal">
-            <a href="#" class="btn-primary magnetic-btn" style="font-size: 1.05rem; padding: 1rem 2.5rem;">Réserver mon appel gratuit →</a>
+        <div class="reveal cta-buttons">
+            <!-- Calendly popup trigger -->
+            <a href="#" class="btn-primary magnetic-btn cta-main-btn" id="calendlyBtn" onclick="openCalendly(); return false;" style="font-size: 1.05rem; padding: 1rem 2.5rem;">Réserver mon appel gratuit →</a>
+            <a href="#contact-form" class="btn-secondary magnetic-btn" style="font-size: 0.95rem; padding: 0.8rem 2rem;">Ou envoyez-nous un message</a>
+        </div>
+
+        <!-- Tally.so Embedded Form -->
+        <div class="contact-form-wrapper reveal" id="contact-form">
+            <div class="form-container">
+                <h3 class="form-title">Parlez-nous de votre projet</h3>
+                <p class="form-subtitle">Nous vous répondons sous 24h.</p>
+                <!-- PLACEHOLDER: Replace data-tally-src with your Tally form URL -->
+                <form class="nexus-form" id="nexusForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="formName">Nom complet</label>
+                            <input type="text" id="formName" placeholder="Jean Dupont" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="formEmail">Email professionnel</label>
+                            <input type="email" id="formEmail" placeholder="jean@entreprise.com" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="formDomain">Domaine d'intérêt</label>
+                        <select id="formDomain">
+                            <option value="">Sélectionnez un domaine</option>
+                            <option value="sante">Santé & Médical</option>
+                            <option value="finance">Finance & Assurance</option>
+                            <option value="ecommerce">E-Commerce & Retail</option>
+                            <option value="education">Éducation & Formation</option>
+                            <option value="immobilier">Immobilier & Construction</option>
+                            <option value="juridique">Juridique & Compliance</option>
+                            <option value="autre">Autre domaine</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="formMessage">Décrivez votre besoin</label>
+                        <textarea id="formMessage" rows="4" placeholder="Parlez-nous de vos enjeux, vos données, votre vision..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary magnetic-btn form-submit">Envoyer ma demande →</button>
+                    <p class="form-note">
+                        <!-- PLACEHOLDER: When you get Tally, replace this form with: -->
+                        <!-- <iframe data-tally-src="https://tally.so/embed/VOTRE_ID?alignLeft=1&hideTitle=1" width="100%" height="500" frameborder="0"></iframe> -->
+                        <span style="opacity:0.5; font-size: 0.75rem;">Formulaire connecté via Tally.so — Remplacez l'ID pour activer</span>
+                    </p>
+                </form>
+            </div>
         </div>
     </section>
+
+    <!-- Calendly Widget (popup mode) -->
+    <!-- PLACEHOLDER: Replace YOUR_CALENDLY_URL with your real Calendly link -->
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+    <script>
+        function openCalendly() {
+            if (typeof Calendly !== 'undefined') {
+                Calendly.initPopupWidget({
+                    url: 'https://calendly.com/YOUR_CALENDLY_URL/30min'
+                });
+            } else {
+                alert('Calendly se charge... Réessayez dans un instant, ou contactez-nous via le formulaire ci-dessous.');
+            }
+        }
+    </script>
 
     <!-- Footer -->
     <footer>
@@ -1943,51 +2114,133 @@
             navbar.classList.toggle('scrolled', window.scrollY > 50);
         });
 
-        // ── Scroll reveal ──
-        const observerOptions = {
-            threshold: 0.15,
-            rootMargin: '0px 0px -50px 0px'
-        };
+        // ── GSAP ScrollTrigger — Scroll Reveal ──
+        gsap.registerPlugin(ScrollTrigger);
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, i) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('visible');
-                    }, i * 100);
+        // Reveal all .reveal elements
+        gsap.utils.toArray('.reveal').forEach(el => {
+            gsap.to(el, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
                 }
             });
-        }, observerOptions);
-
-        document.querySelectorAll('.reveal, .domain-card, .process-card, .testimonial-card, .pricing-card').forEach(el => {
-            observer.observe(el);
         });
 
-        // ── Counter animation ──
-        const counterObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const counter = entry.target;
-                    const target = parseInt(counter.dataset.target);
-                    const duration = 2000;
-                    const start = performance.now();
-
-                    function updateCounter(now) {
-                        const elapsed = now - start;
-                        const progress = Math.min(elapsed / duration, 1);
-                        const eased = 1 - Math.pow(1 - progress, 4);
-                        counter.textContent = Math.round(target * eased);
-                        if (progress < 1) requestAnimationFrame(updateCounter);
-                        else counter.textContent = target + (target < 100 ? '' : '+');
-                    }
-
-                    requestAnimationFrame(updateCounter);
-                    counterObserver.unobserve(counter);
+        // Domain cards — staggered
+        gsap.utils.toArray('.domain-card').forEach((card, i) => {
+            gsap.to(card, {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                delay: i * 0.1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 88%',
+                    toggleActions: 'play none none none'
                 }
             });
-        }, { threshold: 0.5 });
+        });
 
-        document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+        // Process cards — staggered
+        gsap.utils.toArray('.process-card').forEach((card, i) => {
+            gsap.to(card, {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                delay: i * 0.15,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 88%',
+                    toggleActions: 'play none none none'
+                }
+            });
+        });
+
+        // Pricing cards — staggered
+        gsap.utils.toArray('.pricing-card').forEach((card, i) => {
+            gsap.to(card, {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                delay: i * 0.12,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 88%',
+                    toggleActions: 'play none none none'
+                }
+            });
+        });
+
+        // Parallax on stats section
+        const statsEl = document.getElementById('statsSection');
+        if (statsEl) {
+            gsap.to(statsEl, {
+                yPercent: -5,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: statsEl,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 1
+                }
+            });
+        }
+
+        // Parallax on hero visual (neural canvas)
+        gsap.to('.hero-visual', {
+            yPercent: 15,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '.hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 1.5
+            }
+        });
+
+        // Section titles — parallax offset
+        gsap.utils.toArray('.section-title').forEach(title => {
+            gsap.to(title, {
+                y: -20,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: title,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 2
+                }
+            });
+        });
+
+        // ── Counter animation (GSAP-powered) ──
+        document.querySelectorAll('.counter').forEach(counter => {
+            const target = parseInt(counter.dataset.target);
+            const obj = { val: 0 };
+            ScrollTrigger.create({
+                trigger: counter,
+                start: 'top 80%',
+                onEnter: () => {
+                    gsap.to(obj, {
+                        val: target,
+                        duration: 2,
+                        ease: 'power2.out',
+                        onUpdate: () => {
+                            counter.textContent = Math.round(obj.val) + (target >= 100 ? '+' : '');
+                        }
+                    });
+                },
+                once: true
+            });
+        });
 
         // ── Magnetic buttons ──
         document.querySelectorAll('.magnetic-btn').forEach(btn => {
@@ -2013,6 +2266,39 @@
                 }
             });
         });
+
+        // ════════════════════════════════════════════════
+        // ── CONTACT FORM HANDLER ──
+        // ════════════════════════════════════════════════
+        (function() {
+            const form = document.getElementById('nexusForm');
+            if (!form) return;
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const btn = form.querySelector('.form-submit');
+                const originalText = btn.textContent;
+
+                // Visual feedback
+                btn.textContent = 'Envoi en cours...';
+                btn.style.opacity = '0.7';
+                btn.disabled = true;
+
+                // Simulate send (replace with Tally/Formspree endpoint)
+                setTimeout(() => {
+                    btn.textContent = 'Message envoyé !';
+                    btn.style.background = '#22c55e';
+                    btn.style.opacity = '1';
+
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.style.background = '';
+                        btn.disabled = false;
+                        form.reset();
+                    }, 3000);
+                }, 1200);
+            });
+        })();
 
         // ════════════════════════════════════════════════
         // ── TESTIMONIALS HORIZONTAL DRAG SCROLL ──
@@ -2633,5 +2919,20 @@
             });
         })();
     </script>
+    <!-- ══════════════════════════════════════ -->
+    <!-- CRISP CHAT — Replace YOUR_CRISP_ID   -->
+    <!-- ══════════════════════════════════════ -->
+    <script type="text/javascript">
+        window.$crisp=[];
+        window.CRISP_WEBSITE_ID="YOUR_CRISP_ID";
+        (function(){
+            var d=document;
+            var s=d.createElement("script");
+            s.src="https://client.crisp.chat/l.js";
+            s.async=1;
+            d.getElementsByTagName("head")[0].appendChild(s);
+        })();
+    </script>
+
 </body>
 </html>
