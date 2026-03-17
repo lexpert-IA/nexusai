@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw — God View | MiroFish Terminal</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+        :root {
+            --bg: #07080c;
+            --surface: #0d0f14;
+            --surface2: #12151c;
+            --surface3: #181c25;
+            --border: rgba(255,255,255,0.05);
+            --text: #e8eaf0;
+            --text-dim: #5a6078;
+            --green: #00ff88;
+            --green-dim: #00cc6a;
+            --blue: #4d8eff;
+            --purple: #a78bfa;
+            --orange: #ff9f43;
+            --red: #ff4757;
+            --cyan: #00d4ff;
+            --pink: #ff6b9d;
+            --yellow: #ffd93d;
+        }
+
+        html, body { height:100%; overflow:hidden; }
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        /* ── LAYOUT ── */
+        .god-layout {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            grid-template-rows: auto 1fr;
+            height: 100vh;
+            gap: 0;
+        }
+
+        /* ── TOP BAR ── */
+        .top-bar {
+            grid-column: 1 / -1;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            height: 52px;
+        }
+
+        .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .god-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 800;
+            font-size: 1rem;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .god-logo .dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 10px var(--green);
+            animation: pulse-g 2s infinite;
+        }
+
+        @keyframes pulse-g {
+            0%,100% { opacity:1; box-shadow:0 0 10px var(--green); }
+            50% { opacity:.6; box-shadow:0 0 20px var(--green); }
+        }
+
+        .god-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--green);
+            background: rgba(0,255,136,0.08);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            border: 1px solid rgba(0,255,136,0.15);
+        }
+
+        .back-link {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .back-link:hover { color: var(--text); }
+
+        /* ── METRICS BAR ── */
+        .metrics-bar {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .metric {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .metric-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+        }
+        .metric-dot.green { background: var(--green); box-shadow: 0 0 6px var(--green); }
+        .metric-dot.blue { background: var(--blue); box-shadow: 0 0 6px var(--blue); }
+        .metric-dot.orange { background: var(--orange); box-shadow: 0 0 6px var(--orange); }
+        .metric-dot.red { background: var(--red); box-shadow: 0 0 6px var(--red); }
+        .metric-dot.cyan { background: var(--cyan); box-shadow: 0 0 6px var(--cyan); }
+        .metric-dot.purple { background: var(--purple); box-shadow: 0 0 6px var(--purple); }
+
+        .metric-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+        }
+
+        .metric-value {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        /* ── LEFT PANEL — EVENT FEED ── */
+        .feed-panel {
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .feed-header {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .feed-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .feed-count {
+            font-size: 0.6rem;
+            color: var(--green);
+            background: rgba(0,255,136,0.1);
+            padding: 0.15rem 0.5rem;
+            border-radius: 100px;
+        }
+
+        .feed-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.5rem 0;
+            scrollbar-width: thin;
+            scrollbar-color: var(--surface3) transparent;
+        }
+
+        .feed-list::-webkit-scrollbar { width: 4px; }
+        .feed-list::-webkit-scrollbar-track { background: transparent; }
+        .feed-list::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 100px; }
+
+        .feed-item {
+            padding: 0.7rem 1.2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+            animation: feedIn 0.4s ease-out;
+            transition: background 0.2s;
+        }
+
+        .feed-item:hover { background: var(--surface2); }
+
+        @keyframes feedIn {
+            from { opacity:0; transform:translateX(-20px); }
+            to { opacity:1; transform:translateX(0); }
+        }
+
+        .feed-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.25rem;
+        }
+
+        .feed-agent {
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .feed-agent.nathan { color: var(--green); }
+        .feed-agent.vizion { color: var(--cyan); }
+        .feed-agent.scout { color: var(--blue); }
+        .feed-agent.spark { color: var(--orange); }
+        .feed-agent.sentinel { color: var(--red); }
+        .feed-agent.crea { color: var(--pink); }
+        .feed-agent.script { color: var(--purple); }
+        .feed-agent.lens { color: var(--yellow); }
+        .feed-agent.default { color: var(--text-dim); }
+
+        .feed-time {
+            font-size: 0.55rem;
+            color: var(--text-dim);
+        }
+
+        .feed-msg {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            line-height: 1.5;
+        }
+
+        .feed-status {
+            display: inline-block;
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            margin-right: 0.3rem;
+        }
+
+        /* ── AGENT DETAILS PANEL (bottom-left) ── */
+        .agent-detail {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 1rem 1.2rem;
+            min-height: 140px;
+        }
+
+        .agent-detail-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .agent-detail-status {
+            font-size: 0.55rem;
+            padding: 0.1rem 0.5rem;
+            border-radius: 100px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+        .agent-detail-status.active { background:rgba(0,255,136,0.1); color:var(--green); }
+        .agent-detail-status.idle { background:rgba(90,96,120,0.2); color:var(--text-dim); }
+        .agent-detail-status.error { background:rgba(255,71,87,0.1); color:var(--red); }
+
+        .agent-detail-info {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+        .agent-detail-info span { color: var(--text); font-weight: 600; }
+
+        /* ── 3D CANVAS ── */
+        .canvas-container {
+            position: relative;
+            overflow: hidden;
+            background: var(--bg);
+        }
+
+        .canvas-container canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* Canvas overlay controls */
+        .canvas-controls {
+            position: absolute;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .ctrl-btn {
+            width: 36px; height: 36px;
+            border-radius: 10px;
+            background: rgba(13,15,20,0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        .ctrl-btn:hover { border-color: var(--green); color: var(--green); }
+
+        /* Canvas HUD overlay */
+        .canvas-hud {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            pointer-events: none;
+        }
+
+        .hud-label {
+            font-size: 0.55rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-dim);
+            margin-bottom: 0.3rem;
+        }
+
+        .hud-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--green);
+        }
+
+        .hud-sub {
+            font-size: 0.6rem;
+            color: var(--text-dim);
+            margin-top: 0.2rem;
+        }
+
+        /* Legend */
+        .canvas-legend {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            pointer-events: none;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.55rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .legend-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+        }
+
+        /* ── SCANLINE EFFECT ── */
+        .scanline {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: 9999;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,0,0,0.03) 2px,
+                rgba(0,0,0,0.03) 4px
+            );
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .god-layout { grid-template-columns: 1fr; }
+            .feed-panel { display: none; }
+            .metrics-bar { gap: 0.8rem; }
+            .metric-label { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="scanline"></div>
+
+<div class="god-layout">
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <div class="god-logo">
+                <span class="dot"></span>
+                OPENCLAW
+            </div>
+            <div class="god-label">God View</div>
+            <a href="index.html" class="back-link">← Back to Dashboard</a>
+        </div>
+        <div class="metrics-bar" id="metricsBar">
+            <div class="metric">
+                <span class="metric-dot green"></span>
+                <span class="metric-label">Agents</span>
+                <span class="metric-value" id="mAgents">33/33</span>
+            </div>
+            <div class="metric">
+                <span class="metric-dot cyan"></span>
+                <span class="metric-label">Latency</span>
+                <span class="metric-value" id="mLatency">12ms</span>
+            </div>
+            <div class="metric">
+                <span class="metric-dot blue"></span>
+                <span class="metric-label">CPU</span>
+                <span class="metric-value" id="mCPU">34%</span>
+            </div>
+            <div class="metric">
+                <span class="metric-dot purple"></span>
+                <span class="metric-label">RAM</span>
+                <span class="metric-value" id="mRAM">6.2GB</span>
+            </div>
+            <div class="metric">
+                <span class="metric-dot orange"></span>
+                <span class="metric-label">Queue</span>
+                <span class="metric-value" id="mQueue">7</span>
+            </div>
+            <div class="metric">
+                <span class="metric-dot cyan"></span>
+                <span class="metric-label">Tokens</span>
+                <span class="metric-value" id="mTokens">2.4M</span>
+            </div>
+            <div class="metric">
+                <span class="metric-dot red"></span>
+                <span class="metric-label">Errors</span>
+                <span class="metric-value" id="mErrors">0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEFT: EVENT FEED -->
+    <div class="feed-panel">
+        <div class="feed-header">
+            <span class="feed-title">Event Feed</span>
+            <span class="feed-count" id="feedCount">LIVE</span>
+        </div>
+        <div class="feed-list" id="feedList"></div>
+        <div class="agent-detail" id="agentDetail">
+            <div class="agent-detail-name">
+                <span>Select an agent node</span>
+            </div>
+            <div class="agent-detail-info">
+                Click on any node in the 3D view to inspect agent details, status, and recent activity.
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT: 3D CANVAS -->
+    <div class="canvas-container" id="canvasContainer">
+        <div class="canvas-hud">
+            <div class="hud-label">Network Status</div>
+            <div class="hud-value" id="hudStatus">OPERATIONAL</div>
+            <div class="hud-sub" id="hudSub">33 agents connected — 0 errors</div>
+        </div>
+
+        <div class="canvas-legend">
+            <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> Active</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--text-dim)"></div> Idle</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div> Error</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--cyan)"></div> Data Flow</div>
+        </div>
+
+        <div class="canvas-controls">
+            <button class="ctrl-btn" onclick="resetCamera()" title="Reset view">⟳</button>
+            <button class="ctrl-btn" onclick="toggleRotation()" title="Toggle rotation" id="rotBtn">◎</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// AGENT DEFINITIONS — 33 OpenClaw Agents
+// ══════════════════════════════════════════════
+const AGENTS = [
+    // Core
+    { id:'NATHAN', role:'Orchestrator', group:'core', color:0x00ff88 },
+    // Perception
+    { id:'VIZION', role:'Vision Analysis', group:'perception', color:0x00d4ff },
+    { id:'SCOUT', role:'Web Recon', group:'perception', color:0x4d8eff },
+    { id:'LENS', role:'Deep Analysis', group:'perception', color:0xffd93d },
+    { id:'SONAR', role:'Audio Processing', group:'perception', color:0x00d4ff },
+    // Creation
+    { id:'SPARK', role:'Idea Generation', group:'creation', color:0xff9f43 },
+    { id:'CREA', role:'Creative Design', group:'creation', color:0xff6b9d },
+    { id:'SCRIPT', role:'Code Generation', group:'creation', color:0xa78bfa },
+    { id:'VISUAL', role:'Image Generation', group:'creation', color:0xff6b9d },
+    { id:'EDITOR', role:'Content Editing', group:'creation', color:0xa78bfa },
+    { id:'COMPOSER', role:'Music/Audio Gen', group:'creation', color:0xff9f43 },
+    // Execution
+    { id:'FORGE', role:'Build & Deploy', group:'execution', color:0x4d8eff },
+    { id:'RUNNER', role:'Task Execution', group:'execution', color:0x00ff88 },
+    { id:'PIPELINE', role:'Workflow Mgmt', group:'execution', color:0x4d8eff },
+    { id:'DEPLOYER', role:'Cloud Deploy', group:'execution', color:0x00d4ff },
+    // Security
+    { id:'SENTINEL', role:'Threat Detection', group:'security', color:0xff4757 },
+    { id:'GUARDIAN_DEV', role:'Code Security', group:'security', color:0xff4757 },
+    { id:'FIREWALL', role:'Access Control', group:'security', color:0xff4757 },
+    { id:'AUDIT', role:'Compliance Check', group:'security', color:0xff9f43 },
+    // Data
+    { id:'CORTEX', role:'Knowledge Base', group:'data', color:0xa78bfa },
+    { id:'MEMORY', role:'Context Storage', group:'data', color:0xa78bfa },
+    { id:'INDEXER', role:'Data Indexing', group:'data', color:0x4d8eff },
+    { id:'VECTOR', role:'Embedding Engine', group:'data', color:0x00d4ff },
+    // Communication
+    { id:'HERALD', role:'Notifications', group:'comm', color:0xffd93d },
+    { id:'BRIDGE', role:'API Gateway', group:'comm', color:0x00d4ff },
+    { id:'RELAY', role:'Inter-Agent Msg', group:'comm', color:0x00ff88 },
+    // Optimization
+    { id:'TUNER', role:'Model Fine-tune', group:'optim', color:0xff9f43 },
+    { id:'PROFILER', role:'Performance Mon.', group:'optim', color:0xffd93d },
+    { id:'CACHE', role:'Response Cache', group:'optim', color:0x4d8eff },
+    // Specialist
+    { id:'LINGUIST', role:'Translation', group:'specialist', color:0xff6b9d },
+    { id:'ANALYST', role:'Data Analytics', group:'specialist', color:0x00d4ff },
+    { id:'STRATEGIST', role:'Planning', group:'specialist', color:0xa78bfa },
+    { id:'ORACLE', role:'Prediction Engine', group:'specialist', color:0xffd93d }
+];
+
+// Group layout — spherical clusters
+const GROUP_POS = {
+    core:       { x:0,   y:0,   z:0,   r:0 },
+    perception: { x:-12, y:6,   z:-5,  r:4 },
+    creation:   { x:12,  y:5,   z:-3,  r:5 },
+    execution:  { x:-10, y:-6,  z:4,   r:4 },
+    security:   { x:0,   y:-10, z:-6,  r:3.5 },
+    data:       { x:10,  y:-5,  z:5,   r:3.5 },
+    comm:       { x:-6,  y:0,   z:10,  r:3 },
+    optim:      { x:6,   y:8,   z:8,   r:3 },
+    specialist: { x:0,   y:10,  z:3,   r:4 }
+};
+
+// ══════════════════════════════════════════════
+// THREE.JS SCENE SETUP
+// ══════════════════════════════════════════════
+const container = document.getElementById('canvasContainer');
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 1000);
+camera.position.set(0, 5, 35);
+camera.lookAt(0, 0, 0);
+
+const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:false });
+renderer.setSize(container.clientWidth, container.clientHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setClearColor(0x07080c, 1);
+container.insertBefore(renderer.domElement, container.firstChild);
+
+// ── Glow texture ──
+function makeGlow(c1, c2) {
+    const cv = document.createElement('canvas');
+    cv.width = cv.height = 128;
+    const ctx = cv.getContext('2d');
+    const g = ctx.createRadialGradient(64,64,0,64,64,64);
+    g.addColorStop(0, c1);
+    g.addColorStop(0.5, c2);
+    g.addColorStop(1, 'transparent');
+    ctx.fillStyle = g;
+    ctx.fillRect(0,0,128,128);
+    return new THREE.CanvasTexture(cv);
+}
+
+// ── Create nodes ──
+const nodeData = [];
+const nodeMeshes = [];
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+let hoveredIdx = -1;
+let selectedIdx = -1;
+
+AGENTS.forEach((agent, i) => {
+    const gp = GROUP_POS[agent.group];
+    // Distribute within group sphere
+    const count = AGENTS.filter(a => a.group === agent.group).length;
+    const idx = AGENTS.filter((a,j) => a.group === agent.group && j <= i).length - 1;
+    const phi = Math.acos(-1 + (2 * idx + 1) / count);
+    const theta = Math.sqrt(count * Math.PI) * phi;
+    const r = agent.group === 'core' ? 0 : gp.r;
+
+    const x = gp.x + r * Math.cos(theta) * Math.sin(phi);
+    const y = gp.y + r * Math.sin(theta) * Math.sin(phi);
+    const z = gp.z + r * Math.cos(phi);
+
+    // Status
+    const statuses = ['active','active','active','active','active','idle','idle','active'];
+    const status = agent.id === 'NATHAN' ? 'active' : statuses[i % statuses.length];
+
+    const group = new THREE.Group();
+    group.position.set(x, y, z);
+
+    // Core sphere
+    const size = agent.id === 'NATHAN' ? 0.6 : 0.35;
+    const geo = new THREE.SphereGeometry(size, 24, 24);
+    const mat = new THREE.MeshBasicMaterial({ color: agent.color });
+    const mesh = new THREE.Mesh(geo, mat);
+    group.add(mesh);
+
+    // Glow sprite
+    const hexStr = '#' + agent.color.toString(16).padStart(6, '0');
+    const glowTex = makeGlow(hexStr, hexStr.replace(')', ',0.2)').replace('rgb', 'rgba'));
+    const spriteMat = new THREE.SpriteMaterial({
+        map: makeGlow(`rgba(${(agent.color>>16)&255},${(agent.color>>8)&255},${agent.color&255},1)`,
+                       `rgba(${(agent.color>>16)&255},${(agent.color>>8)&255},${agent.color&255},0.15)`),
+        transparent: true,
+        opacity: status === 'active' ? 0.7 : 0.25,
+        blending: THREE.AdditiveBlending
+    });
+    const sprite = new THREE.Sprite(spriteMat);
+    const spriteSize = agent.id === 'NATHAN' ? 4 : 2.2;
+    sprite.scale.set(spriteSize, spriteSize, 1);
+    group.add(sprite);
+
+    // Orbit ring for NATHAN
+    if (agent.id === 'NATHAN') {
+        const ringGeo = new THREE.RingGeometry(1.0, 1.05, 64);
+        const ringMat = new THREE.MeshBasicMaterial({ color:0x00ff88, transparent:true, opacity:0.2, side:THREE.DoubleSide });
+        const ring = new THREE.Mesh(ringGeo, ringMat);
+        group.add(ring);
+        const ring2Geo = new THREE.RingGeometry(1.4, 1.44, 64);
+        const ring2 = new THREE.Mesh(ring2Geo, ringMat.clone());
+        ring2.rotation.x = Math.PI / 3;
+        group.add(ring2);
+    }
+
+    scene.add(group);
+
+    nodeData.push({
+        agent, x, y, z, ox:x, oy:y, oz:z,
+        status, group: group, mesh, sprite, spriteMat,
+        pulse: Math.random() * Math.PI * 2,
+        lastAction: generateAction(agent)
+    });
+    nodeMeshes.push(mesh);
+});
+
+function generateAction(agent) {
+    const actions = {
+        core: ['Orchestrating pipeline #4821', 'Routing task to SPARK', 'Balancing agent workloads'],
+        perception: ['Scanning data feed', 'Processing visual input', 'Analyzing web content', 'Audio transcription active'],
+        creation: ['Generating code module', 'Rendering visual asset', 'Composing response', 'Editing content block'],
+        execution: ['Deploying service v2.3', 'Running test suite', 'Pipeline stage 3/5', 'Scaling instances'],
+        security: ['Scanning for threats', 'Validating access token', 'Audit log updated', 'Firewall rules applied'],
+        data: ['Indexing 1.2K documents', 'Generating embeddings', 'Updating knowledge graph', 'Context cache refreshed'],
+        comm: ['Broadcasting event', 'API request forwarded', 'Agent sync complete', 'Notification dispatched'],
+        optim: ['Fine-tuning model weights', 'Profiling latency', 'Cache hit ratio: 94%', 'Optimizing throughput'],
+        specialist: ['Translating FR→EN', 'Running analytics query', 'Strategy plan updated', 'Prediction model active']
+    };
+    const pool = actions[agent.group] || actions.core;
+    return pool[Math.floor(Math.random() * pool.length)];
+}
+
+// ── Connections ──
+const connections = [];
+const connectionMeshes = [];
+
+// Connect NATHAN to group leaders
+const groupLeaders = {};
+AGENTS.forEach((a, i) => {
+    if (!groupLeaders[a.group]) groupLeaders[a.group] = i;
+});
+
+// NATHAN to all group leaders
+Object.values(groupLeaders).forEach(idx => {
+    if (idx === 0) return;
+    connections.push({ from:0, to:idx, active:true });
+});
+
+// Within groups
+AGENTS.forEach((a, i) => {
+    if (i === 0) return;
+    const leader = groupLeaders[a.group];
+    if (leader !== i) {
+        connections.push({ from:leader, to:i, active:false });
+    }
+});
+
+// Cross-group
+connections.push({ from: AGENTS.findIndex(a=>a.id==='SENTINEL'), to: AGENTS.findIndex(a=>a.id==='GUARDIAN_DEV'), active:true });
+connections.push({ from: AGENTS.findIndex(a=>a.id==='CORTEX'), to: AGENTS.findIndex(a=>a.id==='VECTOR'), active:true });
+connections.push({ from: AGENTS.findIndex(a=>a.id==='BRIDGE'), to: AGENTS.findIndex(a=>a.id==='PIPELINE'), active:true });
+
+connections.forEach(c => {
+    const geo = new THREE.BufferGeometry();
+    const pos = new Float32Array(6);
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    const mat = new THREE.LineBasicMaterial({
+        color: c.active ? 0x00ff88 : 0x1a1f2e,
+        transparent: true,
+        opacity: c.active ? 0.15 : 0.06,
+        blending: THREE.AdditiveBlending
+    });
+    const line = new THREE.Line(geo, mat);
+    scene.add(line);
+    connectionMeshes.push({ line, geo, ...c });
+});
+
+// ── Particles flowing on connections ──
+const particles = [];
+const particleGlow = makeGlow('rgba(0,255,136,1)', 'rgba(0,212,255,0.2)');
+
+connections.filter(c => c.active).forEach((c, ci) => {
+    for (let p = 0; p < 2; p++) {
+        const smat = new THREE.SpriteMaterial({
+            map: particleGlow,
+            transparent: true,
+            opacity: 0.8,
+            blending: THREE.AdditiveBlending
+        });
+        const spr = new THREE.Sprite(smat);
+        spr.scale.set(0.4, 0.4, 1);
+        scene.add(spr);
+        particles.push({
+            sprite: spr,
+            from: c.from,
+            to: c.to,
+            t: Math.random(),
+            speed: 0.003 + Math.random() * 0.005,
+            dir: Math.random() > 0.5 ? 1 : -1
+        });
+    }
+});
+
+// ── Star field ──
+const starGeo = new THREE.BufferGeometry();
+const starPos = new Float32Array(500 * 3);
+for (let i = 0; i < 500; i++) {
+    starPos[i*3] = (Math.random()-0.5)*120;
+    starPos[i*3+1] = (Math.random()-0.5)*80;
+    starPos[i*3+2] = (Math.random()-0.5)*60 - 20;
+}
+starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({
+    color:0x2a3050, size:0.06, transparent:true, opacity:0.6, blending:THREE.AdditiveBlending
+})));
+
+// ── Grid floor ──
+const gridHelper = new THREE.GridHelper(60, 40, 0x111520, 0x0d1018);
+gridHelper.position.y = -15;
+gridHelper.material.transparent = true;
+gridHelper.material.opacity = 0.3;
+scene.add(gridHelper);
+
+// ══════════════════════════════════════════════
+// MOUSE INTERACTION + CAMERA
+// ══════════════════════════════════════════════
+let autoRotate = true;
+let isDragging = false;
+let prevMouse = { x:0, y:0 };
+let cameraTheta = 0;
+let cameraPhi = Math.PI / 2.2;
+let cameraRadius = 35;
+let cameraTarget = new THREE.Vector3(0, 0, 0);
+
+container.addEventListener('mousedown', e => {
+    isDragging = true;
+    prevMouse = { x:e.clientX, y:e.clientY };
+});
+
+container.addEventListener('mousemove', e => {
+    const rect = container.getBoundingClientRect();
+    mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+    if (isDragging) {
+        const dx = e.clientX - prevMouse.x;
+        const dy = e.clientY - prevMouse.y;
+        cameraTheta -= dx * 0.005;
+        cameraPhi = Math.max(0.3, Math.min(Math.PI - 0.3, cameraPhi - dy * 0.005));
+        prevMouse = { x:e.clientX, y:e.clientY };
+        autoRotate = false;
+    }
+});
+
+container.addEventListener('mouseup', () => isDragging = false);
+container.addEventListener('mouseleave', () => isDragging = false);
+
+container.addEventListener('wheel', e => {
+    cameraRadius = Math.max(15, Math.min(60, cameraRadius + e.deltaY * 0.03));
+    e.preventDefault();
+}, { passive:false });
+
+container.addEventListener('click', e => {
+    if (Math.abs(e.clientX - prevMouse.x) > 5) return;
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects(nodeMeshes);
+    if (intersects.length > 0) {
+        selectedIdx = nodeMeshes.indexOf(intersects[0].object);
+        showAgentDetail(selectedIdx);
+    }
+});
+
+function resetCamera() {
+    cameraTheta = 0;
+    cameraPhi = Math.PI / 2.2;
+    cameraRadius = 35;
+    autoRotate = true;
+}
+
+function toggleRotation() {
+    autoRotate = !autoRotate;
+    document.getElementById('rotBtn').style.color = autoRotate ? 'var(--green)' : 'var(--text-dim)';
+}
+
+// ══════════════════════════════════════════════
+// AGENT DETAIL PANEL
+// ══════════════════════════════════════════════
+function showAgentDetail(idx) {
+    const nd = nodeData[idx];
+    const panel = document.getElementById('agentDetail');
+    const statusClass = nd.status;
+    panel.innerHTML = `
+        <div class="agent-detail-name">
+            <span style="color:#${nd.agent.color.toString(16).padStart(6,'0')}">${nd.agent.id}</span>
+            <span class="agent-detail-status ${statusClass}">${statusClass}</span>
+        </div>
+        <div class="agent-detail-info">
+            Role: <span>${nd.agent.role}</span><br>
+            Group: <span>${nd.agent.group.toUpperCase()}</span><br>
+            Last action: <span>${nd.lastAction}</span><br>
+            Uptime: <span>${Math.floor(Math.random()*99+1)}h ${Math.floor(Math.random()*59)}m</span><br>
+            Tasks completed: <span>${Math.floor(Math.random()*500+50)}</span>
+        </div>
+    `;
+}
+
+// ══════════════════════════════════════════════
+// EVENT FEED — SIMULATED LIVE
+// ══════════════════════════════════════════════
+const feedList = document.getElementById('feedList');
+let eventCount = 0;
+
+const eventTemplates = [
+    { agent:'NATHAN', cls:'nathan', msgs:['Routing task #{n} to {target}', 'Pipeline #{n} completed in {ms}ms', 'Load balancing: {pct}% optimal'] },
+    { agent:'VIZION', cls:'vizion', msgs:['Frame analysis complete — {n} objects detected', 'Visual classification: confidence {pct}%'] },
+    { agent:'SCOUT', cls:'scout', msgs:['Web scan: {n} endpoints discovered', 'Reconnaissance complete for domain #{n}'] },
+    { agent:'SPARK', cls:'spark', msgs:['Generated {n} creative variants', 'Idea scoring: top candidate {pct}%'] },
+    { agent:'SENTINEL', cls:'sentinel', msgs:['Threat scan clear — {n} checks passed', 'Anomaly detected: severity LOW', 'Security audit #{n} passed'] },
+    { agent:'CREA', cls:'crea', msgs:['Asset generation: {n} layers rendered', 'Design iteration #{n} complete'] },
+    { agent:'SCRIPT', cls:'script', msgs:['Module compiled: {n} lines, 0 errors', 'Code review: {pct}% coverage'] },
+    { agent:'LENS', cls:'lens', msgs:['Deep analysis: {n} patterns identified', 'Insight extraction: {pct}% confidence'] },
+    { agent:'CORTEX', cls:'default', msgs:['Knowledge base updated: +{n} entries', 'Query resolved in {ms}ms'] },
+    { agent:'FORGE', cls:'default', msgs:['Build #{n} succeeded', 'Deployment v2.{n} rolling out'] },
+    { agent:'RELAY', cls:'default', msgs:['Inter-agent sync: {n} messages routed', 'Broadcast event #{n} dispatched'] },
+    { agent:'GUARDIAN_DEV', cls:'sentinel', msgs:['Code scan: {n} files analyzed, 0 vulns', 'Dependency audit: all clear'] },
+];
+
+function addEvent() {
+    const tmpl = eventTemplates[Math.floor(Math.random() * eventTemplates.length)];
+    const msg = tmpl.msgs[Math.floor(Math.random() * tmpl.msgs.length)]
+        .replace('{n}', Math.floor(Math.random()*9000+1000))
+        .replace('{ms}', Math.floor(Math.random()*200+10))
+        .replace('{pct}', Math.floor(Math.random()*30+70))
+        .replace('{target}', ['SPARK','CREA','SCRIPT','VIZION','SENTINEL','FORGE'][Math.floor(Math.random()*6)]);
+
+    const now = new Date();
+    const time = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+
+    const el = document.createElement('div');
+    el.className = 'feed-item';
+    el.innerHTML = `
+        <div class="feed-item-header">
+            <span class="feed-agent ${tmpl.cls}"><span class="feed-status" style="background:var(--green)"></span>${tmpl.agent}</span>
+            <span class="feed-time">${time}</span>
+        </div>
+        <div class="feed-msg">${msg}</div>
+    `;
+    feedList.insertBefore(el, feedList.firstChild);
+
+    // Keep max 80 items
+    while (feedList.children.length > 80) feedList.removeChild(feedList.lastChild);
+    eventCount++;
+
+    // Flash a random connection
+    const activeConns = connectionMeshes.filter(c => c.active);
+    if (activeConns.length > 0) {
+        const rc = activeConns[Math.floor(Math.random() * activeConns.length)];
+        rc.line.material.opacity = 0.6;
+        setTimeout(() => { rc.line.material.opacity = 0.15; }, 400);
+    }
+}
+
+// Initial burst
+for (let i = 0; i < 15; i++) addEvent();
+// Ongoing
+setInterval(addEvent, 1500 + Math.random() * 2000);
+
+// ══════════════════════════════════════════════
+// METRICS — SIMULATED LIVE
+// ══════════════════════════════════════════════
+function updateMetrics() {
+    const active = 28 + Math.floor(Math.random()*6);
+    document.getElementById('mAgents').textContent = `${active}/33`;
+    document.getElementById('mLatency').textContent = `${Math.floor(Math.random()*30+8)}ms`;
+    document.getElementById('mCPU').textContent = `${Math.floor(Math.random()*40+20)}%`;
+    document.getElementById('mRAM').textContent = `${(Math.random()*4+4).toFixed(1)}GB`;
+    document.getElementById('mQueue').textContent = Math.floor(Math.random()*15);
+    document.getElementById('mTokens').textContent = `${(Math.random()*5+1).toFixed(1)}M`;
+    document.getElementById('mErrors').textContent = Math.random() > 0.9 ? '1' : '0';
+}
+setInterval(updateMetrics, 3000);
+
+// ══════════════════════════════════════════════
+// ANIMATION LOOP
+// ══════════════════════════════════════════════
+const clock = new THREE.Clock();
+
+function animate() {
+    requestAnimationFrame(animate);
+    const t = clock.getElapsedTime();
+
+    // Camera orbit
+    if (autoRotate) cameraTheta += 0.002;
+    camera.position.x = cameraTarget.x + cameraRadius * Math.sin(cameraPhi) * Math.sin(cameraTheta);
+    camera.position.y = cameraTarget.y + cameraRadius * Math.cos(cameraPhi);
+    camera.position.z = cameraTarget.z + cameraRadius * Math.sin(cameraPhi) * Math.cos(cameraTheta);
+    camera.lookAt(cameraTarget);
+
+    // Hover detection
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects(nodeMeshes);
+    hoveredIdx = intersects.length > 0 ? nodeMeshes.indexOf(intersects[0].object) : -1;
+
+    // Update nodes
+    nodeData.forEach((nd, i) => {
+        // Float
+        nd.x = nd.ox + Math.sin(t * 0.4 + nd.pulse) * 0.3;
+        nd.y = nd.oy + Math.cos(t * 0.35 + nd.pulse * 1.2) * 0.2;
+        nd.z = nd.oz + Math.sin(t * 0.3 + nd.pulse * 0.8) * 0.15;
+        nd.group.position.set(nd.x, nd.y, nd.z);
+
+        // Pulse
+        const p = 1 + Math.sin(t * 2 + nd.pulse) * 0.12;
+        nd.mesh.scale.setScalar(p);
+
+        // Hover / selected
+        const isHov = (i === hoveredIdx);
+        const isSel = (i === selectedIdx);
+        const targetOp = isHov || isSel ? 1.0 : (nd.status === 'active' ? 0.7 : 0.25);
+        nd.spriteMat.opacity += (targetOp - nd.spriteMat.opacity) * 0.1;
+        const targetScale = isHov || isSel ? (nd.agent.id === 'NATHAN' ? 5.5 : 3.5) : (nd.agent.id === 'NATHAN' ? 4 : 2.2);
+        const cs = nd.sprite.scale.x;
+        const ns = cs + (targetScale - cs) * 0.08;
+        nd.sprite.scale.set(ns, ns, 1);
+
+        // NATHAN rings
+        if (nd.agent.id === 'NATHAN' && nd.group.children.length > 2) {
+            nd.group.children[2].rotation.z = t * 0.3;
+            nd.group.children[3].rotation.z = -t * 0.2;
+            nd.group.children[3].rotation.x = Math.PI/3 + Math.sin(t*0.5)*0.2;
+        }
+    });
+
+    // Update connections
+    connectionMeshes.forEach(c => {
+        const nf = nodeData[c.from];
+        const nt = nodeData[c.to];
+        const pos = c.geo.attributes.position.array;
+        pos[0]=nf.x; pos[1]=nf.y; pos[2]=nf.z;
+        pos[3]=nt.x; pos[4]=nt.y; pos[5]=nt.z;
+        c.geo.attributes.position.needsUpdate = true;
+    });
+
+    // Update particles
+    particles.forEach(p => {
+        p.t += p.speed * p.dir;
+        if (p.t > 1) p.t = 0;
+        if (p.t < 0) p.t = 1;
+        const nf = nodeData[p.from];
+        const nt = nodeData[p.to];
+        p.sprite.position.set(
+            nf.x + (nt.x - nf.x) * p.t,
+            nf.y + (nt.y - nf.y) * p.t,
+            nf.z + (nt.z - nf.z) * p.t
+        );
+    });
+
+    // Grid pulse
+    gridHelper.position.y = -15 + Math.sin(t * 0.2) * 0.5;
+
+    renderer.render(scene, camera);
+}
+animate();
+
+// ── Resize ──
+window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+});
+
+// ── WebSocket placeholder ──
+// When NATHAN's WebSocket is ready, replace simulated data:
+// const ws = new WebSocket('ws://your-nathan-endpoint/godview');
+// ws.onmessage = (e) => { const data = JSON.parse(e.data); /* update nodes, feed, metrics */ };
+</script>
+</body>
+</html>
