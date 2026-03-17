@@ -3,29 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenClaw — God View | MiroFish Terminal</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>OpenClaw — God View</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
         :root {
-            --bg: #07080c;
-            --surface: #0d0f14;
-            --surface2: #12151c;
-            --surface3: #181c25;
-            --border: rgba(255,255,255,0.05);
-            --text: #e8eaf0;
-            --text-dim: #5a6078;
-            --green: #00ff88;
-            --green-dim: #00cc6a;
-            --blue: #4d8eff;
-            --purple: #a78bfa;
-            --orange: #ff9f43;
-            --red: #ff4757;
-            --cyan: #00d4ff;
-            --pink: #ff6b9d;
-            --yellow: #ffd93d;
+            --bg: #06080e;
+            --surface: #0a0d14;
+            --surface2: #0e1219;
+            --border: rgba(77,142,255,0.08);
+            --text: #c8cde0;
+            --text-dim: #3d465e;
+            --accent: #4d8eff;
+            --accent-dim: rgba(77,142,255,0.15);
+            --accent-glow: rgba(77,142,255,0.4);
         }
 
         html, body { height:100%; overflow:hidden; }
@@ -38,7 +31,7 @@
         /* ── LAYOUT ── */
         .god-layout {
             display: grid;
-            grid-template-columns: 340px 1fr;
+            grid-template-columns: 320px 1fr;
             grid-template-rows: auto 1fr;
             height: 100vh;
             gap: 0;
@@ -53,7 +46,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 0 1.5rem;
-            height: 52px;
+            height: 48px;
         }
 
         .top-bar-left {
@@ -65,43 +58,44 @@
         .god-logo {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 800;
-            font-size: 1rem;
+            font-size: 0.9rem;
             letter-spacing: -0.5px;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            color: var(--text);
         }
 
         .god-logo .dot {
-            width: 8px; height: 8px; border-radius: 50%;
-            background: var(--green);
-            box-shadow: 0 0 10px var(--green);
-            animation: pulse-g 2s infinite;
+            width: 7px; height: 7px; border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent-glow);
+            animation: pulse-dot 3s ease-in-out infinite;
         }
 
-        @keyframes pulse-g {
-            0%,100% { opacity:1; box-shadow:0 0 10px var(--green); }
-            50% { opacity:.6; box-shadow:0 0 20px var(--green); }
+        @keyframes pulse-dot {
+            0%,100% { opacity:1; box-shadow:0 0 8px var(--accent-glow); }
+            50% { opacity:.5; box-shadow:0 0 16px var(--accent-glow); }
         }
 
         .god-label {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             text-transform: uppercase;
             letter-spacing: 3px;
-            color: var(--green);
-            background: rgba(0,255,136,0.08);
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
-            border: 1px solid rgba(0,255,136,0.15);
+            color: var(--accent);
+            background: var(--accent-dim);
+            padding: 0.15rem 0.5rem;
+            border-radius: 3px;
+            border: 1px solid rgba(77,142,255,0.12);
         }
 
         .back-link {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--text-dim);
             text-decoration: none;
             transition: color 0.3s;
         }
-        .back-link:hover { color: var(--text); }
+        .back-link:hover { color: var(--accent); }
 
         /* ── METRICS BAR ── */
         .metrics-bar {
@@ -113,29 +107,27 @@
         .metric {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
 
         .metric-dot {
-            width: 6px; height: 6px; border-radius: 50%;
+            width: 5px; height: 5px; border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 4px var(--accent-glow);
         }
-        .metric-dot.green { background: var(--green); box-shadow: 0 0 6px var(--green); }
-        .metric-dot.blue { background: var(--blue); box-shadow: 0 0 6px var(--blue); }
-        .metric-dot.orange { background: var(--orange); box-shadow: 0 0 6px var(--orange); }
-        .metric-dot.red { background: var(--red); box-shadow: 0 0 6px var(--red); }
-        .metric-dot.cyan { background: var(--cyan); box-shadow: 0 0 6px var(--cyan); }
-        .metric-dot.purple { background: var(--purple); box-shadow: 0 0 6px var(--purple); }
+        .metric-dot.warn { background: #e0a030; box-shadow: 0 0 4px rgba(224,160,48,0.4); }
+        .metric-dot.err { background: #c0392b; box-shadow: 0 0 4px rgba(192,57,43,0.4); }
 
         .metric-label {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--text-dim);
         }
 
         .metric-value {
-            font-size: 0.75rem;
-            font-weight: 700;
+            font-size: 0.7rem;
+            font-weight: 600;
             color: var(--text);
         }
 
@@ -149,7 +141,7 @@
         }
 
         .feed-header {
-            padding: 1rem 1.2rem;
+            padding: 0.8rem 1rem;
             border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
@@ -158,35 +150,36 @@
 
         .feed-title {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
+            color: var(--text-dim);
         }
 
         .feed-count {
-            font-size: 0.6rem;
-            color: var(--green);
-            background: rgba(0,255,136,0.1);
-            padding: 0.15rem 0.5rem;
+            font-size: 0.55rem;
+            color: var(--accent);
+            background: var(--accent-dim);
+            padding: 0.1rem 0.4rem;
             border-radius: 100px;
         }
 
         .feed-list {
             flex: 1;
             overflow-y: auto;
-            padding: 0.5rem 0;
+            padding: 0.3rem 0;
             scrollbar-width: thin;
-            scrollbar-color: var(--surface3) transparent;
+            scrollbar-color: var(--surface2) transparent;
         }
 
-        .feed-list::-webkit-scrollbar { width: 4px; }
+        .feed-list::-webkit-scrollbar { width: 3px; }
         .feed-list::-webkit-scrollbar-track { background: transparent; }
-        .feed-list::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 100px; }
+        .feed-list::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 100px; }
 
         .feed-item {
-            padding: 0.7rem 1.2rem;
-            border-bottom: 1px solid rgba(255,255,255,0.02);
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid rgba(77,142,255,0.03);
             animation: feedIn 0.4s ease-out;
             transition: background 0.2s;
         }
@@ -194,7 +187,7 @@
         .feed-item:hover { background: var(--surface2); }
 
         @keyframes feedIn {
-            from { opacity:0; transform:translateX(-20px); }
+            from { opacity:0; transform:translateX(-10px); }
             to { opacity:1; transform:translateX(0); }
         }
 
@@ -202,74 +195,67 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.2rem;
         }
 
         .feed-agent {
-            font-size: 0.7rem;
-            font-weight: 700;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--accent);
         }
 
-        .feed-agent.nathan { color: var(--green); }
-        .feed-agent.vizion { color: var(--cyan); }
-        .feed-agent.scout { color: var(--blue); }
-        .feed-agent.spark { color: var(--orange); }
-        .feed-agent.sentinel { color: var(--red); }
-        .feed-agent.crea { color: var(--pink); }
-        .feed-agent.script { color: var(--purple); }
-        .feed-agent.lens { color: var(--yellow); }
-        .feed-agent.default { color: var(--text-dim); }
-
         .feed-time {
-            font-size: 0.55rem;
+            font-size: 0.5rem;
             color: var(--text-dim);
         }
 
         .feed-msg {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             color: var(--text-dim);
             line-height: 1.5;
         }
 
         .feed-status {
             display: inline-block;
-            width: 5px; height: 5px;
+            width: 4px; height: 4px;
             border-radius: 50%;
-            margin-right: 0.3rem;
+            margin-right: 0.25rem;
+            background: var(--accent);
+            box-shadow: 0 0 3px var(--accent-glow);
         }
 
-        /* ── AGENT DETAILS PANEL (bottom-left) ── */
+        /* ── AGENT DETAILS PANEL ── */
         .agent-detail {
             background: var(--surface);
             border-top: 1px solid var(--border);
-            padding: 1rem 1.2rem;
-            min-height: 140px;
+            padding: 0.8rem 1rem;
+            min-height: 130px;
         }
 
         .agent-detail-name {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
         .agent-detail-status {
-            font-size: 0.55rem;
-            padding: 0.1rem 0.5rem;
+            font-size: 0.5rem;
+            padding: 0.08rem 0.4rem;
             border-radius: 100px;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 700;
         }
-        .agent-detail-status.active { background:rgba(0,255,136,0.1); color:var(--green); }
-        .agent-detail-status.idle { background:rgba(90,96,120,0.2); color:var(--text-dim); }
-        .agent-detail-status.error { background:rgba(255,71,87,0.1); color:var(--red); }
+        .agent-detail-status.active { background:var(--accent-dim); color:var(--accent); }
+        .agent-detail-status.idle { background:rgba(61,70,94,0.2); color:var(--text-dim); }
+        .agent-detail-status.error { background:rgba(192,57,43,0.1); color:#c0392b; }
 
         .agent-detail-info {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             color: var(--text-dim);
             line-height: 1.8;
         }
@@ -288,112 +274,142 @@
             height: 100% !important;
         }
 
-        /* Canvas overlay controls */
         .canvas-controls {
             position: absolute;
-            bottom: 1.5rem;
-            right: 1.5rem;
+            bottom: 1.2rem;
+            right: 1.2rem;
             display: flex;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
 
         .ctrl-btn {
-            width: 36px; height: 36px;
-            border-radius: 10px;
-            background: rgba(13,15,20,0.8);
-            backdrop-filter: blur(10px);
+            width: 32px; height: 32px;
+            border-radius: 6px;
+            background: rgba(10,13,20,0.85);
+            backdrop-filter: blur(8px);
             border: 1px solid var(--border);
             color: var(--text-dim);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s;
         }
-        .ctrl-btn:hover { border-color: var(--green); color: var(--green); }
+        .ctrl-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-        /* Canvas HUD overlay */
         .canvas-hud {
             position: absolute;
-            top: 1.5rem;
-            left: 1.5rem;
+            top: 1.2rem;
+            left: 1.2rem;
             pointer-events: none;
         }
 
         .hud-label {
-            font-size: 0.55rem;
+            font-size: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 3px;
             color: var(--text-dim);
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.2rem;
         }
 
         .hud-value {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 800;
-            color: var(--green);
+            color: var(--accent);
         }
 
         .hud-sub {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             color: var(--text-dim);
-            margin-top: 0.2rem;
+            margin-top: 0.15rem;
         }
 
-        /* Legend */
         .canvas-legend {
             position: absolute;
-            bottom: 1.5rem;
-            left: 1.5rem;
+            bottom: 1.2rem;
+            left: 1.2rem;
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
             pointer-events: none;
         }
 
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 0.4rem;
-            font-size: 0.55rem;
+            gap: 0.3rem;
+            font-size: 0.5rem;
             color: var(--text-dim);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .legend-dot {
-            width: 6px; height: 6px;
+            width: 5px; height: 5px;
             border-radius: 50%;
         }
 
-        /* ── SCANLINE EFFECT ── */
-        .scanline {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
+        /* ── TOOLTIP ── */
+        .node-tooltip {
+            position: absolute;
             pointer-events: none;
-            z-index: 9999;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 2px,
-                rgba(0,0,0,0.03) 2px,
-                rgba(0,0,0,0.03) 4px
-            );
+            background: rgba(10,13,20,0.92);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(77,142,255,0.15);
+            border-radius: 6px;
+            padding: 0.5rem 0.7rem;
+            font-size: 0.6rem;
+            color: var(--text);
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.15s ease, transform 0.15s ease;
+            z-index: 100;
+            white-space: nowrap;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        .node-tooltip.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .node-tooltip .tt-name {
+            font-weight: 700;
+            font-size: 0.7rem;
+            color: var(--accent);
+            margin-bottom: 0.2rem;
+        }
+        .node-tooltip .tt-role {
+            color: var(--text-dim);
+            margin-bottom: 0.15rem;
+        }
+        .node-tooltip .tt-status {
+            display: inline-block;
+            padding: 0.05rem 0.3rem;
+            border-radius: 3px;
+            font-size: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+            margin-bottom: 0.15rem;
+        }
+        .node-tooltip .tt-status.active { background: var(--accent-dim); color: var(--accent); }
+        .node-tooltip .tt-status.idle { background: rgba(61,70,94,0.25); color: var(--text-dim); }
+        .node-tooltip .tt-action {
+            color: var(--text-dim);
+            font-style: italic;
+            font-size: 0.55rem;
         }
 
         /* ── Responsive ── */
         @media (max-width: 900px) {
             .god-layout { grid-template-columns: 1fr; }
             .feed-panel { display: none; }
-            .metrics-bar { gap: 0.8rem; }
+            .metrics-bar { gap: 0.6rem; }
             .metric-label { display: none; }
         }
     </style>
 </head>
 <body>
-
-<div class="scanline"></div>
 
 <div class="god-layout">
     <!-- TOP BAR -->
@@ -408,37 +424,37 @@
         </div>
         <div class="metrics-bar" id="metricsBar">
             <div class="metric">
-                <span class="metric-dot green"></span>
+                <span class="metric-dot"></span>
                 <span class="metric-label">Agents</span>
                 <span class="metric-value" id="mAgents">33/33</span>
             </div>
             <div class="metric">
-                <span class="metric-dot cyan"></span>
+                <span class="metric-dot"></span>
                 <span class="metric-label">Latency</span>
                 <span class="metric-value" id="mLatency">12ms</span>
             </div>
             <div class="metric">
-                <span class="metric-dot blue"></span>
+                <span class="metric-dot"></span>
                 <span class="metric-label">CPU</span>
                 <span class="metric-value" id="mCPU">34%</span>
             </div>
             <div class="metric">
-                <span class="metric-dot purple"></span>
+                <span class="metric-dot"></span>
                 <span class="metric-label">RAM</span>
                 <span class="metric-value" id="mRAM">6.2GB</span>
             </div>
             <div class="metric">
-                <span class="metric-dot orange"></span>
+                <span class="metric-dot warn"></span>
                 <span class="metric-label">Queue</span>
                 <span class="metric-value" id="mQueue">7</span>
             </div>
             <div class="metric">
-                <span class="metric-dot cyan"></span>
+                <span class="metric-dot"></span>
                 <span class="metric-label">Tokens</span>
                 <span class="metric-value" id="mTokens">2.4M</span>
             </div>
             <div class="metric">
-                <span class="metric-dot red"></span>
+                <span class="metric-dot err"></span>
                 <span class="metric-label">Errors</span>
                 <span class="metric-value" id="mErrors">0</span>
             </div>
@@ -471,15 +487,22 @@
         </div>
 
         <div class="canvas-legend">
-            <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> Active</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div> Active</div>
             <div class="legend-item"><div class="legend-dot" style="background:var(--text-dim)"></div> Idle</div>
-            <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div> Error</div>
-            <div class="legend-item"><div class="legend-dot" style="background:var(--cyan)"></div> Data Flow</div>
+            <div class="legend-item"><div class="legend-dot" style="background:rgba(77,142,255,0.3)"></div> Data Flow</div>
         </div>
 
         <div class="canvas-controls">
             <button class="ctrl-btn" onclick="resetCamera()" title="Reset view">⟳</button>
             <button class="ctrl-btn" onclick="toggleRotation()" title="Toggle rotation" id="rotBtn">◎</button>
+        </div>
+
+        <!-- Tooltip -->
+        <div class="node-tooltip" id="nodeTooltip">
+            <div class="tt-name" id="ttName"></div>
+            <div class="tt-role" id="ttRole"></div>
+            <div class="tt-status" id="ttStatus"></div>
+            <div class="tt-action" id="ttAction"></div>
         </div>
     </div>
 </div>
@@ -488,49 +511,53 @@
 // ══════════════════════════════════════════════
 // AGENT DEFINITIONS — 33 OpenClaw Agents
 // ══════════════════════════════════════════════
+const ACCENT = 0x4d8eff;
+const ACCENT_DIM = 0x2a5ab8;
+const ACCENT_BRIGHT = 0x7aadff;
+
 const AGENTS = [
     // Core
-    { id:'NATHAN', role:'Orchestrator', group:'core', color:0x00ff88 },
+    { id:'NATHAN', role:'Orchestrator', group:'core' },
     // Perception
-    { id:'VIZION', role:'Vision Analysis', group:'perception', color:0x00d4ff },
-    { id:'SCOUT', role:'Web Recon', group:'perception', color:0x4d8eff },
-    { id:'LENS', role:'Deep Analysis', group:'perception', color:0xffd93d },
-    { id:'SONAR', role:'Audio Processing', group:'perception', color:0x00d4ff },
+    { id:'VIZION', role:'Vision Analysis', group:'perception' },
+    { id:'SCOUT', role:'Web Recon', group:'perception' },
+    { id:'LENS', role:'Deep Analysis', group:'perception' },
+    { id:'SONAR', role:'Audio Processing', group:'perception' },
     // Creation
-    { id:'SPARK', role:'Idea Generation', group:'creation', color:0xff9f43 },
-    { id:'CREA', role:'Creative Design', group:'creation', color:0xff6b9d },
-    { id:'SCRIPT', role:'Code Generation', group:'creation', color:0xa78bfa },
-    { id:'VISUAL', role:'Image Generation', group:'creation', color:0xff6b9d },
-    { id:'EDITOR', role:'Content Editing', group:'creation', color:0xa78bfa },
-    { id:'COMPOSER', role:'Music/Audio Gen', group:'creation', color:0xff9f43 },
+    { id:'SPARK', role:'Idea Generation', group:'creation' },
+    { id:'CREA', role:'Creative Design', group:'creation' },
+    { id:'SCRIPT', role:'Code Generation', group:'creation' },
+    { id:'VISUAL', role:'Image Generation', group:'creation' },
+    { id:'EDITOR', role:'Content Editing', group:'creation' },
+    { id:'COMPOSER', role:'Music/Audio Gen', group:'creation' },
     // Execution
-    { id:'FORGE', role:'Build & Deploy', group:'execution', color:0x4d8eff },
-    { id:'RUNNER', role:'Task Execution', group:'execution', color:0x00ff88 },
-    { id:'PIPELINE', role:'Workflow Mgmt', group:'execution', color:0x4d8eff },
-    { id:'DEPLOYER', role:'Cloud Deploy', group:'execution', color:0x00d4ff },
+    { id:'FORGE', role:'Build & Deploy', group:'execution' },
+    { id:'RUNNER', role:'Task Execution', group:'execution' },
+    { id:'PIPELINE', role:'Workflow Mgmt', group:'execution' },
+    { id:'DEPLOYER', role:'Cloud Deploy', group:'execution' },
     // Security
-    { id:'SENTINEL', role:'Threat Detection', group:'security', color:0xff4757 },
-    { id:'GUARDIAN_DEV', role:'Code Security', group:'security', color:0xff4757 },
-    { id:'FIREWALL', role:'Access Control', group:'security', color:0xff4757 },
-    { id:'AUDIT', role:'Compliance Check', group:'security', color:0xff9f43 },
+    { id:'SENTINEL', role:'Threat Detection', group:'security' },
+    { id:'GUARDIAN_DEV', role:'Code Security', group:'security' },
+    { id:'FIREWALL', role:'Access Control', group:'security' },
+    { id:'AUDIT', role:'Compliance Check', group:'security' },
     // Data
-    { id:'CORTEX', role:'Knowledge Base', group:'data', color:0xa78bfa },
-    { id:'MEMORY', role:'Context Storage', group:'data', color:0xa78bfa },
-    { id:'INDEXER', role:'Data Indexing', group:'data', color:0x4d8eff },
-    { id:'VECTOR', role:'Embedding Engine', group:'data', color:0x00d4ff },
+    { id:'CORTEX', role:'Knowledge Base', group:'data' },
+    { id:'MEMORY', role:'Context Storage', group:'data' },
+    { id:'INDEXER', role:'Data Indexing', group:'data' },
+    { id:'VECTOR', role:'Embedding Engine', group:'data' },
     // Communication
-    { id:'HERALD', role:'Notifications', group:'comm', color:0xffd93d },
-    { id:'BRIDGE', role:'API Gateway', group:'comm', color:0x00d4ff },
-    { id:'RELAY', role:'Inter-Agent Msg', group:'comm', color:0x00ff88 },
+    { id:'HERALD', role:'Notifications', group:'comm' },
+    { id:'BRIDGE', role:'API Gateway', group:'comm' },
+    { id:'RELAY', role:'Inter-Agent Msg', group:'comm' },
     // Optimization
-    { id:'TUNER', role:'Model Fine-tune', group:'optim', color:0xff9f43 },
-    { id:'PROFILER', role:'Performance Mon.', group:'optim', color:0xffd93d },
-    { id:'CACHE', role:'Response Cache', group:'optim', color:0x4d8eff },
+    { id:'TUNER', role:'Model Fine-tune', group:'optim' },
+    { id:'PROFILER', role:'Performance Mon.', group:'optim' },
+    { id:'CACHE', role:'Response Cache', group:'optim' },
     // Specialist
-    { id:'LINGUIST', role:'Translation', group:'specialist', color:0xff6b9d },
-    { id:'ANALYST', role:'Data Analytics', group:'specialist', color:0x00d4ff },
-    { id:'STRATEGIST', role:'Planning', group:'specialist', color:0xa78bfa },
-    { id:'ORACLE', role:'Prediction Engine', group:'specialist', color:0xffd93d }
+    { id:'LINGUIST', role:'Translation', group:'specialist' },
+    { id:'ANALYST', role:'Data Analytics', group:'specialist' },
+    { id:'STRATEGIST', role:'Planning', group:'specialist' },
+    { id:'ORACLE', role:'Prediction Engine', group:'specialist' }
 ];
 
 // Group layout — spherical clusters
@@ -558,34 +585,46 @@ camera.lookAt(0, 0, 0);
 const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:false });
 renderer.setSize(container.clientWidth, container.clientHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.setClearColor(0x07080c, 1);
+renderer.setClearColor(0x06080e, 1);
 container.insertBefore(renderer.domElement, container.firstChild);
 
-// ── Glow texture ──
-function makeGlow(c1, c2) {
+// ── Glow texture — unicolor blue ──
+function makeGlow(opacity) {
     const cv = document.createElement('canvas');
-    cv.width = cv.height = 128;
+    cv.width = cv.height = 256;
     const ctx = cv.getContext('2d');
-    const g = ctx.createRadialGradient(64,64,0,64,64,64);
-    g.addColorStop(0, c1);
-    g.addColorStop(0.5, c2);
-    g.addColorStop(1, 'transparent');
+    const g = ctx.createRadialGradient(128,128,0,128,128,128);
+    g.addColorStop(0, `rgba(77,142,255,${opacity})`);
+    g.addColorStop(0.3, `rgba(77,142,255,${opacity * 0.5})`);
+    g.addColorStop(0.6, `rgba(77,142,255,${opacity * 0.15})`);
+    g.addColorStop(1, 'rgba(77,142,255,0)');
     ctx.fillStyle = g;
-    ctx.fillRect(0,0,128,128);
+    ctx.fillRect(0,0,256,256);
     return new THREE.CanvasTexture(cv);
 }
+
+const glowTexActive = makeGlow(0.9);
+const glowTexIdle = makeGlow(0.4);
+const glowTexHover = makeGlow(1.0);
 
 // ── Create nodes ──
 const nodeData = [];
 const nodeMeshes = [];
+// Use a larger invisible sphere for raycasting (wider detection zone)
+const hitMeshes = [];
 const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
+const mouse = new THREE.Vector2(-999, -999);
 let hoveredIdx = -1;
 let selectedIdx = -1;
 
+const tooltip = document.getElementById('nodeTooltip');
+const ttName = document.getElementById('ttName');
+const ttRole = document.getElementById('ttRole');
+const ttStatus = document.getElementById('ttStatus');
+const ttAction = document.getElementById('ttAction');
+
 AGENTS.forEach((agent, i) => {
     const gp = GROUP_POS[agent.group];
-    // Distribute within group sphere
     const count = AGENTS.filter(a => a.group === agent.group).length;
     const idx = AGENTS.filter((a,j) => a.group === agent.group && j <= i).length - 1;
     const phi = Math.acos(-1 + (2 * idx + 1) / count);
@@ -596,56 +635,75 @@ AGENTS.forEach((agent, i) => {
     const y = gp.y + r * Math.sin(theta) * Math.sin(phi);
     const z = gp.z + r * Math.cos(phi);
 
-    // Status
     const statuses = ['active','active','active','active','active','idle','idle','active'];
     const status = agent.id === 'NATHAN' ? 'active' : statuses[i % statuses.length];
 
     const group = new THREE.Group();
     group.position.set(x, y, z);
 
-    // Core sphere
-    const size = agent.id === 'NATHAN' ? 0.6 : 0.35;
+    // Core sphere — uniform blue
+    const isNathan = agent.id === 'NATHAN';
+    const size = isNathan ? 0.55 : 0.3;
+    const coreColor = status === 'active' ? ACCENT : ACCENT_DIM;
     const geo = new THREE.SphereGeometry(size, 24, 24);
-    const mat = new THREE.MeshBasicMaterial({ color: agent.color });
+    const mat = new THREE.MeshBasicMaterial({ color: coreColor });
     const mesh = new THREE.Mesh(geo, mat);
     group.add(mesh);
 
-    // Glow sprite
-    const hexStr = '#' + agent.color.toString(16).padStart(6, '0');
-    const glowTex = makeGlow(hexStr, hexStr.replace(')', ',0.2)').replace('rgb', 'rgba'));
+    // Invisible hit sphere — 3x bigger for easier hover detection
+    const hitGeo = new THREE.SphereGeometry(isNathan ? 2.0 : 1.2, 8, 8);
+    const hitMat = new THREE.MeshBasicMaterial({ visible: false });
+    const hitMesh = new THREE.Mesh(hitGeo, hitMat);
+    group.add(hitMesh);
+
+    // Glow sprite — blue only
     const spriteMat = new THREE.SpriteMaterial({
-        map: makeGlow(`rgba(${(agent.color>>16)&255},${(agent.color>>8)&255},${agent.color&255},1)`,
-                       `rgba(${(agent.color>>16)&255},${(agent.color>>8)&255},${agent.color&255},0.15)`),
+        map: status === 'active' ? glowTexActive : glowTexIdle,
         transparent: true,
-        opacity: status === 'active' ? 0.7 : 0.25,
+        opacity: status === 'active' ? 0.5 : 0.15,
         blending: THREE.AdditiveBlending
     });
     const sprite = new THREE.Sprite(spriteMat);
-    const spriteSize = agent.id === 'NATHAN' ? 4 : 2.2;
+    const spriteSize = isNathan ? 3.5 : 1.8;
     sprite.scale.set(spriteSize, spriteSize, 1);
     group.add(sprite);
 
-    // Orbit ring for NATHAN
-    if (agent.id === 'NATHAN') {
-        const ringGeo = new THREE.RingGeometry(1.0, 1.05, 64);
-        const ringMat = new THREE.MeshBasicMaterial({ color:0x00ff88, transparent:true, opacity:0.2, side:THREE.DoubleSide });
-        const ring = new THREE.Mesh(ringGeo, ringMat);
-        group.add(ring);
-        const ring2Geo = new THREE.RingGeometry(1.4, 1.44, 64);
-        const ring2 = new THREE.Mesh(ring2Geo, ringMat.clone());
-        ring2.rotation.x = Math.PI / 3;
-        group.add(ring2);
+    // Outer ring (glow ring that intensifies on hover)
+    const ringGeo = new THREE.RingGeometry(isNathan ? 0.9 : 0.5, isNathan ? 0.95 : 0.54, 48);
+    const ringMat = new THREE.MeshBasicMaterial({
+        color: ACCENT,
+        transparent: true,
+        opacity: 0,
+        side: THREE.DoubleSide,
+        blending: THREE.AdditiveBlending
+    });
+    const ring = new THREE.Mesh(ringGeo, ringMat);
+    ring.lookAt(camera.position);
+    group.add(ring);
+
+    // NATHAN extra orbit rings
+    if (isNathan) {
+        const r1Geo = new THREE.RingGeometry(1.1, 1.14, 64);
+        const r1Mat = new THREE.MeshBasicMaterial({ color:ACCENT, transparent:true, opacity:0.1, side:THREE.DoubleSide, blending:THREE.AdditiveBlending });
+        const r1 = new THREE.Mesh(r1Geo, r1Mat);
+        group.add(r1);
+        const r2Geo = new THREE.RingGeometry(1.5, 1.53, 64);
+        const r2 = new THREE.Mesh(r2Geo, r1Mat.clone());
+        r2.rotation.x = Math.PI / 3;
+        group.add(r2);
     }
 
     scene.add(group);
 
     nodeData.push({
         agent, x, y, z, ox:x, oy:y, oz:z,
-        status, group: group, mesh, sprite, spriteMat,
+        status, group: group, mesh, hitMesh, sprite, spriteMat, ring, ringMat,
         pulse: Math.random() * Math.PI * 2,
-        lastAction: generateAction(agent)
+        lastAction: generateAction(agent),
+        hoverIntensity: 0 // smooth interpolation target
     });
     nodeMeshes.push(mesh);
+    hitMeshes.push(hitMesh);
 });
 
 function generateAction(agent) {
@@ -668,19 +726,16 @@ function generateAction(agent) {
 const connections = [];
 const connectionMeshes = [];
 
-// Connect NATHAN to group leaders
 const groupLeaders = {};
 AGENTS.forEach((a, i) => {
     if (!groupLeaders[a.group]) groupLeaders[a.group] = i;
 });
 
-// NATHAN to all group leaders
 Object.values(groupLeaders).forEach(idx => {
     if (idx === 0) return;
     connections.push({ from:0, to:idx, active:true });
 });
 
-// Within groups
 AGENTS.forEach((a, i) => {
     if (i === 0) return;
     const leader = groupLeaders[a.group];
@@ -689,7 +744,6 @@ AGENTS.forEach((a, i) => {
     }
 });
 
-// Cross-group
 connections.push({ from: AGENTS.findIndex(a=>a.id==='SENTINEL'), to: AGENTS.findIndex(a=>a.id==='GUARDIAN_DEV'), active:true });
 connections.push({ from: AGENTS.findIndex(a=>a.id==='CORTEX'), to: AGENTS.findIndex(a=>a.id==='VECTOR'), active:true });
 connections.push({ from: AGENTS.findIndex(a=>a.id==='BRIDGE'), to: AGENTS.findIndex(a=>a.id==='PIPELINE'), active:true });
@@ -699,9 +753,9 @@ connections.forEach(c => {
     const pos = new Float32Array(6);
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
     const mat = new THREE.LineBasicMaterial({
-        color: c.active ? 0x00ff88 : 0x1a1f2e,
+        color: ACCENT,
         transparent: true,
-        opacity: c.active ? 0.15 : 0.06,
+        opacity: c.active ? 0.08 : 0.03,
         blending: THREE.AdditiveBlending
     });
     const line = new THREE.Line(geo, mat);
@@ -711,18 +765,18 @@ connections.forEach(c => {
 
 // ── Particles flowing on connections ──
 const particles = [];
-const particleGlow = makeGlow('rgba(0,255,136,1)', 'rgba(0,212,255,0.2)');
+const particleGlow = makeGlow(0.8);
 
 connections.filter(c => c.active).forEach((c, ci) => {
     for (let p = 0; p < 2; p++) {
         const smat = new THREE.SpriteMaterial({
             map: particleGlow,
             transparent: true,
-            opacity: 0.8,
+            opacity: 0.5,
             blending: THREE.AdditiveBlending
         });
         const spr = new THREE.Sprite(smat);
-        spr.scale.set(0.4, 0.4, 1);
+        spr.scale.set(0.3, 0.3, 1);
         scene.add(spr);
         particles.push({
             sprite: spr,
@@ -737,22 +791,22 @@ connections.filter(c => c.active).forEach((c, ci) => {
 
 // ── Star field ──
 const starGeo = new THREE.BufferGeometry();
-const starPos = new Float32Array(500 * 3);
-for (let i = 0; i < 500; i++) {
+const starPos = new Float32Array(400 * 3);
+for (let i = 0; i < 400; i++) {
     starPos[i*3] = (Math.random()-0.5)*120;
     starPos[i*3+1] = (Math.random()-0.5)*80;
     starPos[i*3+2] = (Math.random()-0.5)*60 - 20;
 }
 starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
 scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({
-    color:0x2a3050, size:0.06, transparent:true, opacity:0.6, blending:THREE.AdditiveBlending
+    color:0x1a2540, size:0.05, transparent:true, opacity:0.5, blending:THREE.AdditiveBlending
 })));
 
 // ── Grid floor ──
-const gridHelper = new THREE.GridHelper(60, 40, 0x111520, 0x0d1018);
+const gridHelper = new THREE.GridHelper(60, 40, 0x0d1525, 0x090e18);
 gridHelper.position.y = -15;
 gridHelper.material.transparent = true;
-gridHelper.material.opacity = 0.3;
+gridHelper.material.opacity = 0.2;
 scene.add(gridHelper);
 
 // ══════════════════════════════════════════════
@@ -761,13 +815,16 @@ scene.add(gridHelper);
 let autoRotate = true;
 let isDragging = false;
 let prevMouse = { x:0, y:0 };
+let dragDist = 0;
 let cameraTheta = 0;
 let cameraPhi = Math.PI / 2.2;
 let cameraRadius = 35;
 let cameraTarget = new THREE.Vector3(0, 0, 0);
+let mouseScreen = { x: -1000, y: -1000 };
 
 container.addEventListener('mousedown', e => {
     isDragging = true;
+    dragDist = 0;
     prevMouse = { x:e.clientX, y:e.clientY };
 });
 
@@ -775,10 +832,13 @@ container.addEventListener('mousemove', e => {
     const rect = container.getBoundingClientRect();
     mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
     mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+    mouseScreen.x = e.clientX - rect.left;
+    mouseScreen.y = e.clientY - rect.top;
 
     if (isDragging) {
         const dx = e.clientX - prevMouse.x;
         const dy = e.clientY - prevMouse.y;
+        dragDist += Math.abs(dx) + Math.abs(dy);
         cameraTheta -= dx * 0.005;
         cameraPhi = Math.max(0.3, Math.min(Math.PI - 0.3, cameraPhi - dy * 0.005));
         prevMouse = { x:e.clientX, y:e.clientY };
@@ -787,7 +847,13 @@ container.addEventListener('mousemove', e => {
 });
 
 container.addEventListener('mouseup', () => isDragging = false);
-container.addEventListener('mouseleave', () => isDragging = false);
+container.addEventListener('mouseleave', () => {
+    isDragging = false;
+    mouse.x = -999;
+    mouse.y = -999;
+    hoveredIdx = -1;
+    tooltip.classList.remove('visible');
+});
 
 container.addEventListener('wheel', e => {
     cameraRadius = Math.max(15, Math.min(60, cameraRadius + e.deltaY * 0.03));
@@ -795,11 +861,11 @@ container.addEventListener('wheel', e => {
 }, { passive:false });
 
 container.addEventListener('click', e => {
-    if (Math.abs(e.clientX - prevMouse.x) > 5) return;
+    if (dragDist > 8) return; // was a drag, not a click
     raycaster.setFromCamera(mouse, camera);
-    const intersects = raycaster.intersectObjects(nodeMeshes);
+    const intersects = raycaster.intersectObjects(hitMeshes);
     if (intersects.length > 0) {
-        selectedIdx = nodeMeshes.indexOf(intersects[0].object);
+        selectedIdx = hitMeshes.indexOf(intersects[0].object);
         showAgentDetail(selectedIdx);
     }
 });
@@ -813,7 +879,30 @@ function resetCamera() {
 
 function toggleRotation() {
     autoRotate = !autoRotate;
-    document.getElementById('rotBtn').style.color = autoRotate ? 'var(--green)' : 'var(--text-dim)';
+    document.getElementById('rotBtn').style.color = autoRotate ? 'var(--accent)' : 'var(--text-dim)';
+}
+
+// ══════════════════════════════════════════════
+// TOOLTIP
+// ══════════════════════════════════════════════
+function updateTooltip(idx) {
+    if (idx < 0) {
+        tooltip.classList.remove('visible');
+        return;
+    }
+    const nd = nodeData[idx];
+    ttName.textContent = nd.agent.id;
+    ttRole.textContent = nd.agent.role;
+    ttStatus.textContent = nd.status.toUpperCase();
+    ttStatus.className = 'tt-status ' + nd.status;
+    ttAction.textContent = nd.lastAction;
+
+    // Position tooltip near cursor
+    const tx = Math.min(mouseScreen.x + 16, container.clientWidth - 200);
+    const ty = Math.max(mouseScreen.y - 60, 10);
+    tooltip.style.left = tx + 'px';
+    tooltip.style.top = ty + 'px';
+    tooltip.classList.add('visible');
 }
 
 // ══════════════════════════════════════════════
@@ -822,11 +911,10 @@ function toggleRotation() {
 function showAgentDetail(idx) {
     const nd = nodeData[idx];
     const panel = document.getElementById('agentDetail');
-    const statusClass = nd.status;
     panel.innerHTML = `
         <div class="agent-detail-name">
-            <span style="color:#${nd.agent.color.toString(16).padStart(6,'0')}">${nd.agent.id}</span>
-            <span class="agent-detail-status ${statusClass}">${statusClass}</span>
+            <span style="color:var(--accent)">${nd.agent.id}</span>
+            <span class="agent-detail-status ${nd.status}">${nd.status}</span>
         </div>
         <div class="agent-detail-info">
             Role: <span>${nd.agent.role}</span><br>
@@ -845,18 +933,18 @@ const feedList = document.getElementById('feedList');
 let eventCount = 0;
 
 const eventTemplates = [
-    { agent:'NATHAN', cls:'nathan', msgs:['Routing task #{n} to {target}', 'Pipeline #{n} completed in {ms}ms', 'Load balancing: {pct}% optimal'] },
-    { agent:'VIZION', cls:'vizion', msgs:['Frame analysis complete — {n} objects detected', 'Visual classification: confidence {pct}%'] },
-    { agent:'SCOUT', cls:'scout', msgs:['Web scan: {n} endpoints discovered', 'Reconnaissance complete for domain #{n}'] },
-    { agent:'SPARK', cls:'spark', msgs:['Generated {n} creative variants', 'Idea scoring: top candidate {pct}%'] },
-    { agent:'SENTINEL', cls:'sentinel', msgs:['Threat scan clear — {n} checks passed', 'Anomaly detected: severity LOW', 'Security audit #{n} passed'] },
-    { agent:'CREA', cls:'crea', msgs:['Asset generation: {n} layers rendered', 'Design iteration #{n} complete'] },
-    { agent:'SCRIPT', cls:'script', msgs:['Module compiled: {n} lines, 0 errors', 'Code review: {pct}% coverage'] },
-    { agent:'LENS', cls:'lens', msgs:['Deep analysis: {n} patterns identified', 'Insight extraction: {pct}% confidence'] },
-    { agent:'CORTEX', cls:'default', msgs:['Knowledge base updated: +{n} entries', 'Query resolved in {ms}ms'] },
-    { agent:'FORGE', cls:'default', msgs:['Build #{n} succeeded', 'Deployment v2.{n} rolling out'] },
-    { agent:'RELAY', cls:'default', msgs:['Inter-agent sync: {n} messages routed', 'Broadcast event #{n} dispatched'] },
-    { agent:'GUARDIAN_DEV', cls:'sentinel', msgs:['Code scan: {n} files analyzed, 0 vulns', 'Dependency audit: all clear'] },
+    { agent:'NATHAN', msgs:['Routing task #{n} to {target}', 'Pipeline #{n} completed in {ms}ms', 'Load balancing: {pct}% optimal'] },
+    { agent:'VIZION', msgs:['Frame analysis complete — {n} objects detected', 'Visual classification: confidence {pct}%'] },
+    { agent:'SCOUT', msgs:['Web scan: {n} endpoints discovered', 'Reconnaissance complete for domain #{n}'] },
+    { agent:'SPARK', msgs:['Generated {n} creative variants', 'Idea scoring: top candidate {pct}%'] },
+    { agent:'SENTINEL', msgs:['Threat scan clear — {n} checks passed', 'Anomaly detected: severity LOW', 'Security audit #{n} passed'] },
+    { agent:'CREA', msgs:['Asset generation: {n} layers rendered', 'Design iteration #{n} complete'] },
+    { agent:'SCRIPT', msgs:['Module compiled: {n} lines, 0 errors', 'Code review: {pct}% coverage'] },
+    { agent:'LENS', msgs:['Deep analysis: {n} patterns identified', 'Insight extraction: {pct}% confidence'] },
+    { agent:'CORTEX', msgs:['Knowledge base updated: +{n} entries', 'Query resolved in {ms}ms'] },
+    { agent:'FORGE', msgs:['Build #{n} succeeded', 'Deployment v2.{n} rolling out'] },
+    { agent:'RELAY', msgs:['Inter-agent sync: {n} messages routed', 'Broadcast event #{n} dispatched'] },
+    { agent:'GUARDIAN_DEV', msgs:['Code scan: {n} files analyzed, 0 vulns', 'Dependency audit: all clear'] },
 ];
 
 function addEvent() {
@@ -874,29 +962,30 @@ function addEvent() {
     el.className = 'feed-item';
     el.innerHTML = `
         <div class="feed-item-header">
-            <span class="feed-agent ${tmpl.cls}"><span class="feed-status" style="background:var(--green)"></span>${tmpl.agent}</span>
+            <span class="feed-agent"><span class="feed-status"></span>${tmpl.agent}</span>
             <span class="feed-time">${time}</span>
         </div>
         <div class="feed-msg">${msg}</div>
     `;
     feedList.insertBefore(el, feedList.firstChild);
 
-    // Keep max 80 items
     while (feedList.children.length > 80) feedList.removeChild(feedList.lastChild);
     eventCount++;
+
+    // Update last action for agent
+    const agentIdx = AGENTS.findIndex(a => a.id === tmpl.agent);
+    if (agentIdx >= 0) nodeData[agentIdx].lastAction = msg;
 
     // Flash a random connection
     const activeConns = connectionMeshes.filter(c => c.active);
     if (activeConns.length > 0) {
         const rc = activeConns[Math.floor(Math.random() * activeConns.length)];
-        rc.line.material.opacity = 0.6;
-        setTimeout(() => { rc.line.material.opacity = 0.15; }, 400);
+        rc.line.material.opacity = 0.3;
+        setTimeout(() => { rc.line.material.opacity = 0.08; }, 400);
     }
 }
 
-// Initial burst
 for (let i = 0; i < 15; i++) addEvent();
-// Ongoing
 setInterval(addEvent, 1500 + Math.random() * 2000);
 
 // ══════════════════════════════════════════════
@@ -924,44 +1013,73 @@ function animate() {
     const t = clock.getElapsedTime();
 
     // Camera orbit
-    if (autoRotate) cameraTheta += 0.002;
+    if (autoRotate) cameraTheta += 0.0015;
     camera.position.x = cameraTarget.x + cameraRadius * Math.sin(cameraPhi) * Math.sin(cameraTheta);
     camera.position.y = cameraTarget.y + cameraRadius * Math.cos(cameraPhi);
     camera.position.z = cameraTarget.z + cameraRadius * Math.sin(cameraPhi) * Math.cos(cameraTheta);
     camera.lookAt(cameraTarget);
 
-    // Hover detection
+    // Hover detection — use larger hitMeshes
     raycaster.setFromCamera(mouse, camera);
-    const intersects = raycaster.intersectObjects(nodeMeshes);
-    hoveredIdx = intersects.length > 0 ? nodeMeshes.indexOf(intersects[0].object) : -1;
+    const intersects = raycaster.intersectObjects(hitMeshes);
+    const newHover = intersects.length > 0 ? hitMeshes.indexOf(intersects[0].object) : -1;
+
+    if (newHover !== hoveredIdx) {
+        hoveredIdx = newHover;
+        updateTooltip(hoveredIdx);
+    } else if (hoveredIdx >= 0) {
+        // Update tooltip position as mouse moves
+        updateTooltip(hoveredIdx);
+    }
+
+    // Update cursor
+    container.style.cursor = hoveredIdx >= 0 ? 'pointer' : 'default';
 
     // Update nodes
     nodeData.forEach((nd, i) => {
-        // Float
+        // Float animation
         nd.x = nd.ox + Math.sin(t * 0.4 + nd.pulse) * 0.3;
         nd.y = nd.oy + Math.cos(t * 0.35 + nd.pulse * 1.2) * 0.2;
         nd.z = nd.oz + Math.sin(t * 0.3 + nd.pulse * 0.8) * 0.15;
         nd.group.position.set(nd.x, nd.y, nd.z);
 
-        // Pulse
-        const p = 1 + Math.sin(t * 2 + nd.pulse) * 0.12;
+        // Gentle pulse
+        const p = 1 + Math.sin(t * 1.8 + nd.pulse) * 0.08;
         nd.mesh.scale.setScalar(p);
 
-        // Hover / selected
+        // Smooth hover/select intensity interpolation
         const isHov = (i === hoveredIdx);
         const isSel = (i === selectedIdx);
-        const targetOp = isHov || isSel ? 1.0 : (nd.status === 'active' ? 0.7 : 0.25);
+        const targetIntensity = isHov ? 1.0 : (isSel ? 0.6 : 0);
+        nd.hoverIntensity += (targetIntensity - nd.hoverIntensity) * 0.08; // smooth lerp
+
+        // Glow sprite opacity — smooth
+        const baseOp = nd.status === 'active' ? 0.5 : 0.15;
+        const targetOp = baseOp + nd.hoverIntensity * 0.5;
         nd.spriteMat.opacity += (targetOp - nd.spriteMat.opacity) * 0.1;
-        const targetScale = isHov || isSel ? (nd.agent.id === 'NATHAN' ? 5.5 : 3.5) : (nd.agent.id === 'NATHAN' ? 4 : 2.2);
+
+        // Glow sprite scale — smooth
+        const isNathan = nd.agent.id === 'NATHAN';
+        const baseScale = isNathan ? 3.5 : 1.8;
+        const targetScale = baseScale + nd.hoverIntensity * (isNathan ? 2.5 : 1.8);
         const cs = nd.sprite.scale.x;
-        const ns = cs + (targetScale - cs) * 0.08;
+        const ns = cs + (targetScale - cs) * 0.06;
         nd.sprite.scale.set(ns, ns, 1);
 
-        // NATHAN rings
-        if (nd.agent.id === 'NATHAN' && nd.group.children.length > 2) {
-            nd.group.children[2].rotation.z = t * 0.3;
-            nd.group.children[3].rotation.z = -t * 0.2;
-            nd.group.children[3].rotation.x = Math.PI/3 + Math.sin(t*0.5)*0.2;
+        // Ring glow — progressive intensification
+        const ringTarget = nd.hoverIntensity * 0.6;
+        nd.ringMat.opacity += (ringTarget - nd.ringMat.opacity) * 0.1;
+        // Make ring face camera
+        nd.ring.lookAt(camera.position);
+
+        // NATHAN orbit rings
+        if (isNathan) {
+            const kids = nd.group.children;
+            if (kids.length > 4) {
+                kids[4].rotation.z = t * 0.25;
+                kids[5].rotation.z = -t * 0.18;
+                kids[5].rotation.x = Math.PI/3 + Math.sin(t*0.4)*0.15;
+            }
         }
     });
 
@@ -989,8 +1107,7 @@ function animate() {
         );
     });
 
-    // Grid pulse
-    gridHelper.position.y = -15 + Math.sin(t * 0.2) * 0.5;
+    gridHelper.position.y = -15 + Math.sin(t * 0.15) * 0.3;
 
     renderer.render(scene, camera);
 }
@@ -1004,7 +1121,6 @@ window.addEventListener('resize', () => {
 });
 
 // ── WebSocket placeholder ──
-// When NATHAN's WebSocket is ready, replace simulated data:
 // const ws = new WebSocket('ws://your-nathan-endpoint/godview');
 // ws.onmessage = (e) => { const data = JSON.parse(e.data); /* update nodes, feed, metrics */ };
 </script>

@@ -2046,36 +2046,34 @@
     <section id="tarifs">
         <div class="reveal" style="text-align: center;">
             <div class="section-label">Investissement</div>
-            <h2 class="section-title" style="margin: 0 auto;">Paiement unique. Votre IA pour toujours.</h2>
-            <p class="section-desc" style="margin: 1rem auto 0;">Pas d'abonnement, pas de frais cachés. Un paiement, un écosystème complet livré clé en main.</p>
+            <h2 class="section-title" style="margin: 0 auto;">Votre écosystème IA clé en main.</h2>
+            <p class="section-desc" style="margin: 1rem auto 0;">Déploiement one-shot + maintenance mensuelle optionnelle pour garder votre IA au sommet.</p>
             <div class="animated-line" style="margin: 1.5rem auto 0;"></div>
         </div>
 
         <div class="pricing-grid">
             <div class="pricing-card">
-                <div class="pricing-badge unique">Paiement unique</div>
-                <div class="pricing-label">Starter</div>
-                <div class="pricing-old-price">990€</div>
-                <div class="pricing-price">497€</div>
+                <div class="pricing-badge unique">One-shot + maintenance</div>
+                <div class="pricing-label">Créateur</div>
+                <div class="pricing-price">990€ <span style="font-size:0.5em;font-weight:400;color:var(--text-light);">+ 199€/mois maintenance</span></div>
                 <ul class="pricing-features">
                     <li>Jusqu'à 3 agents IA</li>
                     <li>1 modèle IA inclus (GPT / Claude)</li>
                     <li>1 domaine métier</li>
                     <li>Dashboard analytique</li>
                     <li>Support email 6 mois</li>
-                    <li>Mises à jour 6 mois incluses</li>
+                    <li>Mises à jour continues</li>
                     <li>Formation initiale (2h)</li>
                     <li>Documentation technique</li>
                     <li>Code source livré</li>
                 </ul>
-                <a href="#contact" class="btn-secondary magnetic-btn" style="width: 100%; justify-content: center;">Choisir Starter</a>
+                <a href="#contact" class="btn-secondary magnetic-btn" style="width: 100%; justify-content: center;">Choisir Créateur</a>
                 <div class="pricing-guarantee">🔒 Satisfait ou remboursé 30 jours</div>
             </div>
             <div class="pricing-card featured">
                 <div class="pricing-badge popular">Le plus choisi</div>
-                <div class="pricing-label">Premium</div>
-                <div class="pricing-old-price">1 790€</div>
-                <div class="pricing-price">897€</div>
+                <div class="pricing-label">Business</div>
+                <div class="pricing-price">1 990€ <span style="font-size:0.5em;font-weight:400;color:rgba(255,255,255,0.6);">+ 349€/mois maintenance</span></div>
                 <ul class="pricing-features">
                     <li>Jusqu'à 12 agents IA</li>
                     <li>3 modèles IA inclus (GPT, Claude, Mistral)</li>
@@ -2083,20 +2081,20 @@
                     <li>3 domaines métier</li>
                     <li>API & intégrations custom</li>
                     <li>Support prioritaire 12 mois</li>
-                    <li>Mises à jour 12 mois incluses</li>
+                    <li>Mises à jour continues + évolutives</li>
                     <li>Formation équipes (8h)</li>
                     <li>Architecture sur-mesure</li>
                     <li>Code source + documentation</li>
                     <li>Appel stratégique mensuel</li>
                     <li>Optimisation trimestrielle</li>
                 </ul>
-                <a href="#contact" class="btn-primary magnetic-btn">Choisir Premium →</a>
+                <a href="#contact" class="btn-primary magnetic-btn">Choisir Business →</a>
                 <div class="pricing-guarantee">🔒 Satisfait ou remboursé 30 jours</div>
             </div>
             <div class="pricing-card">
-                <div class="pricing-badge unique">Paiement unique</div>
-                <div class="pricing-label">Enterprise</div>
-                <div class="pricing-price">Sur devis</div>
+                <div class="pricing-badge unique">Sur devis</div>
+                <div class="pricing-label">Sur Mesure</div>
+                <div class="pricing-price">À partir de 3 500€</div>
                 <ul class="pricing-features">
                     <li>Agents IA illimités</li>
                     <li>Tous modèles IA du marché</li>
@@ -2108,7 +2106,7 @@
                     <li>Audit de sécurité complet</li>
                     <li>Support dédié 24 mois</li>
                     <li>Formation sur-site</li>
-                    <li>Maintenance évolutive</li>
+                    <li>Maintenance évolutive incluse</li>
                     <li>Propriété totale du code</li>
                 </ul>
                 <a href="#contact" class="btn-secondary magnetic-btn" style="width: 100%; justify-content: center;">Demander un devis</a>
@@ -2156,7 +2154,7 @@
             </div>
 
             <div class="roi-cta" id="roiCta" style="display:none;">
-                <p>Avec l'offre Premium à 897€, votre investissement est rentabilisé en <span class="savings-highlight" id="roiPaybackCta"></span></p>
+                <p>Avec l'offre Business à 1 990€, votre investissement est rentabilisé en <span class="savings-highlight" id="roiPaybackCta"></span></p>
                 <a href="#contact" class="btn-primary magnetic-btn">Démarrer maintenant →</a>
             </div>
         </div>
@@ -2496,8 +2494,8 @@
                 document.getElementById('roiSavingsMonth').textContent = formatK(Math.round(monthlySavings));
                 document.getElementById('roiSavingsYear').textContent = formatK(Math.round(yearlySavings));
 
-                // Payback on Premium plan (897€)
-                const premiumPrice = 897;
+                // Payback on Business plan (1990€)
+                const premiumPrice = 1990;
                 const paybackMonths = premiumPrice / monthlySavings;
 
                 let paybackText;
