@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusAI — Simulateur Employés → Agents IA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+        :root {
+            --bg: #fafbfc;
+            --white: #ffffff;
+            --text: #0f172a;
+            --text-secondary: #64748b;
+            --border: #e2e8f0;
+            --accent: #6366f1;
+            --accent-light: #eef2ff;
+            --green: #22c55e;
+            --green-light: #f0fdf4;
+            --red: #ef4444;
+            --red-light: #fef2f2;
+            --orange: #f59e0b;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* ── Header ── */
+        .sim-header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .sim-header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .sim-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .sim-logo .dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: var(--accent);
+        }
+        .sim-badge {
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent);
+            background: var(--accent-light);
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+        }
+        .sim-back {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .sim-back:hover { color: var(--accent); }
+
+        /* ── Main layout ── */
+        .sim-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .sim-hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .sim-hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 0.5rem;
+        }
+        .sim-hero h1 .grad {
+            background: linear-gradient(135deg, var(--accent), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .sim-hero p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ── Config Panel ── */
+        .sim-grid {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .sim-config {
+            background: var(--white);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            padding: 2rem;
+            position: sticky;
+            top: 80px;
+        }
+
+        .sim-config h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sim-field {
+            margin-bottom: 1.5rem;
+        }
+        .sim-field label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .sim-field label span {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 800;
+            color: var(--accent);
+        }
+        .sim-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            border-radius: 100px;
+            background: var(--border);
+            outline: none;
+            transition: background 0.2s;
+        }
+        .sim-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(99,102,241,0.3);
+            transition: transform 0.15s;
+        }
+        .sim-slider::-webkit-slider-thumb:hover { transform: scale(1.15); }
+
+        .sim-field select {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            background: var(--bg);
+            color: var(--text);
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .sim-field select:focus { border-color: var(--accent); }
+
+        /* Postes grid */
+        .poste-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .poste-item {
+            padding: 0.5rem 0.6rem;
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            user-select: none;
+        }
+        .poste-item:hover { border-color: rgba(99,102,241,0.3); }
+        .poste-item.selected {
+            border-color: var(--accent);
+            background: var(--accent-light);
+        }
+        .poste-item .poste-icon { font-size: 1.2rem; margin-bottom: 0.15rem; }
+        .poste-item .poste-name { font-size: 0.65rem; font-weight: 600; }
+        .poste-item .poste-salary { font-size: 0.6rem; color: var(--text-secondary); }
+
+        /* ── Results panel ── */
+        .sim-results {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .result-card {
+            background: var(--white);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            padding: 2rem;
+        }
+
+        .result-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Big number */
+        .big-savings {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(34,197,94,0.06), rgba(34,197,94,0.02));
+            border: 1px solid rgba(34,197,94,0.15);
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+        }
+        .big-savings .amount {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--green);
+            letter-spacing: -2px;
+        }
+        .big-savings .sub {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        /* Comparison bars */
+        .compare-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .compare-label {
+            width: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        .compare-bar-wrap {
+            flex: 1;
+            height: 32px;
+            background: var(--bg);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        .compare-bar {
+            height: 100%;
+            border-radius: 8px;
+            transition: width 0.8s cubic-bezier(0.16,1,0.3,1);
+            display: flex;
+            align-items: center;
+            padding-left: 0.6rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: white;
+        }
+        .compare-bar.employee { background: linear-gradient(135deg, var(--red), #f97316); }
+        .compare-bar.ai { background: linear-gradient(135deg, var(--green), #10b981); }
+        .compare-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 800;
+            width: 90px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        /* Detail breakdown table */
+        .breakdown-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .breakdown-table th {
+            text-align: left;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .breakdown-table td {
+            padding: 0.7rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.04);
+            font-size: 0.85rem;
+        }
+        .breakdown-table td:last-child {
+            text-align: right;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+        .breakdown-table .cost-emp { color: var(--red); }
+        .breakdown-table .cost-ai { color: var(--green); }
+        .breakdown-table .saving { color: var(--accent); font-weight: 700; }
+
+        /* Recommended plan */
+        .recommended-plan {
+            background: linear-gradient(135deg, rgba(99,102,241,0.06), rgba(168,85,247,0.04));
+            border: 1px solid rgba(99,102,241,0.15);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .recommended-plan .plan-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+        .recommended-plan .plan-price {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.3rem;
+        }
+        .recommended-plan .plan-roi {
+            font-size: 0.8rem;
+            color: var(--green);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .recommended-plan .plan-btn {
+            display: inline-block;
+            padding: 0.7rem 2rem;
+            background: var(--text);
+            color: white;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .recommended-plan .plan-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        /* Productivity chart */
+        .prod-chart {
+            display: flex;
+            gap: 0.3rem;
+            align-items: flex-end;
+            height: 120px;
+            padding-top: 1rem;
+        }
+        .prod-bar-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .prod-bars {
+            display: flex;
+            gap: 3px;
+            align-items: flex-end;
+            width: 100%;
+            justify-content: center;
+        }
+        .prod-bar {
+            width: 16px;
+            border-radius: 4px 4px 0 0;
+            transition: height 0.6s cubic-bezier(0.16,1,0.3,1);
+        }
+        .prod-bar.emp { background: rgba(239,68,68,0.25); }
+        .prod-bar.ai { background: var(--green); }
+        .prod-month {
+            font-size: 0.55rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        /* Guarantee banner */
+        .guarantee-strip {
+            background: var(--green-light);
+            border: 1px solid rgba(34,197,94,0.2);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 0.8rem;
+            color: #166534;
+            font-weight: 600;
+        }
+        .guarantee-strip .g-icon { font-size: 1.5rem; }
+
+        @media (max-width: 768px) {
+            .sim-grid { grid-template-columns: 1fr; }
+            .sim-config { position: static; }
+            .poste-grid { grid-template-columns: repeat(3, 1fr); }
+            .sim-hero h1 { font-size: 1.5rem; }
+            .big-savings .amount { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="sim-header">
+    <div class="sim-header-left">
+        <a href="index.html" class="sim-logo"><span class="dot"></span> NexusAI</a>
+        <span class="sim-badge">Simulateur</span>
+    </div>
+    <a href="index.html" class="sim-back">← Retour au site</a>
+</header>
+
+<div class="sim-container">
+    <div class="sim-hero">
+        <h1>Employés → <span class="grad">Agents IA</span></h1>
+        <p>Simulez les économies réelles en remplaçant des tâches répétitives par des agents IA autonomes. Résultats basés sur les données marché 2025.</p>
+    </div>
+
+    <div class="sim-grid">
+        <!-- LEFT: Configuration -->
+        <div class="sim-config">
+            <h3>⚙️ Configuration</h3>
+
+            <div class="sim-field">
+                <label>Nombre d'employés concernés <span id="valEmp">10</span></label>
+                <input type="range" class="sim-slider" id="slEmp" min="1" max="100" value="10">
+            </div>
+
+            <div class="sim-field">
+                <label>Heures/semaine sur tâches automatisables <span id="valHrs">20</span>h</label>
+                <input type="range" class="sim-slider" id="slHrs" min="5" max="40" value="20">
+            </div>
+
+            <div class="sim-field">
+                <label>Secteur d'activité</label>
+                <select id="selSector">
+                    <option value="tech">Tech & SaaS</option>
+                    <option value="finance">Finance & Assurance</option>
+                    <option value="sante">Santé & Médical</option>
+                    <option value="ecommerce">E-Commerce & Retail</option>
+                    <option value="immobilier">Immobilier</option>
+                    <option value="juridique">Juridique</option>
+                    <option value="education">Éducation</option>
+                    <option value="autre">Autre</option>
+                </select>
+            </div>
+
+            <div class="sim-field">
+                <label>Postes concernés (sélectionnez)</label>
+                <div class="poste-grid" id="posteGrid">
+                    <div class="poste-item selected" data-poste="support" data-salary="2800">
+                        <div class="poste-icon">🎧</div>
+                        <div class="poste-name">Support client</div>
+                        <div class="poste-salary">~2 800€/mois</div>
+                    </div>
+                    <div class="poste-item" data-poste="admin" data-salary="2500">
+                        <div class="poste-icon">📋</div>
+                        <div class="poste-name">Administratif</div>
+                        <div class="poste-salary">~2 500€/mois</div>
+                    </div>
+                    <div class="poste-item" data-poste="data" data-salary="3800">
+                        <div class="poste-icon">📊</div>
+                        <div class="poste-name">Data / Analyse</div>
+                        <div class="poste-salary">~3 800€/mois</div>
+                    </div>
+                    <div class="poste-item" data-poste="marketing" data-salary="3200">
+                        <div class="poste-icon">📣</div>
+                        <div class="poste-name">Marketing</div>
+                        <div class="poste-salary">~3 200€/mois</div>
+                    </div>
+                    <div class="poste-item" data-poste="dev" data-salary="4200">
+                        <div class="poste-icon">💻</div>
+                        <div class="poste-name">Développement</div>
+                        <div class="poste-salary">~4 200€/mois</div>
+                    </div>
+                    <div class="poste-item" data-poste="rh" data-salary="3000">
+                        <div class="poste-icon">👥</div>
+                        <div class="poste-name">RH / Recrutement</div>
+                        <div class="poste-salary">~3 000€/mois</div>
+                    </div>
+                    <div class="poste-item" data-poste="compta" data-salary="2900">
+                        <div class="poste-icon">🧾</div>
+                        <div class="poste-name">Comptabilité</div>
+                        <div class="poste-salary">~2 900€/mois</div>
+                    </div>
+                    <div class="poste-item" data-poste="legal" data-salary="4500">
+                        <div class="poste-icon">⚖️</div>
+                        <div class="poste-name">Juridique</div>
+                        <div class="poste-salary">~4 500€/mois</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="guarantee-strip">
+                <span class="g-icon">🔒</span>
+                Productivité garantie ou remboursé — 30 jours
+            </div>
+        </div>
+
+        <!-- RIGHT: Results -->
+        <div class="sim-results" id="simResults">
+
+            <!-- Big savings -->
+            <div class="result-card">
+                <div class="big-savings">
+                    <div class="amount" id="resSavingsYear">—</div>
+                    <div class="sub">d'économies estimées par an</div>
+                </div>
+
+                <div class="compare-row">
+                    <div class="compare-label">Employés</div>
+                    <div class="compare-bar-wrap">
+                        <div class="compare-bar employee" id="barEmp" style="width:0%"></div>
+                    </div>
+                    <div class="compare-value cost-emp" id="valCostEmp">—</div>
+                </div>
+                <div class="compare-row">
+                    <div class="compare-label">Agents IA</div>
+                    <div class="compare-bar-wrap">
+                        <div class="compare-bar ai" id="barAI" style="width:0%"></div>
+                    </div>
+                    <div class="compare-value cost-ai" id="valCostAI">—</div>
+                </div>
+            </div>
+
+            <!-- Breakdown -->
+            <div class="result-card">
+                <h3>📋 Détail des coûts</h3>
+                <table class="breakdown-table">
+                    <thead>
+                        <tr>
+                            <th>Poste</th>
+                            <th style="text-align:right">Coût employé/an</th>
+                            <th style="text-align:right">Coût IA/an</th>
+                            <th style="text-align:right">Économie</th>
+                        </tr>
+                    </thead>
+                    <tbody id="breakdownBody"></tbody>
+                </table>
+            </div>
+
+            <!-- Productivity over months -->
+            <div class="result-card">
+                <h3>📈 Productivité mois par mois</h3>
+                <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:1rem;">
+                    Les agents IA s'améliorent avec le temps — les employés restent stables.
+                </p>
+                <div class="prod-chart" id="prodChart"></div>
+                <div style="display:flex;gap:1.5rem;justify-content:center;margin-top:0.8rem;">
+                    <span style="font-size:0.65rem;color:var(--text-secondary);display:flex;align-items:center;gap:0.3rem;">
+                        <span style="width:10px;height:10px;border-radius:3px;background:rgba(239,68,68,0.25);"></span> Employés
+                    </span>
+                    <span style="font-size:0.65rem;color:var(--text-secondary);display:flex;align-items:center;gap:0.3rem;">
+                        <span style="width:10px;height:10px;border-radius:3px;background:var(--green);"></span> Agents IA
+                    </span>
+                </div>
+            </div>
+
+            <!-- Recommended plan -->
+            <div class="result-card">
+                <h3>🎯 Plan recommandé</h3>
+                <div class="recommended-plan">
+                    <div class="plan-name" id="recPlanName">—</div>
+                    <div class="plan-price" id="recPlanPrice">—</div>
+                    <div class="plan-roi" id="recPlanRoi">—</div>
+                    <a href="index.html#tarifs" class="plan-btn">Voir le plan →</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    // Elements
+    const slEmp = document.getElementById('slEmp');
+    const slHrs = document.getElementById('slHrs');
+    const selSector = document.getElementById('selSector');
+    const valEmp = document.getElementById('valEmp');
+    const valHrs = document.getElementById('valHrs');
+    const posteGrid = document.getElementById('posteGrid');
+    const posteItems = posteGrid.querySelectorAll('.poste-item');
+
+    // Sector multipliers (cost-of-living / complexity)
+    const sectorMult = {
+        tech: 1.2, finance: 1.35, sante: 1.15, ecommerce: 1.0,
+        immobilier: 1.1, juridique: 1.4, education: 0.9, autre: 1.0
+    };
+
+    // Automation efficiency by poste
+    const autoRate = {
+        support: 0.78, admin: 0.85, data: 0.60, marketing: 0.55,
+        dev: 0.40, rh: 0.65, compta: 0.80, legal: 0.50
+    };
+
+    // Agent names by poste
+    const agentNames = {
+        support: 'SupportBot', admin: 'AutoAdmin', data: 'DataLens',
+        marketing: 'MarketAI', dev: 'CodeAssist', rh: 'TalentScan',
+        compta: 'ComptaFlow', legal: 'LegalMind'
+    };
+
+    // Poste selection
+    posteItems.forEach(item => {
+        item.addEventListener('click', () => {
+            item.classList.toggle('selected');
+            calculate();
+        });
+    });
+
+    // Sliders
+    slEmp.addEventListener('input', calculate);
+    slHrs.addEventListener('input', calculate);
+    selSector.addEventListener('change', calculate);
+
+    function formatK(n) {
+        if (n >= 1000000) return (n/1000000).toFixed(1).replace('.0','') + 'M€';
+        if (n >= 1000) return Math.round(n/1000) + 'K€';
+        return Math.round(n) + '€';
+    }
+
+    function calculate() {
+        const numEmp = parseInt(slEmp.value);
+        const hrs = parseInt(slHrs.value);
+        const sector = selSector.value;
+        const mult = sectorMult[sector];
+
+        valEmp.textContent = numEmp;
+        valHrs.textContent = hrs;
+
+        const selectedPostes = [];
+        posteItems.forEach(item => {
+            if (item.classList.contains('selected')) {
+                selectedPostes.push({
+                    name: item.querySelector('.poste-name').textContent,
+                    poste: item.dataset.poste,
+                    salary: parseInt(item.dataset.salary)
+                });
+            }
+        });
+
+        if (selectedPostes.length === 0) {
+            selectedPostes.push({ name: 'Support client', poste: 'support', salary: 2800 });
+        }
+
+        // Distribute employees across selected postes
+        const empPerPoste = numEmp / selectedPostes.length;
+        const hrsRatio = hrs / 40; // proportion of work that's automatable
+
+        let totalCostEmp = 0;
+        let totalCostAI = 0;
+        const breakdown = [];
+
+        selectedPostes.forEach(p => {
+            const adjustedSalary = p.salary * mult;
+            const yearlyCostEmp = empPerPoste * adjustedSalary * 12 * 1.45; // charges patronales ~45%
+            const efficiency = autoRate[p.poste] || 0.6;
+            const automatable = yearlyCostEmp * hrsRatio * efficiency;
+            // IA cost: ~5-15% of what it replaces (infra + maintenance)
+            const iaCostRatio = 0.08 + (1 - efficiency) * 0.1;
+            const iaCost = automatable * iaCostRatio;
+            const saving = automatable - iaCost;
+
+            totalCostEmp += yearlyCostEmp * hrsRatio;
+            totalCostAI += iaCost;
+
+            breakdown.push({
+                name: p.name,
+                agent: agentNames[p.poste] || 'Agent IA',
+                costEmp: yearlyCostEmp * hrsRatio,
+                costAI: iaCost,
+                saving,
+                efficiency: Math.round(efficiency * 100)
+            });
+        });
+
+        const totalSaving = totalCostEmp - totalCostAI;
+
+        // Update big savings
+        document.getElementById('resSavingsYear').textContent = formatK(totalSaving) + '/an';
+
+        // Update bars
+        const maxCost = Math.max(totalCostEmp, totalCostAI);
+        document.getElementById('barEmp').style.width = '100%';
+        document.getElementById('barAI').style.width = Math.round((totalCostAI / totalCostEmp) * 100) + '%';
+        document.getElementById('valCostEmp').textContent = formatK(totalCostEmp) + '/an';
+        document.getElementById('valCostAI').textContent = formatK(totalCostAI) + '/an';
+
+        // Breakdown table
+        const tbody = document.getElementById('breakdownBody');
+        tbody.innerHTML = breakdown.map(b => `
+            <tr>
+                <td><strong>${b.name}</strong><br><span style="font-size:0.7rem;color:var(--text-secondary);">→ ${b.agent} (${b.efficiency}% auto.)</span></td>
+                <td class="cost-emp">${formatK(b.costEmp)}</td>
+                <td class="cost-ai">${formatK(b.costAI)}</td>
+                <td class="saving">${formatK(b.saving)}</td>
+            </tr>
+        `).join('') + `
+            <tr style="border-top:2px solid var(--border);font-weight:800;">
+                <td><strong>TOTAL</strong></td>
+                <td class="cost-emp">${formatK(totalCostEmp)}</td>
+                <td class="cost-ai">${formatK(totalCostAI)}</td>
+                <td class="saving">${formatK(totalSaving)}</td>
+            </tr>
+        `;
+
+        // Productivity chart
+        const chart = document.getElementById('prodChart');
+        const months = ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
+        chart.innerHTML = months.map((m, i) => {
+            const empH = 50 + Math.random() * 10; // stable ~50-60
+            const aiH = 30 + (i * 7) + Math.random() * 5; // growing
+            return `
+                <div class="prod-bar-group">
+                    <div class="prod-bars">
+                        <div class="prod-bar emp" style="height:${empH}px"></div>
+                        <div class="prod-bar ai" style="height:${Math.min(aiH, 110)}px"></div>
+                    </div>
+                    <span class="prod-month">${m}</span>
+                </div>
+            `;
+        }).join('');
+
+        // Recommended plan
+        const agentCount = selectedPostes.length * Math.ceil(empPerPoste / 4);
+        let planName, planPrice, payback;
+        if (agentCount <= 3) {
+            planName = 'Plan Créateur';
+            planPrice = '990€ + 199€/mois';
+            payback = totalSaving > 0 ? Math.max(0.1, (990 + 199) / (totalSaving / 12)) : 99;
+        } else if (agentCount <= 12) {
+            planName = 'Plan Business';
+            planPrice = '1 990€ + 349€/mois';
+            payback = totalSaving > 0 ? Math.max(0.1, (1990 + 349) / (totalSaving / 12)) : 99;
+        } else {
+            planName = 'Plan Sur Mesure';
+            planPrice = 'À partir de 3 500€';
+            payback = totalSaving > 0 ? Math.max(0.1, 3500 / (totalSaving / 12)) : 99;
+        }
+
+        document.getElementById('recPlanName').textContent = planName;
+        document.getElementById('recPlanPrice').textContent = planPrice;
+
+        if (payback < 1) {
+            document.getElementById('recPlanRoi').textContent = `Rentabilisé en ${Math.round(payback * 30)} jours`;
+        } else {
+            document.getElementById('recPlanRoi').textContent = `Rentabilisé en ${payback.toFixed(1)} mois`;
+        }
+    }
+
+    // Initial calc
+    calculate();
+})();
+</script>
+</body>
+</html>

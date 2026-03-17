@@ -101,15 +101,17 @@
 
         .nav-links {
             display: flex;
-            gap: 2.5rem;
+            gap: 2rem;
             list-style: none;
             align-items: center;
         }
 
+        .nav-links > li { position: relative; }
+
         .nav-links a {
             text-decoration: none;
             color: var(--text-secondary);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
             transition: color 0.3s;
             position: relative;
@@ -129,6 +131,78 @@
         }
 
         .nav-links a:hover::after { width: 100%; }
+
+        /* Dropdown trigger */
+        .nav-dropdown-trigger {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: color 0.3s;
+            user-select: none;
+        }
+        .nav-dropdown-trigger:hover { color: var(--text); }
+        .nav-dropdown-trigger .arrow {
+            font-size: 0.5rem;
+            transition: transform 0.3s;
+        }
+        .nav-dropdown.open .nav-dropdown-trigger .arrow { transform: rotate(180deg); }
+        .nav-dropdown.open .nav-dropdown-trigger { color: var(--text); }
+
+        /* Dropdown menu */
+        .nav-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 12px);
+            left: 50%;
+            transform: translateX(-50%) translateY(8px);
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12), 0 0 0 1px var(--border);
+            padding: 0.5rem;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 100;
+        }
+        .nav-dropdown.open .nav-dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+        .nav-dropdown-menu a {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.6rem 0.8rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            color: var(--text-secondary) !important;
+            transition: background 0.2s, color 0.2s;
+        }
+        .nav-dropdown-menu a::after { display: none !important; }
+        .nav-dropdown-menu a:hover {
+            background: var(--accent-light);
+            color: var(--text) !important;
+        }
+        .nav-dropdown-menu .dd-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: var(--accent-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+        .nav-dropdown-menu .dd-text { display: flex; flex-direction: column; }
+        .nav-dropdown-menu .dd-label { font-weight: 600; color: var(--text); font-size: 0.8rem; }
+        .nav-dropdown-menu .dd-desc { font-size: 0.65rem; color: var(--text-secondary); margin-top: 1px; }
+        .nav-dropdown-menu .dd-divider { height: 1px; background: var(--border); margin: 0.3rem 0.5rem; }
 
         .btn-primary {
             background: var(--text);
@@ -2069,12 +2143,47 @@
             NexusAI
         </div>
         <ul class="nav-links">
-            <li><a href="#domaines">Domaines</a></li>
+            <li class="nav-dropdown" id="navSolutions">
+                <span class="nav-dropdown-trigger">Solutions <span class="arrow">▼</span></span>
+                <div class="nav-dropdown-menu">
+                    <a href="#domaines">
+                        <span class="dd-icon">🎯</span>
+                        <span class="dd-text"><span class="dd-label">Domaines</span><span class="dd-desc">6 secteurs couverts</span></span>
+                    </a>
+                    <a href="#configurateur">
+                        <span class="dd-icon">⚡</span>
+                        <span class="dd-text"><span class="dd-label">Configurateur</span><span class="dd-desc">Visualisez votre écosystème</span></span>
+                    </a>
+                    <a href="#crew-builder">
+                        <span class="dd-icon">🤖</span>
+                        <span class="dd-text"><span class="dd-label">Build Your Crew</span><span class="dd-desc">Composez votre équipe IA</span></span>
+                    </a>
+                    <div class="dd-divider"></div>
+                    <a href="god-view.html">
+                        <span class="dd-icon" style="background:rgba(0,240,255,0.1);">👁️</span>
+                        <span class="dd-text"><span class="dd-label" style="color:#00d4ff;">God View</span><span class="dd-desc">Dashboard 3D agents</span></span>
+                    </a>
+                </div>
+            </li>
             <li><a href="#processus">Processus</a></li>
-            <li><a href="#crew-builder">Configurateur</a></li>
-            <li><a href="#tarifs">Tarifs</a></li>
-            <li><a href="#roi">ROI</a></li>
-            <li><a href="god-view.html" style="color:#00f0ff;">God View</a></li>
+            <li class="nav-dropdown" id="navPricing">
+                <span class="nav-dropdown-trigger">Tarifs <span class="arrow">▼</span></span>
+                <div class="nav-dropdown-menu">
+                    <a href="#tarifs">
+                        <span class="dd-icon">💰</span>
+                        <span class="dd-text"><span class="dd-label">Plans & Prix</span><span class="dd-desc">Créateur, Business, Sur Mesure</span></span>
+                    </a>
+                    <a href="#roi">
+                        <span class="dd-icon">📊</span>
+                        <span class="dd-text"><span class="dd-label">Calculateur ROI</span><span class="dd-desc">Simulez vos économies</span></span>
+                    </a>
+                    <a href="simulateur.html">
+                        <span class="dd-icon">🧮</span>
+                        <span class="dd-text"><span class="dd-label">Simulateur Employés → IA</span><span class="dd-desc">Économies détaillées</span></span>
+                    </a>
+                </div>
+            </li>
+            <li><a href="#temoignages">Avis</a></li>
             <li><a href="#contact" class="btn-primary magnetic-btn">Démarrer →</a></li>
         </ul>
     </nav>
@@ -2556,7 +2665,7 @@
                 <div class="cost-total">Équivalent interne : <strong>~54 000€/an</strong></div>
 
                 <a href="#contact" class="btn-secondary magnetic-btn" style="width: 100%; justify-content: center;">Choisir Créateur</a>
-                <div class="pricing-guarantee">🔒 Satisfait ou remboursé 30 jours</div>
+                <div class="pricing-guarantee">🔒 Productivité garantie ou remboursé — 30 jours</div>
 
                 <!-- Amélioration 2: Social Proof -->
                 <div class="social-proof-strip">
@@ -2598,7 +2707,7 @@
                 <div class="cost-total">Équivalent interne : <strong>~210 000€/an</strong></div>
 
                 <a href="#contact" class="btn-primary magnetic-btn">Choisir Business →</a>
-                <div class="pricing-guarantee">🔒 Satisfait ou remboursé 30 jours</div>
+                <div class="pricing-guarantee">🔒 Productivité garantie ou remboursé — 30 jours</div>
 
                 <div class="social-proof-strip">
                     <div class="avatar-stack">
@@ -2655,30 +2764,30 @@
     <!-- Amélioration 5: Risk Reversal Guarantee -->
     <section class="risk-reversal">
         <div class="reveal" style="text-align: center;">
-            <div class="section-label">Garantie zéro risque</div>
-            <h2 class="section-title" style="margin: 0 auto;">Vous ne risquez <span class="gradient-text">rien</span>.</h2>
+            <div class="section-label">Engagement productivité</div>
+            <h2 class="section-title" style="margin: 0 auto;">Productivité garantie ou <span class="gradient-text">remboursé</span>.</h2>
         </div>
         <div class="risk-reversal-card reveal">
             <div class="guarantee-timeline" id="guaranteeTimeline">
                 <div class="guarantee-step filled">
                     <div class="guarantee-step-dot">1</div>
                     <div class="guarantee-step-label">Jour 1</div>
-                    <div class="guarantee-step-desc">Déploiement de votre écosystème</div>
+                    <div class="guarantee-step-desc">Déploiement & mise en production de vos agents</div>
                 </div>
                 <div class="guarantee-step">
                     <div class="guarantee-step-dot">14</div>
                     <div class="guarantee-step-label">Jour 14</div>
-                    <div class="guarantee-step-desc">Check-in performance avec votre architecte</div>
+                    <div class="guarantee-step-desc">Mesure de productivité avec votre architecte IA</div>
                 </div>
                 <div class="guarantee-step">
                     <div class="guarantee-step-dot">30</div>
                     <div class="guarantee-step-label">Jour 30</div>
-                    <div class="guarantee-step-desc">Pas convaincu ? Remboursement intégral</div>
+                    <div class="guarantee-step-desc">Aucun gain mesurable ? Remboursement intégral</div>
                 </div>
             </div>
             <p class="guarantee-bottom">
-                Si après 30 jours votre écosystème IA ne vous convient pas, nous vous remboursons <strong>100% du montant</strong>.<br>
-                Et vous gardez la documentation technique et le code produit. <strong>Aucun engagement, aucun risque.</strong>
+                Si après 30 jours vos agents IA ne génèrent pas de gain de productivité mesurable, nous vous remboursons <strong>100% du montant</strong>.<br>
+                Vous conservez le code source, la documentation et la formation. <strong>Zéro risque — on assume la performance.</strong>
             </p>
         </div>
     </section>
@@ -2888,6 +2997,27 @@
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
             navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ── Dropdown menus ──
+        document.querySelectorAll('.nav-dropdown').forEach(dd => {
+            const trigger = dd.querySelector('.nav-dropdown-trigger');
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Close others
+                document.querySelectorAll('.nav-dropdown.open').forEach(d => {
+                    if (d !== dd) d.classList.remove('open');
+                });
+                dd.classList.toggle('open');
+            });
+            // Close on link click inside dropdown
+            dd.querySelectorAll('.nav-dropdown-menu a').forEach(link => {
+                link.addEventListener('click', () => dd.classList.remove('open'));
+            });
+        });
+        // Close dropdowns on click outside
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.nav-dropdown.open').forEach(d => d.classList.remove('open'));
         });
 
         // ── GSAP ScrollTrigger — Scroll Reveal ──
