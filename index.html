@@ -1387,6 +1387,89 @@
             .mini-preview { margin: 1rem -1.2rem; }
             .guarantee-timeline { flex-direction: column; gap: 1.5rem; }
             .guarantee-timeline::before { display: none; }
+            .promo-popup { width: 92% !important; right: 4% !important; left: 4% !important; }
+        }
+
+        /* ── Smart Promo Popup ── */
+        .promo-popup {
+            position: fixed;
+            bottom: -300px;
+            right: 2rem;
+            width: 380px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 0 0 1px var(--border);
+            z-index: 999;
+            overflow: hidden;
+            transition: bottom 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .promo-popup.visible {
+            bottom: 1.5rem;
+        }
+        .promo-popup-header {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            color: white;
+            padding: 1rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .promo-popup-header span {
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+        .promo-popup-close {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .promo-popup-close:hover { background: rgba(255,255,255,0.35); }
+        .promo-popup-body {
+            padding: 1.2rem;
+        }
+        .promo-popup-body p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+        }
+        .promo-popup-body strong {
+            color: var(--text);
+        }
+        .promo-popup-timer {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--gradient-1);
+            text-align: center;
+            margin-bottom: 0.8rem;
+        }
+        .promo-popup-btn {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .promo-popup-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(99,102,241,0.3);
         }
 
         /* ── ROI Calculator (Game Changer Surprise) ── */
@@ -2449,8 +2532,9 @@
         <div class="pricing-grid" id="pricingGrid">
             <!-- CRÉATEUR -->
             <div class="pricing-card" data-plan="createur">
-                <div class="pricing-badge unique">One-shot + maintenance</div>
+                <div class="pricing-badge unique">-40% Offre de lancement</div>
                 <div class="pricing-label">Créateur</div>
+                <div class="pricing-old-price">1 650€</div>
                 <div class="pricing-price">990€ <span style="font-size:0.5em;font-weight:400;color:var(--text-light);">+ 199€/mois</span></div>
 
                 <!-- Amélioration 4: Mini 3D Preview -->
@@ -2488,8 +2572,9 @@
 
             <!-- BUSINESS -->
             <div class="pricing-card featured" data-plan="business">
-                <div class="pricing-badge popular">Le plus choisi</div>
+                <div class="pricing-badge popular">-40% — Le plus choisi</div>
                 <div class="pricing-label">Business</div>
+                <div class="pricing-old-price">3 290€</div>
                 <div class="pricing-price">1 990€ <span style="font-size:0.5em;font-weight:400;color:rgba(255,255,255,0.6);">+ 349€/mois</span></div>
 
                 <div class="mini-preview" id="miniPreview2">
@@ -2697,6 +2782,20 @@
             </div>
         </div>
     </section>
+
+    <!-- Smart Promo Popup -->
+    <div class="promo-popup" id="promoPopup">
+        <div class="promo-popup-header">
+            <span>Offre -40% expire bientôt</span>
+            <button class="promo-popup-close" id="promoClose">×</button>
+        </div>
+        <div class="promo-popup-body">
+            <p>Vous hésitez ? L'offre de lancement à <strong>-40%</strong> se termine dans :</p>
+            <div class="promo-popup-timer" id="promoTimer">—</div>
+            <p>Le plan <strong>Business</strong> passe de <s>3 290€</s> à <strong>1 990€</strong>. Plus que quelques places ce trimestre.</p>
+            <button class="promo-popup-btn" onclick="document.getElementById('promoPopup').classList.remove('visible');document.querySelector('#tarifs').scrollIntoView({behavior:'smooth'});">Voir les plans →</button>
+        </div>
+    </div>
 
     <!-- Calendly Widget (popup mode) -->
     <!-- PLACEHOLDER: Replace YOUR_CALENDLY_URL with your real Calendly link -->
@@ -3008,11 +3107,11 @@
             const timerEl = document.getElementById('urgencyTimer');
             if (!timerEl) return;
 
-            // Set deadline to 3 days from now (persisted in localStorage)
-            let deadline = localStorage.getItem('nexus_deadline');
+            // Set deadline to 1 day from now (persisted in localStorage)
+            let deadline = localStorage.getItem('nexus_deadline_v2');
             if (!deadline || parseInt(deadline) < Date.now()) {
-                deadline = Date.now() + 3 * 24 * 60 * 60 * 1000;
-                localStorage.setItem('nexus_deadline', deadline);
+                deadline = Date.now() + 1 * 24 * 60 * 60 * 1000;
+                localStorage.setItem('nexus_deadline_v2', deadline);
             }
             deadline = parseInt(deadline);
 
@@ -3293,6 +3392,74 @@
                 });
             }, { threshold: 0.3 });
             observer.observe(timeline);
+        })();
+
+        // ════════════════════════════════════════════════
+        // ── SMART PROMO POPUP ──
+        // ════════════════════════════════════════════════
+        (function() {
+            const popup = document.getElementById('promoPopup');
+            const closeBtn = document.getElementById('promoClose');
+            const timerEl = document.getElementById('promoTimer');
+            if (!popup) return;
+
+            let shown = false;
+            const dismissed = sessionStorage.getItem('promo_dismissed');
+            if (dismissed) return;
+
+            closeBtn.addEventListener('click', () => {
+                popup.classList.remove('visible');
+                sessionStorage.setItem('promo_dismissed', '1');
+            });
+
+            // Sync timer with urgency banner
+            function updatePopupTimer() {
+                const dl = localStorage.getItem('nexus_deadline_v2');
+                if (!dl) return;
+                const diff = parseInt(dl) - Date.now();
+                if (diff <= 0) { timerEl.textContent = 'Dernières heures !'; return; }
+                const h = Math.floor(diff / 3600000);
+                const m = Math.floor((diff % 3600000) / 60000);
+                const s = Math.floor((diff % 60000) / 1000);
+                timerEl.textContent = `${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
+            }
+            setInterval(updatePopupTimer, 1000);
+            updatePopupTimer();
+
+            function showPopup() {
+                if (shown || sessionStorage.getItem('promo_dismissed')) return;
+                shown = true;
+                popup.classList.add('visible');
+            }
+
+            // Trigger 1: After scrolling past 60% of page
+            window.addEventListener('scroll', function scrollTrigger() {
+                const scrollPct = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+                if (scrollPct > 0.6) {
+                    showPopup();
+                    window.removeEventListener('scroll', scrollTrigger);
+                }
+            });
+
+            // Trigger 2: Exit intent — mouse leaves viewport at top
+            document.addEventListener('mouseleave', function exitIntent(e) {
+                if (e.clientY < 5) {
+                    showPopup();
+                    document.removeEventListener('mouseleave', exitIntent);
+                }
+            });
+
+            // Trigger 3: After 45 seconds on page
+            setTimeout(showPopup, 45000);
+
+            // Trigger 4: Click on any CTA button that goes to #contact (user showed interest)
+            document.querySelectorAll('a[href="#contact"]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Don't show popup if they're already converting
+                    sessionStorage.setItem('promo_dismissed', '1');
+                    popup.classList.remove('visible');
+                });
+            });
         })();
 
         // ════════════════════════════════════════════════
