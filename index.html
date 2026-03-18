@@ -400,12 +400,10 @@
             transform: translateY(0);
         }
 
-        .hero-visual {
-            margin-top: 5rem;
+        .config-neural-wrap {
             width: 100%;
             max-width: 1000px;
-            opacity: 0;
-            animation: fadeInUp 1s 1s forwards;
+            margin: 3rem auto 0;
         }
 
         /* ── 3D Neural Network Canvas ── */
@@ -3395,14 +3393,10 @@
             <span class="title-line" data-line="1">artificielle</span>
             <span class="title-line gradient-text" data-line="2">à votre échelle.</span>
         </h1>
-        <p class="hero-subtitle" id="heroSubtitle">Déployez un écosystème complet d'agents IA autonomes, conçu sur-mesure pour votre métier. Opérationnel en 6 semaines, avec garantie de résultat ou remboursement intégral.</p>
+        <p class="hero-subtitle" id="heroSubtitle">Un système productif dans votre secteur</p>
         <div class="hero-buttons">
             <a href="#contact" class="btn-primary magnetic-btn">Découvrir nos solutions →</a>
             <a href="#domaines" class="btn-secondary magnetic-btn">Explorer les domaines</a>
-        </div>
-
-        <div class="hero-visual">
-            <div id="neural-canvas"></div>
         </div>
     </section>
 
@@ -3555,6 +3549,10 @@
                 </div>
                 <div class="config-agents-grid" id="configAgents"></div>
             </div>
+        </div>
+
+        <div class="config-neural-wrap reveal" style="margin-top:3rem;">
+            <div id="neural-canvas"></div>
         </div>
     </section>
 
@@ -4458,18 +4456,6 @@
                 }
             });
         }
-
-        // Parallax on hero visual (neural canvas)
-        gsap.to('.hero-visual', {
-            yPercent: 15,
-            ease: 'none',
-            scrollTrigger: {
-                trigger: '.hero',
-                start: 'top top',
-                end: 'bottom top',
-                scrub: 1.5
-            }
-        });
 
         // Section titles — parallax offset
         gsap.utils.toArray('.section-title').forEach(title => {
