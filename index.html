@@ -3332,6 +3332,147 @@
             .nxa-greeting { right: 1rem; bottom: 5rem; max-width: 260px; }
         }
 
+        /* ── GAME CHANGER: Aurora Borealis Background ── */
+        .aurora-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .aurora-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            animation: aurora-drift 20s ease-in-out infinite alternate;
+        }
+        .aurora-blob:nth-child(1) {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, #6366f1, transparent);
+            top: -10%; left: -10%;
+            animation-duration: 18s;
+        }
+        .aurora-blob:nth-child(2) {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, #22d3ee, transparent);
+            top: 20%; right: -5%;
+            animation-duration: 22s;
+            animation-delay: -5s;
+        }
+        .aurora-blob:nth-child(3) {
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, #a855f7, transparent);
+            bottom: -10%; left: 30%;
+            animation-duration: 25s;
+            animation-delay: -10s;
+        }
+        .aurora-blob:nth-child(4) {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, #0ea5e9, transparent);
+            top: 60%; left: -5%;
+            animation-duration: 20s;
+            animation-delay: -3s;
+        }
+        .aurora-blob:nth-child(5) {
+            width: 350px; height: 350px;
+            background: radial-gradient(circle, #ec4899, transparent);
+            top: 40%; right: 20%;
+            animation-duration: 16s;
+            animation-delay: -8s;
+        }
+        @keyframes aurora-drift {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(60px, -40px) scale(1.1); }
+            66% { transform: translate(-40px, 30px) scale(0.95); }
+            100% { transform: translate(20px, -20px) scale(1.05); }
+        }
+
+        /* ── Film Grain Overlay ── */
+        .grain-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9990;
+            pointer-events: none;
+            opacity: 0.035;
+            mix-blend-mode: overlay;
+        }
+
+        /* ── Odometer Stats ── */
+        .odometer-digit {
+            display: inline-block;
+            overflow: hidden;
+            height: 1.1em;
+            vertical-align: bottom;
+        }
+        .odometer-digit-inner {
+            display: flex;
+            flex-direction: column;
+            transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .odometer-digit-inner span {
+            display: block;
+            height: 1.1em;
+            line-height: 1.1em;
+        }
+        .stat-suffix {
+            display: inline;
+        }
+
+        /* ── Pricing Spotlight ── */
+        .pricing-spotlight {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(99,102,241,0.12), transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+            transition: left 0.3s ease, top 0.3s ease;
+            opacity: 0;
+        }
+        #pricingGrid:hover .pricing-spotlight {
+            opacity: 1;
+        }
+        #pricingGrid {
+            position: relative;
+        }
+        .pricing-card {
+            position: relative;
+            z-index: 1;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .pricing-card.spotlight-dim {
+            opacity: 0.5;
+            filter: brightness(0.7);
+        }
+
+        /* ── Scroll Text Reveal ── */
+        .section-title .reveal-word {
+            display: inline-block;
+            color: rgba(255,255,255,0.15);
+            transition: color 0.1s;
+        }
+        .section-title .reveal-word.lit {
+            color: var(--text);
+        }
+        .gradient-text .reveal-word.lit {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2), var(--gradient-3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ── Horizontal Scroll Testimonials ── */
+        .testimonials-section.pinned {
+            height: auto;
+        }
+        .testimonials-pin-wrap {
+            width: 100%;
+            overflow: visible;
+        }
+
         /* ── 3D Starfield Background ── */
         #agentStarfield {
             position: fixed;
@@ -3352,6 +3493,24 @@
     </style>
 </head>
 <body>
+
+    <!-- Aurora Borealis Background -->
+    <div class="aurora-bg">
+        <div class="aurora-blob"></div>
+        <div class="aurora-blob"></div>
+        <div class="aurora-blob"></div>
+        <div class="aurora-blob"></div>
+        <div class="aurora-blob"></div>
+    </div>
+
+    <!-- Film Grain Overlay (SVG noise) -->
+    <svg class="grain-overlay" viewBox="0 0 512 512" preserveAspectRatio="none" style="width:100%;height:100%;">
+        <filter id="noiseFilter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+            <feColorMatrix type="saturate" values="0"/>
+        </filter>
+        <rect width="100%" height="100%" filter="url(#noiseFilter)"/>
+    </svg>
 
     <!-- Urgency Banner -->
     <div class="urgency-banner" id="urgencyBanner">
@@ -3619,19 +3778,19 @@
         </div>
         <div class="stats-grid">
             <div class="stat-item">
-                <h3 class="counter" data-target="97">0</h3>
-                <p>% de précision moyenne</p>
+                <h3 class="odometer" data-target="97" data-suffix="%">0%</h3>
+                <p>de précision moyenne</p>
             </div>
             <div class="stat-item">
-                <h3 class="counter" data-target="340">0</h3>
+                <h3 class="odometer" data-target="340" data-suffix="+">0+</h3>
                 <p>Entreprises accompagnées</p>
             </div>
             <div class="stat-item">
-                <h3 class="counter" data-target="60">0</h3>
-                <p>% de gain de productivité</p>
+                <h3 class="odometer" data-target="60" data-suffix="%">0%</h3>
+                <p>de gain de productivité</p>
             </div>
             <div class="stat-item">
-                <h3 class="counter" data-target="24">0</h3>
+                <h3 class="odometer" data-target="24" data-suffix="">0</h3>
                 <p>Domaines couverts</p>
             </div>
         </div>
@@ -3943,6 +4102,7 @@
         </div>
 
         <div class="pricing-grid" id="pricingGrid">
+            <div class="pricing-spotlight" id="pricingSpotlight"></div>
             <!-- CRÉATEUR -->
             <div class="pricing-card" data-plan="createur">
                 <div class="pricing-badge unique">-40% Offre de lancement</div>
@@ -4525,21 +4685,48 @@
             });
         });
 
-        // ── Counter animation (GSAP-powered) ──
-        document.querySelectorAll('.counter').forEach(counter => {
-            const target = parseInt(counter.dataset.target);
-            const obj = { val: 0 };
+        // ── ODOMETER COUNTER EFFECT ──
+        document.querySelectorAll('.odometer').forEach(function(el) {
+            var target = parseInt(el.dataset.target);
+            var suffix = el.dataset.suffix || '';
+            var digits = String(target).split('');
+
+            // Build odometer markup
+            el.textContent = '';
+            digits.forEach(function(d) {
+                var digit = document.createElement('span');
+                digit.className = 'odometer-digit';
+                var inner = document.createElement('span');
+                inner.className = 'odometer-digit-inner';
+                // Add all digits 0-9 as options
+                for (var n = 0; n <= 9; n++) {
+                    var s = document.createElement('span');
+                    s.textContent = n;
+                    inner.appendChild(s);
+                }
+                inner.style.transform = 'translateY(0)';
+                digit.appendChild(inner);
+                el.appendChild(digit);
+            });
+            if (suffix) {
+                var suf = document.createElement('span');
+                suf.className = 'stat-suffix';
+                suf.textContent = suffix;
+                el.appendChild(suf);
+            }
+
+            // Animate on scroll
             ScrollTrigger.create({
-                trigger: counter,
-                start: 'top 80%',
-                onEnter: () => {
-                    gsap.to(obj, {
-                        val: target,
-                        duration: 2,
-                        ease: 'power2.out',
-                        onUpdate: () => {
-                            counter.textContent = Math.round(obj.val) + (target >= 100 ? '+' : '');
-                        }
+                trigger: el,
+                start: 'top 85%',
+                onEnter: function() {
+                    var digitEls = el.querySelectorAll('.odometer-digit-inner');
+                    digits.forEach(function(d, i) {
+                        var targetDigit = parseInt(d);
+                        var pct = -(targetDigit / 10) * 100;
+                        setTimeout(function() {
+                            digitEls[i].style.transform = 'translateY(' + pct + '%)';
+                        }, i * 150);
                     });
                 },
                 once: true
@@ -5234,12 +5421,28 @@
         })();
 
         // ════════════════════════════════════════════════
-        // ── TESTIMONIALS HORIZONTAL DRAG SCROLL ──
+        // ── TESTIMONIALS HORIZONTAL DRAG SCROLL (mobile only) ──
         // ════════════════════════════════════════════════
         (function() {
             const wrapper = document.getElementById('testimonialsWrapper');
             const track = document.getElementById('testimonialsTrack');
             if (!wrapper || !track) return;
+            // On desktop, GSAP pin handles this
+            if (window.innerWidth >= 768) {
+                // Just reveal cards
+                const tObs = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            track.querySelectorAll('.testimonial-card').forEach((card, i) => {
+                                setTimeout(() => card.classList.add('visible'), i * 150);
+                            });
+                            tObs.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.2 });
+                tObs.observe(wrapper);
+                return;
+            }
 
             let isDragging = false;
             let startX = 0;
@@ -5512,47 +5715,47 @@
                 subtitle.appendChild(span);
             });
 
-            // Sequential reveal after loader
+            // Fast sequential reveal — CTA visible in <0.5s
             setTimeout(() => {
                 let delay = 0;
-                const baseDelay = 400; // wait for loader
+                const baseDelay = 50;
 
-                // Line 0 chars
+                // Line 0 chars — fast
                 lines[0].querySelectorAll('.char').forEach((char, i) => {
-                    setTimeout(() => char.classList.add('revealed'), baseDelay + i * 40);
-                    delay = baseDelay + i * 40;
+                    setTimeout(() => char.classList.add('revealed'), baseDelay + i * 18);
+                    delay = baseDelay + i * 18;
                 });
-                delay += 200;
+                delay += 60;
 
                 // Line 1 chars
                 const line1Start = delay;
                 lines[1].querySelectorAll('.char').forEach((char, i) => {
-                    setTimeout(() => char.classList.add('revealed'), line1Start + i * 40);
-                    delay = line1Start + i * 40;
+                    setTimeout(() => char.classList.add('revealed'), line1Start + i * 18);
+                    delay = line1Start + i * 18;
                 });
-                delay += 200;
+                delay += 60;
 
                 // Line 2 chars (gradient)
                 const line2Start = delay;
                 lines[2].querySelectorAll('.char').forEach((char, i) => {
-                    setTimeout(() => char.classList.add('revealed'), line2Start + i * 45);
-                    delay = line2Start + i * 45;
+                    setTimeout(() => char.classList.add('revealed'), line2Start + i * 20);
+                    delay = line2Start + i * 20;
                 });
-                delay += 300;
+                delay += 80;
 
-                // Subtitle words
+                // Subtitle words — fast
                 const subStart = delay;
                 subtitle.querySelectorAll('.word').forEach((word, i) => {
-                    setTimeout(() => word.classList.add('revealed'), subStart + i * 60);
-                    delay = subStart + i * 60;
+                    setTimeout(() => word.classList.add('revealed'), subStart + i * 30);
+                    delay = subStart + i * 30;
                 });
 
-                // Buttons
+                // Buttons — show immediately after subtitle
                 setTimeout(() => {
                     document.querySelector('.hero-buttons').classList.add('revealed');
-                }, delay + 200);
+                }, delay + 50);
 
-            }, 600);
+            }, 200);
         })();
 
         // ════════════════════════════════════════════════
@@ -6832,6 +7035,129 @@
             }
             drawParticles();
         }
+    })();
+
+    // ════════════════════════════════════════════════
+    // ── SCROLL-DRIVEN TEXT REVEAL on Section Titles ──
+    // ════════════════════════════════════════════════
+    (function() {
+        // Select section titles (not the hero title)
+        document.querySelectorAll('section .section-title, .stats-section .section-title, .testimonials-section .section-title, .cta-section h2').forEach(function(title) {
+            var text = title.innerHTML;
+            // Split into words preserving HTML tags like <span>
+            if (title.querySelector('span.gradient-text')) {
+                // Has gradient text child — handle differently
+                return;
+            }
+            var words = title.textContent.trim().split(/\s+/);
+            title.innerHTML = '';
+            words.forEach(function(word, i) {
+                var span = document.createElement('span');
+                span.className = 'reveal-word';
+                span.textContent = word + ' ';
+                title.appendChild(span);
+            });
+
+            var wordEls = title.querySelectorAll('.reveal-word');
+            ScrollTrigger.create({
+                trigger: title,
+                start: 'top 85%',
+                end: 'top 30%',
+                scrub: 0.5,
+                onUpdate: function(self) {
+                    var progress = self.progress;
+                    wordEls.forEach(function(w, i) {
+                        var threshold = i / wordEls.length;
+                        if (progress > threshold) {
+                            w.classList.add('lit');
+                        } else {
+                            w.classList.remove('lit');
+                        }
+                    });
+                }
+            });
+        });
+    })();
+
+    // ════════════════════════════════════════════════
+    // ── PRICING SPOTLIGHT CURSOR EFFECT ──
+    // ════════════════════════════════════════════════
+    (function() {
+        var grid = document.getElementById('pricingGrid');
+        var spot = document.getElementById('pricingSpotlight');
+        if (!grid || !spot) return;
+
+        var cards = grid.querySelectorAll('.pricing-card');
+
+        grid.addEventListener('mousemove', function(e) {
+            var rect = grid.getBoundingClientRect();
+            spot.style.left = (e.clientX - rect.left) + 'px';
+            spot.style.top = (e.clientY - rect.top) + 'px';
+
+            // Find closest card
+            var closestIdx = -1;
+            var closestDist = Infinity;
+            cards.forEach(function(card, i) {
+                var cr = card.getBoundingClientRect();
+                var cx = cr.left + cr.width / 2;
+                var cy = cr.top + cr.height / 2;
+                var dx = e.clientX - cx;
+                var dy = e.clientY - cy;
+                var dist = Math.sqrt(dx*dx + dy*dy);
+                if (dist < closestDist) {
+                    closestDist = dist;
+                    closestIdx = i;
+                }
+            });
+
+            cards.forEach(function(card, i) {
+                if (i === closestIdx) {
+                    card.classList.remove('spotlight-dim');
+                } else {
+                    card.classList.add('spotlight-dim');
+                }
+            });
+        });
+
+        grid.addEventListener('mouseleave', function() {
+            cards.forEach(function(card) {
+                card.classList.remove('spotlight-dim');
+            });
+        });
+    })();
+
+    // ════════════════════════════════════════════════
+    // ── HORIZONTAL SCROLL TESTIMONIALS (GSAP Pin) ──
+    // ════════════════════════════════════════════════
+    (function() {
+        var wrapper = document.getElementById('testimonialsWrapper');
+        var track = document.getElementById('testimonialsTrack');
+        if (!wrapper || !track) return;
+
+        // Only on desktop
+        if (window.innerWidth < 768) return;
+
+        // Calculate total scroll distance
+        function getScrollAmount() {
+            return -(track.scrollWidth - wrapper.offsetWidth);
+        }
+
+        gsap.to(track, {
+            x: getScrollAmount,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: wrapper,
+                start: 'top 15%',
+                end: function() { return '+=' + Math.abs(getScrollAmount()); },
+                pin: true,
+                scrub: 1.5,
+                invalidateOnRefresh: true,
+                onUpdate: function(self) {
+                    var fill = document.getElementById('scrollProgressFill');
+                    if (fill) fill.style.width = (self.progress * 100) + '%';
+                }
+            }
+        });
     })();
     </script>
 
