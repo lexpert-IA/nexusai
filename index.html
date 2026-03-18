@@ -909,7 +909,7 @@
 
         .testimonial-card:hover {
             transform: translateY(-6px);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+            box-shadow: 0 20px 60px rgba(99,102,241,0.1);
         }
 
         .testimonial-img-wrap {
@@ -917,7 +917,7 @@
         }
         .testimonial-img {
             width: 100%;
-            height: 180px;
+            height: 200px;
             object-fit: cover;
             display: block;
         }
@@ -1031,6 +1031,21 @@
             text-transform: uppercase;
             font-weight: 600;
         }
+        .scroll-progress-bar {
+            width: 200px;
+            height: 3px;
+            background: var(--accent-light);
+            border-radius: 100px;
+            margin: 0.8rem auto 0;
+            overflow: hidden;
+        }
+        .scroll-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--gradient-1), var(--gradient-2));
+            border-radius: 100px;
+            transition: width 0.15s ease-out;
+        }
 
         @media (max-width: 768px) {
             .testimonial-card { width: 320px; }
@@ -1048,8 +1063,9 @@
         .pricing-card {
             padding: 3rem 2.5rem;
             border-radius: 24px;
-            border: 1px solid var(--border);
-            background: white;
+            border: 1px solid rgba(99,102,241,0.08);
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(20px);
             text-align: center;
             opacity: 0;
             transform: translateY(40px);
@@ -1062,9 +1078,10 @@
         }
 
         .pricing-card.featured {
-            background: var(--text);
+            background: linear-gradient(145deg, #0c0c12, #1a1a2e);
             color: white;
-            border: none;
+            border: 1px solid rgba(139,92,246,0.25);
+            box-shadow: 0 20px 60px rgba(99,102,241,0.15), 0 0 0 1px rgba(139,92,246,0.1);
             transform: scale(1.05) translateY(40px);
         }
 
@@ -1213,7 +1230,7 @@
         .cost-alt {
             display: none;
             font-size: 0.7rem;
-            color: #dc2626;
+            color: #9ca3af;
             text-decoration: line-through;
             margin-left: auto;
             font-weight: 600;
@@ -1229,8 +1246,8 @@
             text-align: center;
             margin-top: 1rem;
             padding: 0.8rem;
-            background: linear-gradient(135deg, rgba(220,38,38,0.06), rgba(220,38,38,0.02));
-            border: 1px solid rgba(220,38,38,0.1);
+            background: linear-gradient(135deg, rgba(99,102,241,0.06), rgba(168,85,247,0.03));
+            border: 1px solid rgba(99,102,241,0.1);
             border-radius: 12px;
             font-size: 0.8rem;
             font-weight: 600;
@@ -1241,14 +1258,20 @@
         .cost-total strong {
             font-family: 'Space Grotesk', sans-serif;
             font-size: 1.3rem;
-            color: #dc2626;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         .pricing-card.featured .cost-total {
             background: rgba(255,255,255,0.05);
             border-color: rgba(255,255,255,0.1);
         }
         .pricing-card.featured .cost-total strong {
-            color: #fca5a5;
+            background: linear-gradient(135deg, #a78bfa, #c4b5fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         /* ── Social Proof Counters ── */
@@ -1290,8 +1313,9 @@
         .spots-left {
             font-size: 0.6rem;
             font-weight: 700;
-            color: #dc2626;
-            background: rgba(220,38,38,0.08);
+            color: var(--gradient-2);
+            background: rgba(139,92,246,0.08);
+            border: 1px solid rgba(139,92,246,0.12);
             padding: 0.15rem 0.5rem;
             border-radius: 100px;
             white-space: nowrap;
@@ -1369,11 +1393,11 @@
             flex-shrink: 0;
         }
         .crew-group-name {
-            font-size: 0.7rem;
+            font-size: 0.76rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            color: var(--text-secondary);
+            color: var(--text);
         }
         .crew-group-count {
             font-size: 0.6rem;
@@ -1390,8 +1414,8 @@
         .crew-group-count.visible { opacity: 1; }
         .crew-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            gap: 0.6rem;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.7rem;
         }
         .crew-agent {
             padding: 0.65rem 0.5rem;
@@ -1430,13 +1454,13 @@
             justify-content: center;
         }
         .crew-agent-name {
-            font-size: 0.7rem;
+            font-size: 0.78rem;
             font-weight: 700;
             letter-spacing: -0.2px;
             margin-bottom: 0.15rem;
         }
         .crew-agent-role {
-            font-size: 0.55rem;
+            font-size: 0.65rem;
             color: var(--text-secondary);
         }
         .crew-result {
@@ -1492,12 +1516,13 @@
             text-align: center;
         }
         .risk-reversal-card {
-            background: white;
-            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(99,102,241,0.1);
             border-radius: 24px;
             padding: 3rem;
             margin-top: 2rem;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.04);
+            box-shadow: 0 20px 60px rgba(99,102,241,0.06);
         }
         .guarantee-timeline {
             display: flex;
@@ -1614,12 +1639,12 @@
         }
         .guarantee-step.filled .guarantee-step-day { opacity: 1; }
         .guarantee-step-label {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             font-weight: 700;
             margin-bottom: 0.2rem;
         }
         .guarantee-step-desc {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: var(--text-secondary);
             max-width: 160px;
             margin: 0 auto;
@@ -1645,13 +1670,23 @@
             display: flex;
             align-items: center;
             gap: 0.4rem;
-            font-size: 0.75rem;
+            font-size: 0.82rem;
             color: var(--text-secondary);
-            font-weight: 500;
+            font-weight: 600;
+            padding: 0.5rem 0.8rem;
+            background: rgba(99,102,241,0.04);
+            border: 1px solid rgba(99,102,241,0.08);
+            border-radius: 10px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .guarantee-trust-item:hover {
+            transform: translateY(-2px);
+            border-color: rgba(99,102,241,0.15);
+            box-shadow: 0 4px 12px rgba(99,102,241,0.06);
         }
         .guarantee-trust-item svg {
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
             stroke: var(--gradient-1);
             fill: none;
             stroke-width: 2;
@@ -1921,20 +1956,20 @@
         }
         .roi-bar-track {
             flex: 1;
-            height: 32px;
-            background: var(--accent-light);
-            border-radius: 8px;
+            height: 40px;
+            background: linear-gradient(135deg, #f8f9ff, #f1f3f9);
+            border-radius: 12px;
             overflow: hidden;
             position: relative;
         }
         .roi-bar-fill {
             height: 100%;
-            border-radius: 8px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: flex-end;
             padding-right: 0.8rem;
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             font-weight: 700;
             color: white;
             font-family: 'Space Grotesk', sans-serif;
@@ -1942,28 +1977,48 @@
             min-width: 60px;
         }
         .roi-bar-fill.current {
-            background: linear-gradient(90deg, #ef4444, #f97316);
+            background: linear-gradient(90deg, #e2e4ea, #c5c8d4);
+            color: #4b5563;
         }
         .roi-bar-fill.nexus {
-            background: linear-gradient(90deg, var(--gradient-1), var(--gradient-2));
+            background: linear-gradient(90deg, var(--gradient-1), var(--gradient-2), var(--gradient-3));
+            box-shadow: 0 4px 15px rgba(99,102,241,0.3);
         }
         .roi-savings-circle {
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 1.5rem auto 0;
-            width: 100px;
-            height: 100px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
-            background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(168,85,247,0.08));
-            border: 3px solid var(--gradient-1);
+            background: linear-gradient(135deg, rgba(99,102,241,0.06), rgba(168,85,247,0.06));
             position: relative;
+        }
+        .roi-savings-circle::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2), var(--gradient-3));
+            z-index: -1;
+        }
+        .roi-savings-circle::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: white;
+            z-index: -1;
         }
         .roi-savings-circle-text {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 800;
-            font-size: 1.4rem;
-            color: var(--gradient-1);
+            font-size: 1.6rem;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         .roi-savings-circle-label {
             font-size: 0.65rem;
@@ -2061,12 +2116,13 @@
         }
 
         .form-container {
-            background: white;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(20px);
             border-radius: 24px;
-            border: 1px solid var(--border);
+            border: 1px solid rgba(99,102,241,0.1);
             padding: 3rem;
             text-align: left;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.04);
+            box-shadow: 0 20px 60px rgba(99,102,241,0.06);
         }
 
         .form-title {
@@ -2110,20 +2166,22 @@
             width: 100%;
             padding: 0.8rem 1rem;
             border-radius: 12px;
-            border: 1.5px solid var(--border);
+            border: 1.5px solid rgba(99,102,241,0.1);
             font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
-            background: #fafafa;
+            background: rgba(248,249,255,0.8);
             transition: all 0.3s;
             outline: none;
         }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder { color: #b0b5c3; }
 
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
             border-color: var(--gradient-1);
             background: white;
-            box-shadow: 0 0 0 4px rgba(99,102,241,0.08);
+            box-shadow: 0 0 0 4px rgba(99,102,241,0.08), 0 4px 12px rgba(99,102,241,0.06);
         }
 
         .form-group textarea { resize: vertical; }
@@ -2204,13 +2262,17 @@
             display: flex;
             align-items: center;
             gap: 0.35rem;
-            font-size: 0.72rem;
+            font-size: 0.78rem;
             color: var(--text-secondary);
-            font-weight: 500;
+            font-weight: 600;
+            padding: 0.4rem 0.7rem;
+            background: rgba(99,102,241,0.04);
+            border: 1px solid rgba(99,102,241,0.08);
+            border-radius: 8px;
         }
         .cta-trust-badge svg {
-            width: 14px;
-            height: 14px;
+            width: 16px;
+            height: 16px;
             stroke: var(--gradient-1);
             fill: none;
             stroke-width: 2;
@@ -2535,11 +2597,13 @@
         }
         .pricing-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 30px 80px rgba(0,0,0,0.08), 0 0 0 1px rgba(99,102,241,0.08);
+            box-shadow: 0 30px 80px rgba(99,102,241,0.1), 0 0 0 1px rgba(99,102,241,0.12);
+            border-color: rgba(99,102,241,0.2);
         }
         .pricing-card.featured:hover {
             transform: scale(1.05) translateY(-8px);
-            box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+            box-shadow: 0 30px 80px rgba(139,92,246,0.25), 0 0 40px rgba(99,102,241,0.1);
+            border-color: rgba(139,92,246,0.4);
         }
 
         /* ── 6. Crew agent cards — pulse ring on select ── */
@@ -2725,6 +2789,203 @@
 
         @keyframes spin {
             to { transform: rotate(360deg); }
+        }
+
+        /* ── AI Chat Widget ── */
+        .nxa-fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            border: none;
+            cursor: pointer;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 30px rgba(99,102,241,0.35);
+            transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+            animation: nxa-pulse 3s ease-in-out infinite;
+        }
+        .nxa-fab:hover { transform: scale(1.1); box-shadow: 0 12px 40px rgba(99,102,241,0.45); }
+        .nxa-fab svg { width: 28px; height: 28px; fill: white; }
+        .nxa-fab.open svg { display: none; }
+        .nxa-fab.open::after { content: '\00d7'; font-size: 2rem; color: white; line-height: 1; }
+        @keyframes nxa-pulse { 0%,100%{box-shadow:0 8px 30px rgba(99,102,241,0.35)} 50%{box-shadow:0 8px 40px rgba(99,102,241,0.55)} }
+
+        .nxa-greeting {
+            position: fixed;
+            bottom: 6.5rem;
+            right: 2rem;
+            background: white;
+            border: 1px solid rgba(99,102,241,0.1);
+            border-radius: 16px;
+            padding: 1rem 1.2rem;
+            max-width: 300px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            z-index: 9998;
+            font-size: 0.82rem;
+            line-height: 1.5;
+            opacity: 0;
+            transform: translateY(10px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+            pointer-events: none;
+        }
+        .nxa-greeting.visible { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+        .nxa-greeting-close {
+            position: absolute; top: 6px; right: 10px; background: none; border: none;
+            font-size: 1.2rem; cursor: pointer; color: var(--text-secondary); line-height: 1;
+        }
+
+        .nxa-chat {
+            position: fixed;
+            bottom: 6.5rem;
+            right: 2rem;
+            width: 380px;
+            max-height: 520px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(99,102,241,0.12);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+            z-index: 9998;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(20px) scale(0.9);
+            transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .nxa-chat.visible { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+
+        .nxa-chat-header {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            color: white;
+            padding: 1rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .nxa-chat-avatar {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem;
+        }
+        .nxa-chat-name { font-weight: 700; font-size: 0.9rem; }
+        .nxa-chat-status { font-size: 0.65rem; opacity: 0.8; display: flex; align-items: center; gap: 0.3rem; }
+        .nxa-chat-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #34d399; }
+
+        .nxa-chat-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            max-height: 340px;
+        }
+        .nxa-msg {
+            max-width: 85%;
+            padding: 0.7rem 1rem;
+            border-radius: 16px;
+            font-size: 0.82rem;
+            line-height: 1.5;
+            animation: nxa-msg-in 0.3s ease-out;
+        }
+        @keyframes nxa-msg-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .nxa-msg.bot {
+            background: rgba(99,102,241,0.08);
+            border: 1px solid rgba(99,102,241,0.06);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+        .nxa-msg.user {
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .nxa-typing {
+            display: flex; gap: 4px; align-items: center; padding: 0.5rem 0;
+        }
+        .nxa-typing span {
+            width: 6px; height: 6px; border-radius: 50%; background: var(--gradient-1); opacity: 0.4;
+            animation: nxa-dot 1.2s ease-in-out infinite;
+        }
+        .nxa-typing span:nth-child(2) { animation-delay: 0.2s; }
+        .nxa-typing span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes nxa-dot { 0%,100%{opacity:0.3;transform:translateY(0)} 50%{opacity:1;transform:translateY(-4px)} }
+
+        .nxa-quick-replies {
+            display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0 1rem 0.5rem;
+        }
+        .nxa-quick-btn {
+            padding: 0.35rem 0.8rem;
+            border-radius: 100px;
+            border: 1px solid rgba(99,102,241,0.15);
+            background: rgba(99,102,241,0.04);
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--gradient-1);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .nxa-quick-btn:hover { background: rgba(99,102,241,0.1); transform: translateY(-1px); }
+
+        .nxa-chat-footer {
+            padding: 0.8rem;
+            border-top: 1px solid rgba(99,102,241,0.06);
+            display: flex;
+            gap: 0.5rem;
+        }
+        .nxa-chat-input {
+            flex: 1;
+            border: 1.5px solid rgba(99,102,241,0.1);
+            border-radius: 12px;
+            padding: 0.6rem 1rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            outline: none;
+            background: rgba(248,249,255,0.8);
+            transition: all 0.3s;
+        }
+        .nxa-chat-input:focus { border-color: var(--gradient-1); box-shadow: 0 0 0 3px rgba(99,102,241,0.08); }
+        .nxa-chat-send {
+            width: 40px; height: 40px; border-radius: 12px;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+        }
+        .nxa-chat-send:hover { transform: scale(1.05); }
+        .nxa-chat-send svg { width: 18px; height: 18px; fill: white; }
+
+        @media (max-width: 768px) {
+            .nxa-chat { width: calc(100% - 2rem); right: 1rem; bottom: 5.5rem; }
+            .nxa-fab { bottom: 1rem; right: 1rem; width: 52px; height: 52px; }
+            .nxa-greeting { right: 1rem; bottom: 5rem; max-width: 260px; }
+        }
+
+        /* ── 3D Starfield Background ── */
+        #agentStarfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        /* Ensure all content is above starfield */
+        .urgency-banner, .navbar, .hero, section, .testimonials-section,
+        .cta-section, footer, .promo-popup, .cursor-glow, .loader {
+            position: relative;
+            z-index: 1;
         }
     </style>
 </head>
@@ -3251,7 +3512,10 @@
                 </div>
             </div>
         </div>
-        <div class="scroll-hint">← glisser pour explorer →</div>
+        <div class="scroll-hint">
+            ← glisser pour explorer →
+            <div class="scroll-progress-bar"><div class="scroll-progress-fill" id="scrollProgressFill"></div></div>
+        </div>
     </div>
 
     <!-- GAME CHANGER: Build Your AI Crew Configurator -->
@@ -3628,7 +3892,7 @@
                     <p class="form-note">
                         <!-- PLACEHOLDER: When you get Tally, replace this form with: -->
                         <!-- <iframe data-tally-src="https://tally.so/embed/VOTRE_ID?alignLeft=1&hideTitle=1" width="100%" height="500" frameborder="0"></iframe> -->
-                        <span style="opacity:0.5; font-size: 0.75rem;">Formulaire connecté via Tally.so — Remplacez l'ID pour activer</span>
+                        <span style="opacity:0.5; font-size: 0.75rem;">Vos données sont protégées et ne seront jamais partagées.</span>
                     </p>
                 </form>
                 <div class="cta-trust-row">
@@ -4682,10 +4946,16 @@
 
             wrapper.addEventListener('touchend', stopDrag);
 
+            var progressFill = document.getElementById('scrollProgressFill');
             function clampAndApply() {
                 const maxScroll = -(track.scrollWidth - wrapper.clientWidth);
                 currentTranslate = Math.max(maxScroll, Math.min(0, currentTranslate));
                 track.style.transform = `translateX(${currentTranslate}px)`;
+                // Update progress bar
+                if (progressFill && maxScroll < 0) {
+                    var pct = Math.abs(currentTranslate / maxScroll) * 100;
+                    progressFill.style.width = pct + '%';
+                }
             }
 
             // Reveal cards on scroll into view
@@ -5230,6 +5500,383 @@
             s1.setAttribute('crossorigin','*');
             s0.parentNode.insertBefore(s1,s0);
         })();
+    </script>
+
+    <!-- 3D Agent Starfield Canvas -->
+    <canvas id="agentStarfield"></canvas>
+
+    <!-- AI Chat Widget -->
+    <button class="nxa-fab" id="nxaFab">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    </button>
+
+    <div class="nxa-greeting" id="nxaGreeting">
+        <button class="nxa-greeting-close" id="nxaGreetClose">&times;</button>
+        Bonjour ! Je suis l'assistant IA NexusAI. Posez-moi vos questions sur nos solutions.
+    </div>
+
+    <div class="nxa-chat" id="nxaChat">
+        <div class="nxa-chat-header">
+            <div class="nxa-chat-avatar">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+            </div>
+            <div>
+                <div class="nxa-chat-name">NexusAI Assistant</div>
+                <div class="nxa-chat-status">En ligne</div>
+            </div>
+        </div>
+        <div class="nxa-chat-body" id="nxaChatBody">
+            <div class="nxa-msg bot">Bonjour ! Comment puis-je vous aider ? Posez-moi vos questions sur nos solutions IA.</div>
+        </div>
+        <div class="nxa-quick-replies" id="nxaQuickReplies">
+            <button class="nxa-quick-btn" data-q="pricing">Tarifs</button>
+            <button class="nxa-quick-btn" data-q="guarantee">Garantie</button>
+            <button class="nxa-quick-btn" data-q="demo">Voir une démo</button>
+            <button class="nxa-quick-btn" data-q="delay">Délai de déploiement</button>
+        </div>
+        <div class="nxa-chat-footer">
+            <input type="text" class="nxa-chat-input" id="nxaChatInput" placeholder="Posez votre question...">
+            <button class="nxa-chat-send" id="nxaChatSend">
+                <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+    // ════════════════════════════════════════════════
+    // ── AI CHAT WIDGET ──
+    // ════════════════════════════════════════════════
+    (function() {
+        var fab = document.getElementById('nxaFab');
+        var chat = document.getElementById('nxaChat');
+        var greeting = document.getElementById('nxaGreeting');
+        var greetClose = document.getElementById('nxaGreetClose');
+        var body = document.getElementById('nxaChatBody');
+        var input = document.getElementById('nxaChatInput');
+        var sendBtn = document.getElementById('nxaChatSend');
+        var quickReplies = document.getElementById('nxaQuickReplies');
+        if (!fab) return;
+
+        var isOpen = false;
+
+        // Show greeting after 4 seconds
+        setTimeout(function() {
+            if (!isOpen) greeting.classList.add('visible');
+        }, 4000);
+
+        greetClose.addEventListener('click', function() {
+            greeting.classList.remove('visible');
+        });
+
+        fab.addEventListener('click', function() {
+            isOpen = !isOpen;
+            fab.classList.toggle('open', isOpen);
+            chat.classList.toggle('visible', isOpen);
+            greeting.classList.remove('visible');
+            if (isOpen) input.focus();
+        });
+
+        // Knowledge base
+        var kb = {
+            pricing: 'Nous proposons 3 plans :\n\n• **Créateur** — 990€ + 199€/mois (jusqu\'à 3 agents)\n• **Business** — 1 990€ + 349€/mois (jusqu\'à 12 agents) — Le plus choisi\n• **Sur Mesure** — À partir de 3 500€ (agents illimités)\n\nTous incluent le code source et la garantie 30 jours.',
+            guarantee: 'Notre garantie est simple :\n\n• **Jour 1** — Déploiement de vos agents IA\n• **Jour 14** — Mesure de productivité avec votre architecte\n• **Jour 30** — Aucun gain mesurable ? Remboursement intégral à 100%\n\nVous gardez le code, la documentation et la formation.',
+            demo: 'Découvrez NexusAI en action :\n\n• **God View** — Dashboard 3D avec nos 33 agents en temps réel\n• **Simulateur** — Calculez vos économies employés → agents IA\n• **Appel stratégique** — 30 min gratuites avec un architecte IA',
+            delay: 'Les délais varient selon le plan :\n\n• **Créateur** — 4 à 6 semaines\n• **Business** — 6 à 8 semaines\n• **Sur Mesure** — Planning personnalisé\n\nChaque déploiement inclut audit, build, tests et formation.',
+            agents: 'Notre écosystème OpenClaw comprend **33 agents IA** organisés en 9 groupes :\n\nNoyau, Perception, Création, Exécution, Sécurité, Data, Communication, Optimisation et Spécialistes.\n\nNATHAN orchestre l\'ensemble. Chaque agent est spécialisé.',
+            security: 'La sécurité est au cœur de NexusAI :\n\n• Chiffrement SSL 256-bit\n• Conformité RGPD native\n• NDA disponible sur demande\n• Agent SENTINEL dédié à la sécurité\n• Souveraineté totale de vos données\n• Code source livré = vous êtes propriétaire'
+        };
+
+        var patterns = [
+            { regex: /tarif|prix|co[uû]t|plan|formule|combien/i, key: 'pricing' },
+            { regex: /garant|rembours|risque|30.*jour/i, key: 'guarantee' },
+            { regex: /d[eé]mo|voir|essai|test|god.*view|simulat/i, key: 'demo' },
+            { regex: /d[eé]lai|temps|dur[eé]e|combien.*temps|livr/i, key: 'delay' },
+            { regex: /agent|openclaw|nathan|[eé]quipe|crew/i, key: 'agents' },
+            { regex: /s[eé]curit|rgpd|donn[eé]e|confiden|nda|ssl/i, key: 'security' }
+        ];
+
+        function addMsg(text, type) {
+            var el = document.createElement('div');
+            el.className = 'nxa-msg ' + type;
+            el.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+            body.appendChild(el);
+            body.scrollTop = body.scrollHeight;
+        }
+
+        function showTyping() {
+            var el = document.createElement('div');
+            el.className = 'nxa-typing';
+            el.id = 'nxaTyping';
+            el.innerHTML = '<span></span><span></span><span></span>';
+            body.appendChild(el);
+            body.scrollTop = body.scrollHeight;
+        }
+
+        function removeTyping() {
+            var t = document.getElementById('nxaTyping');
+            if (t) t.remove();
+        }
+
+        function getResponse(text) {
+            for (var i = 0; i < patterns.length; i++) {
+                if (patterns[i].regex.test(text)) return kb[patterns[i].key];
+            }
+            return 'Merci pour votre question ! Pour une réponse personnalisée, je vous invite à réserver un **appel stratégique gratuit** avec un de nos architectes IA. Ils pourront analyser votre besoin en détail.';
+        }
+
+        function updateQuickReplies(lastKey) {
+            var defaults = [
+                {q:'pricing',l:'Tarifs'}, {q:'guarantee',l:'Garantie'},
+                {q:'demo',l:'Voir une démo'}, {q:'delay',l:'Délai'}
+            ];
+            var contextual = {
+                pricing: [{q:'guarantee',l:'Et la garantie ?'},{q:'demo',l:'Voir une démo'},{q:'delay',l:'Délai de livraison'}],
+                guarantee: [{q:'pricing',l:'Voir les tarifs'},{q:'demo',l:'Voir une démo'},{q:'security',l:'Sécurité'}],
+                demo: [{q:'pricing',l:'Les tarifs'},{q:'agents',l:'Les agents'},{q:'delay',l:'Délai'}],
+                delay: [{q:'pricing',l:'Les tarifs'},{q:'guarantee',l:'Garantie'},{q:'agents',l:'Les agents'}],
+                agents: [{q:'demo',l:'Voir une démo'},{q:'pricing',l:'Les tarifs'},{q:'security',l:'Sécurité'}],
+                security: [{q:'guarantee',l:'Garantie'},{q:'pricing',l:'Les tarifs'},{q:'agents',l:'Les agents'}]
+            };
+            var items = contextual[lastKey] || defaults;
+            quickReplies.innerHTML = '';
+            items.forEach(function(item) {
+                var btn = document.createElement('button');
+                btn.className = 'nxa-quick-btn';
+                btn.dataset.q = item.q;
+                btn.textContent = item.l;
+                btn.addEventListener('click', function() { handleQuick(item.q); });
+                quickReplies.appendChild(btn);
+            });
+        }
+
+        function handleQuick(key) {
+            var labels = {pricing:'Quels sont vos tarifs ?',guarantee:'Comment fonctionne la garantie ?',demo:'Je veux voir une démo',delay:'Quel est le délai ?',agents:'Parlez-moi des agents',security:'Quid de la sécurité ?'};
+            addMsg(labels[key] || key, 'user');
+            showTyping();
+            setTimeout(function() {
+                removeTyping();
+                addMsg(kb[key] || 'Je n\'ai pas cette info.', 'bot');
+                updateQuickReplies(key);
+                // Auto-redirect for demo
+                if (key === 'demo') {
+                    setTimeout(function() {
+                        addMsg('Je vous ouvre la God View...', 'bot');
+                    }, 1500);
+                }
+            }, 800 + Math.random() * 600);
+        }
+
+        function handleSend() {
+            var text = input.value.trim();
+            if (!text) return;
+            addMsg(text, 'user');
+            input.value = '';
+            showTyping();
+
+            var response = getResponse(text);
+            var matchedKey = null;
+            for (var i = 0; i < patterns.length; i++) {
+                if (patterns[i].regex.test(text)) { matchedKey = patterns[i].key; break; }
+            }
+
+            setTimeout(function() {
+                removeTyping();
+                addMsg(response, 'bot');
+                if (matchedKey) updateQuickReplies(matchedKey);
+            }, 800 + Math.random() * 800);
+        }
+
+        sendBtn.addEventListener('click', handleSend);
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') handleSend();
+        });
+
+        // Quick reply buttons (initial)
+        document.querySelectorAll('.nxa-quick-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() { handleQuick(btn.dataset.q); });
+        });
+    })();
+
+    // ════════════════════════════════════════════════
+    // ── 3D AGENT STARFIELD BACKGROUND ──
+    // ════════════════════════════════════════════════
+    (function() {
+        if (typeof THREE === 'undefined') return;
+        var canvas = document.getElementById('agentStarfield');
+        if (!canvas) return;
+
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 500);
+        camera.position.set(0, 0, 80);
+
+        var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: false, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+        renderer.setClearColor(0x000000, 0);
+
+        // Glow texture
+        var cv = document.createElement('canvas');
+        cv.width = cv.height = 64;
+        var ctx = cv.getContext('2d');
+        var g = ctx.createRadialGradient(32,32,0,32,32,32);
+        g.addColorStop(0, 'rgba(99,102,241,0.8)');
+        g.addColorStop(0.4, 'rgba(99,102,241,0.15)');
+        g.addColorStop(1, 'rgba(99,102,241,0)');
+        ctx.fillStyle = g;
+        ctx.fillRect(0,0,64,64);
+        var glowTex = new THREE.CanvasTexture(cv);
+
+        var group = new THREE.Group();
+
+        // 400 dust particles
+        var dustParticles = [];
+        for (var i = 0; i < 400; i++) {
+            var mat = new THREE.SpriteMaterial({
+                map: glowTex, transparent: true, opacity: 0.15 + Math.random() * 0.15,
+                blending: THREE.AdditiveBlending, color: 0x6366f1
+            });
+            var sprite = new THREE.Sprite(mat);
+            var px = (Math.random() - 0.5) * 200;
+            var py = (Math.random() - 0.5) * 200;
+            var pz = (Math.random() - 0.5) * 50;
+            sprite.position.set(px, py, pz);
+            var sz = 0.15 + Math.random() * 0.3;
+            sprite.scale.set(sz, sz, 1);
+            group.add(sprite);
+            dustParticles.push({
+                sprite: sprite,
+                baseX: px, baseY: py,
+                driftX: (Math.random() - 0.5) * 0.003,
+                driftY: (Math.random() - 0.5) * 0.002,
+                phase: Math.random() * Math.PI * 2,
+                speed: 0.2 + Math.random() * 0.3
+            });
+        }
+
+        // 23 Agent nodes
+        var agentNames = ['NATHAN','VIZION','SCOUT','LENS','SPARK','CREA','SCRIPT','VISUAL','EDITOR',
+            'FORGE','RUNNER','PIPELINE','SENTINEL','CORTEX','MEMORY','VECTOR','BRIDGE','RELAY',
+            'TUNER','PROFILER','LINGUIST','ANALYST','ORACLE'];
+        var agentNodes = [];
+
+        agentNames.forEach(function(name, idx) {
+            var ax = (Math.random() - 0.5) * 160;
+            var ay = (Math.random() - 0.5) * 160;
+            var az = (Math.random() - 0.5) * 40;
+
+            // Core sphere
+            var geo = new THREE.SphereGeometry(0.15, 8, 8);
+            var meshMat = new THREE.MeshBasicMaterial({ color: idx < 5 ? 0xa78bfa : 0x6366f1 });
+            var mesh = new THREE.Mesh(geo, meshMat);
+            mesh.position.set(ax, ay, az);
+            group.add(mesh);
+
+            // Glow sprite
+            var sMat = new THREE.SpriteMaterial({
+                map: glowTex, transparent: true, opacity: idx < 5 ? 0.5 : 0.3,
+                blending: THREE.AdditiveBlending, color: idx < 5 ? 0xa78bfa : 0x6366f1
+            });
+            var spr = new THREE.Sprite(sMat);
+            spr.position.copy(mesh.position);
+            var glowSize = 1.5 + Math.random() * 1.5;
+            spr.scale.set(glowSize, glowSize, 1);
+            group.add(spr);
+
+            agentNodes.push({
+                mesh: mesh, glow: spr,
+                baseX: ax, baseY: ay, baseZ: az,
+                phase: Math.random() * Math.PI * 2,
+                speed: 0.1 + Math.random() * 0.2,
+                driftX: (Math.random() - 0.5) * 0.005,
+                driftY: (Math.random() - 0.5) * 0.005
+            });
+        });
+
+        // Constellation lines between close agents
+        var constellationLines = [];
+        for (var a = 0; a < agentNodes.length; a++) {
+            for (var b = a + 1; b < agentNodes.length; b++) {
+                var dist = agentNodes[a].mesh.position.distanceTo(agentNodes[b].mesh.position);
+                if (dist < 40) {
+                    var lineGeo = new THREE.BufferGeometry();
+                    var positions = new Float32Array(6);
+                    lineGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                    var lineMat = new THREE.LineBasicMaterial({
+                        color: 0x6366f1, transparent: true,
+                        opacity: Math.max(0.02, 0.08 * (1 - dist / 40)),
+                        blending: THREE.AdditiveBlending
+                    });
+                    var line = new THREE.Line(lineGeo, lineMat);
+                    group.add(line);
+                    constellationLines.push({ line: line, a: agentNodes[a], b: agentNodes[b], baseDist: dist, mat: lineMat });
+                }
+            }
+        }
+
+        scene.add(group);
+
+        var mouseX = 0, mouseY = 0, targetMX = 0, targetMY = 0;
+        document.addEventListener('mousemove', function(e) {
+            targetMX = (e.clientX / window.innerWidth - 0.5) * 6;
+            targetMY = (e.clientY / window.innerHeight - 0.5) * 4;
+        });
+
+        var clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            var t = clock.getElapsedTime();
+
+            // Mouse parallax
+            mouseX += (targetMX - mouseX) * 0.02;
+            mouseY += (targetMY - mouseY) * 0.02;
+            camera.position.x = mouseX;
+            camera.position.y = -mouseY;
+
+            // Scroll awareness
+            var scrollY = window.scrollY || 0;
+            camera.position.y += scrollY * 0.02;
+
+            camera.lookAt(mouseX * 0.5, -mouseY * 0.5 + scrollY * 0.01, 0);
+
+            // Animate dust
+            dustParticles.forEach(function(p) {
+                p.sprite.position.x = p.baseX + Math.sin(t * p.speed + p.phase) * 2;
+                p.sprite.position.y = p.baseY + Math.cos(t * p.speed * 0.7 + p.phase) * 1.5;
+            });
+
+            // Animate agent nodes
+            agentNodes.forEach(function(n) {
+                var nx = n.baseX + Math.sin(t * n.speed + n.phase) * 1.5;
+                var ny = n.baseY + Math.cos(t * n.speed * 0.8 + n.phase) * 1.2;
+                var nz = n.baseZ + Math.sin(t * n.speed * 0.5 + n.phase * 2) * 0.8;
+                n.mesh.position.set(nx, ny, nz);
+                n.glow.position.set(nx, ny, nz);
+            });
+
+            // Update constellation lines
+            constellationLines.forEach(function(c) {
+                var posArr = c.line.geometry.attributes.position.array;
+                posArr[0] = c.a.mesh.position.x;
+                posArr[1] = c.a.mesh.position.y;
+                posArr[2] = c.a.mesh.position.z;
+                posArr[3] = c.b.mesh.position.x;
+                posArr[4] = c.b.mesh.position.y;
+                posArr[5] = c.b.mesh.position.z;
+                c.line.geometry.attributes.position.needsUpdate = true;
+                c.mat.opacity = Math.max(0.01, 0.06 * (1 - c.a.mesh.position.distanceTo(c.b.mesh.position) / 40)) * (0.7 + 0.3 * Math.sin(t * 0.5));
+            });
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', function() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    })();
     </script>
 
 </body>
