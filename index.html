@@ -2481,6 +2481,106 @@
 
         .orbit-item:hover .orbit-tooltip { opacity: 1; }
 
+        .orbit-item { cursor: pointer; }
+        .orbit-item.expanded {
+            z-index: 100;
+            transform: scale(1.3);
+        }
+        .orbit-detail-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            z-index: 10001;
+            background: linear-gradient(145deg, #0c0c12, #1a1a2e);
+            border: 1px solid rgba(99,102,241,0.4);
+            border-radius: 20px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 400px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 30px 80px rgba(99,102,241,0.25);
+        }
+        .orbit-detail-panel.active {
+            opacity: 1;
+            pointer-events: all;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .orbit-detail-panel .detail-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #818cf8;
+            margin-bottom: 0.5rem;
+        }
+        .orbit-detail-panel .detail-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.3rem;
+        }
+        .orbit-detail-panel .detail-acronym {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 1rem;
+        }
+        .orbit-detail-panel .detail-desc {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .orbit-detail-panel .detail-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+        .orbit-detail-panel .detail-tag {
+            padding: 0.2rem 0.6rem;
+            border-radius: 100px;
+            background: rgba(99,102,241,0.15);
+            border: 1px solid rgba(99,102,241,0.25);
+            font-size: 0.7rem;
+            color: #a5b4fc;
+        }
+        .orbit-detail-panel .detail-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        .orbit-detail-panel .detail-close:hover {
+            background: rgba(255,255,255,0.15);
+        }
+        .orbit-detail-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: rgba(0,0,0,0.5);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .orbit-detail-backdrop.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
         /* ══════════════════════════════════════════════════
            VISUAL GAME CHANGERS — Section upgrades
            ══════════════════════════════════════════════════ */
@@ -2519,6 +2619,139 @@
         }
         .domain-card:hover::after { opacity: 1; }
 
+        .domain-card { cursor: pointer; }
+        .domain-card .domain-explore {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 0.8rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--gradient-1);
+            opacity: 0;
+            transform: translateY(8px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .domain-card:hover .domain-explore {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Domain 3D Modal ── */
+        .domain-3d-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .domain-3d-modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .domain-3d-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+        }
+        .domain-3d-content {
+            position: relative;
+            width: 90%;
+            max-width: 800px;
+            height: 70vh;
+            max-height: 600px;
+            background: linear-gradient(145deg, #0c0c12, #1a1a2e);
+            border: 1px solid rgba(99,102,241,0.3);
+            border-radius: 24px;
+            overflow: hidden;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 40px 120px rgba(99,102,241,0.2);
+        }
+        .domain-3d-modal.active .domain-3d-content {
+            transform: scale(1) translateY(0);
+        }
+        .domain-3d-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2;
+            background: linear-gradient(180deg, rgba(12,12,18,0.9), transparent);
+        }
+        .domain-3d-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+        }
+        .domain-3d-subtitle {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+            margin-top: 0.2rem;
+        }
+        .domain-3d-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        .domain-3d-close:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.4);
+        }
+        .domain-3d-canvas {
+            width: 100%;
+            height: 100%;
+        }
+        .domain-3d-legend {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            z-index: 2;
+        }
+        .domain-3d-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.6);
+        }
+        .domain-3d-legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .domain-3d-hint {
+            position: absolute;
+            bottom: 4rem;
+            right: 2rem;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.3);
+            z-index: 2;
+        }
+
         /* ── 2. Process cards — connecting line + number glow ── */
         .process-grid { position: relative; }
         .process-grid::before {
@@ -2542,6 +2775,83 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             filter: drop-shadow(0 0 20px rgba(99,102,241,0.3));
+        }
+
+        /* ── Process section — enhanced timeline ── */
+        #processus {
+            position: relative;
+            overflow: hidden;
+        }
+        #processus .process-bg-canvas {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .process-timeline {
+            position: relative;
+            margin-top: 4rem;
+        }
+        .process-timeline::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: rgba(99,102,241,0.1);
+            border-radius: 2px;
+        }
+        .process-timeline-progress {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gradient-1), var(--gradient-2), var(--gradient-3));
+            border-radius: 2px;
+            transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 0 15px rgba(99,102,241,0.4);
+        }
+        .process-timeline-progress.animated { width: 100%; }
+        .process-card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(99,102,241,0.08);
+        }
+        .process-card:hover {
+            border-color: rgba(99,102,241,0.2);
+            background: rgba(255,255,255,0.06);
+        }
+        .process-duration {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            margin-top: 1rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 100px;
+            background: rgba(99,102,241,0.08);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #818cf8;
+        }
+        .process-dot {
+            position: absolute;
+            top: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            border: 3px solid white;
+            z-index: 2;
+            box-shadow: 0 0 0 4px rgba(99,102,241,0.15);
+            transition: all 0.4s;
+        }
+        .process-card:hover .process-dot {
+            box-shadow: 0 0 0 8px rgba(99,102,241,0.2), 0 0 20px rgba(99,102,241,0.3);
+            transform: translateX(-50%) scale(1.2);
         }
 
         /* ── 3. Stats section — animated gradient border ── */
@@ -3085,16 +3395,14 @@
             <span class="title-line" data-line="1">artificielle</span>
             <span class="title-line gradient-text" data-line="2">à votre échelle.</span>
         </h1>
-        <p class="hero-subtitle" id="heroSubtitle">Des écosystèmes IA complets, conçus sur-mesure pour transformer chaque domaine de votre activité. De l'audit à la mise en production.</p>
+        <p class="hero-subtitle" id="heroSubtitle">Déployez un écosystème complet d'agents IA autonomes, conçu sur-mesure pour votre métier. Opérationnel en 6 semaines, avec garantie de résultat ou remboursement intégral.</p>
         <div class="hero-buttons">
             <a href="#contact" class="btn-primary magnetic-btn">Découvrir nos solutions →</a>
             <a href="#domaines" class="btn-secondary magnetic-btn">Explorer les domaines</a>
         </div>
 
         <div class="hero-visual">
-            <div id="neural-canvas">
-                <span class="canvas-overlay-label">Écosystème IA — Simulation en temps réel</span>
-            </div>
+            <div id="neural-canvas"></div>
         </div>
     </section>
 
@@ -3139,53 +3447,59 @@
         </div>
 
         <div class="domains-grid">
-            <div class="domain-card">
+            <div class="domain-card" data-domain-key="sante">
                 <div class="domain-icon">
                     <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_pk5mpw6j.json" background="transparent" speed="1" loop autoplay></lottie-player>
                 </div>
                 <h3>Santé & Médical</h3>
                 <p>Diagnostic assisté, analyse d'imagerie, gestion de parcours patients et prédiction épidémiologique.</p>
                 <span class="domain-tag">12 agents IA</span>
+                <div class="domain-explore">Explorer l'écosystème <span>→</span></div>
             </div>
-            <div class="domain-card">
+            <div class="domain-card" data-domain-key="finance">
                 <div class="domain-icon">
                     <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_06a6pf9i.json" background="transparent" speed="1" loop autoplay></lottie-player>
                 </div>
                 <h3>Finance & Assurance</h3>
                 <p>Détection de fraude, scoring crédit, trading algorithmique et conformité réglementaire automatisée.</p>
                 <span class="domain-tag">9 agents IA</span>
+                <div class="domain-explore">Explorer l'écosystème <span>→</span></div>
             </div>
-            <div class="domain-card">
+            <div class="domain-card" data-domain-key="ecommerce">
                 <div class="domain-icon">
                     <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_ysas4vcp.json" background="transparent" speed="1" loop autoplay></lottie-player>
                 </div>
                 <h3>E-Commerce & Retail</h3>
                 <p>Recommandations personnalisées, pricing dynamique, gestion de stock prédictive et chatbots intelligents.</p>
                 <span class="domain-tag">15 agents IA</span>
+                <div class="domain-explore">Explorer l'écosystème <span>→</span></div>
             </div>
-            <div class="domain-card">
+            <div class="domain-card" data-domain-key="education">
                 <div class="domain-icon">
                     <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_swnrn2oy.json" background="transparent" speed="1" loop autoplay></lottie-player>
                 </div>
                 <h3>Éducation & Formation</h3>
                 <p>Tutorat adaptatif, création de contenu, évaluation automatique et parcours d'apprentissage sur-mesure.</p>
                 <span class="domain-tag">8 agents IA</span>
+                <div class="domain-explore">Explorer l'écosystème <span>→</span></div>
             </div>
-            <div class="domain-card">
+            <div class="domain-card" data-domain-key="immobilier">
                 <div class="domain-icon">
                     <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_iorpbol0.json" background="transparent" speed="1" loop autoplay></lottie-player>
                 </div>
                 <h3>Immobilier & Construction</h3>
                 <p>Estimation automatisée, analyse de marché, gestion locative intelligente et optimisation énergétique.</p>
                 <span class="domain-tag">7 agents IA</span>
+                <div class="domain-explore">Explorer l'écosystème <span>→</span></div>
             </div>
-            <div class="domain-card">
+            <div class="domain-card" data-domain-key="juridique">
                 <div class="domain-icon">
                     <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_gkgqj2yq.json" background="transparent" speed="1" loop autoplay></lottie-player>
                 </div>
                 <h3>Juridique & Compliance</h3>
                 <p>Analyse de contrats, recherche jurisprudentielle, veille réglementaire et rédaction assistée.</p>
                 <span class="domain-tag">6 agents IA</span>
+                <div class="domain-explore">Explorer l'écosystème <span>→</span></div>
             </div>
         </div>
     </section>
@@ -3193,7 +3507,7 @@
     <!-- Ecosystem Configurator -->
     <section class="configurator-section" id="configurateur">
         <div class="reveal">
-            <div class="section-label">Configurateur</div>
+            <div class="section-label">Configurateur — Simulation en temps réel</div>
             <h2 class="section-title">Visualisez votre écosystème.</h2>
             <p class="section-desc">Sélectionnez votre domaine et voyez les agents IA se déployer en temps réel.</p>
             <div class="animated-line"></div>
@@ -3348,6 +3662,7 @@
 
     <!-- Process Section -->
     <section id="processus">
+        <canvas class="process-bg-canvas"></canvas>
         <div class="reveal">
             <div class="section-label">Notre processus</div>
             <h2 class="section-title">De l'idée au déploiement en 3 étapes.</h2>
@@ -3355,21 +3670,39 @@
             <div class="animated-line"></div>
         </div>
 
-        <div class="process-grid">
-            <div class="process-card">
-                <div class="process-number">01</div>
-                <h3>Audit & Cartographie</h3>
-                <p>Analyse complète de vos processus, données et infrastructure pour identifier les cas d'usage à fort impact.</p>
-            </div>
-            <div class="process-card">
-                <div class="process-number">02</div>
-                <h3>Architecture & Build</h3>
-                <p>Conception et développement de votre écosystème IA sur-mesure avec agents, modèles et interfaces intégrés.</p>
-            </div>
-            <div class="process-card">
-                <div class="process-number">03</div>
-                <h3>Déploiement & Scale</h3>
-                <p>Mise en production, formation des équipes, monitoring continu et optimisation itérative des performances.</p>
+        <div class="process-timeline">
+            <div class="process-timeline-progress"></div>
+            <div class="process-grid">
+                <div class="process-card">
+                    <div class="process-dot"></div>
+                    <div class="process-number">01</div>
+                    <h3>Audit & Cartographie</h3>
+                    <p>Analyse complète de vos processus, données et infrastructure pour identifier les cas d'usage à fort impact.</p>
+                    <div class="process-duration">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        1-2 semaines
+                    </div>
+                </div>
+                <div class="process-card">
+                    <div class="process-dot"></div>
+                    <div class="process-number">02</div>
+                    <h3>Architecture & Build</h3>
+                    <p>Conception et développement de votre écosystème IA sur-mesure avec agents, modèles et interfaces intégrés.</p>
+                    <div class="process-duration">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        3-4 semaines
+                    </div>
+                </div>
+                <div class="process-card">
+                    <div class="process-dot"></div>
+                    <div class="process-number">03</div>
+                    <h3>Déploiement & Scale</h3>
+                    <p>Mise en production, formation des équipes, monitoring continu et optimisation itérative des performances.</p>
+                    <div class="process-duration">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        1-2 semaines
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -5876,6 +6209,534 @@
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
+    })();
+    </script>
+
+    <!-- Domain 3D Modal -->
+    <div class="domain-3d-modal" id="domain3dModal">
+        <div class="domain-3d-backdrop" id="domain3dBackdrop"></div>
+        <div class="domain-3d-content">
+            <div class="domain-3d-header">
+                <div>
+                    <div class="domain-3d-title" id="domain3dTitle"></div>
+                    <div class="domain-3d-subtitle" id="domain3dSubtitle"></div>
+                </div>
+                <button class="domain-3d-close" id="domain3dClose">&times;</button>
+            </div>
+            <canvas class="domain-3d-canvas" id="domain3dCanvas"></canvas>
+            <div class="domain-3d-legend" id="domain3dLegend"></div>
+            <div class="domain-3d-hint">Cliquez et faites glisser pour pivoter</div>
+        </div>
+    </div>
+
+    <!-- Orbit Detail Panel -->
+    <div class="orbit-detail-backdrop" id="orbitDetailBackdrop"></div>
+    <div class="orbit-detail-panel" id="orbitDetailPanel">
+        <button class="detail-close" id="orbitDetailClose">&times;</button>
+        <div class="detail-label" id="orbitDetailLabel"></div>
+        <div class="detail-title" id="orbitDetailTitle"></div>
+        <div class="detail-acronym" id="orbitDetailAcronym"></div>
+        <div class="detail-desc" id="orbitDetailDesc"></div>
+        <div class="detail-tags" id="orbitDetailTags"></div>
+    </div>
+
+    <script>
+    // ════════════════════════════════════════════════
+    // ── STEP 2: Domain 3D Agent Network ──
+    // ════════════════════════════════════════════════
+    (function() {
+        const modal = document.getElementById('domain3dModal');
+        const canvas = document.getElementById('domain3dCanvas');
+        if (!modal || !canvas) return;
+
+        const domainAgentData = {
+            sante: {
+                title: 'Santé & Médical',
+                subtitle: 'Réseau de 12 agents autonomes interconnectés',
+                color: '#22d3ee',
+                agents: [
+                    { name: 'DiagAI', role: 'Diagnostic' },
+                    { name: 'ImageScan', role: 'Imagerie' },
+                    { name: 'PathGuide', role: 'Parcours patient' },
+                    { name: 'PredEpi', role: 'Épidémiologie' },
+                    { name: 'DrugWatch', role: 'Pharmacovigilance' },
+                    { name: 'LabAssist', role: 'Labo auto.' },
+                    { name: 'NurseBot', role: 'Aide soignant' },
+                    { name: 'BioTrack', role: 'Biomarqueurs' },
+                    { name: 'TriageAI', role: 'Triage urgences' },
+                    { name: 'GenomAI', role: 'Génomique' },
+                    { name: 'RehabPlan', role: 'Rééducation' },
+                    { name: 'MedRecord', role: 'Dossier médical' }
+                ]
+            },
+            finance: {
+                title: 'Finance & Assurance',
+                subtitle: 'Réseau de 9 agents autonomes interconnectés',
+                color: '#f59e0b',
+                agents: [
+                    { name: 'FraudShield', role: 'Anti-fraude' },
+                    { name: 'CreditScore', role: 'Scoring' },
+                    { name: 'AlgoTrade', role: 'Trading' },
+                    { name: 'ComplianceBot', role: 'Conformité' },
+                    { name: 'RiskAssess', role: 'Risques' },
+                    { name: 'ClaimAI', role: 'Sinistres' },
+                    { name: 'PortfolioOpt', role: 'Portefeuille' },
+                    { name: 'AMLGuard', role: 'Anti-blanchiment' },
+                    { name: 'InsurPrice', role: 'Tarification' }
+                ]
+            },
+            ecommerce: {
+                title: 'E-Commerce & Retail',
+                subtitle: 'Réseau de 15 agents autonomes interconnectés',
+                color: '#10b981',
+                agents: [
+                    { name: 'RecoEngine', role: 'Recommandation' },
+                    { name: 'PriceBot', role: 'Pricing' },
+                    { name: 'StockPredict', role: 'Stock' },
+                    { name: 'ChatAssist', role: 'Support' },
+                    { name: 'VisualSearch', role: 'Recherche visuelle' },
+                    { name: 'ReviewSense', role: 'Avis' },
+                    { name: 'MailCraft', role: 'Emails' },
+                    { name: 'ChurnGuard', role: 'Anti-churn' },
+                    { name: 'ABTest', role: 'Tests A/B' },
+                    { name: 'CartOptim', role: 'Panier' },
+                    { name: 'SEOBot', role: 'SEO' },
+                    { name: 'PushSmart', role: 'Notifs' },
+                    { name: 'TrendSpy', role: 'Tendances' },
+                    { name: 'TagAuto', role: 'Tagging' },
+                    { name: 'DeliverAI', role: 'Livraison' }
+                ]
+            },
+            education: {
+                title: 'Éducation & Formation',
+                subtitle: 'Réseau de 8 agents autonomes interconnectés',
+                color: '#8b5cf6',
+                agents: [
+                    { name: 'TutorAI', role: 'Tutorat' },
+                    { name: 'ContentGen', role: 'Contenu' },
+                    { name: 'AutoGrade', role: 'Évaluation' },
+                    { name: 'PathFinder', role: 'Parcours' },
+                    { name: 'ProgressTrack', role: 'Suivi' },
+                    { name: 'LangCoach', role: 'Langues' },
+                    { name: 'QuizMaker', role: 'Quiz' },
+                    { name: 'GroupOptim', role: 'Groupes' }
+                ]
+            },
+            immobilier: {
+                title: 'Immobilier & Construction',
+                subtitle: 'Réseau de 7 agents autonomes interconnectés',
+                color: '#ef4444',
+                agents: [
+                    { name: 'ValuEngine', role: 'Estimation' },
+                    { name: 'MarketPulse', role: 'Marché' },
+                    { name: 'TenantMatch', role: 'Locataire' },
+                    { name: 'EnergyOpt', role: 'Énergie' },
+                    { name: 'LeaseBot', role: 'Baux' },
+                    { name: 'BuildPredict', role: 'Chantier' },
+                    { name: 'VisitVR', role: 'Visite VR' }
+                ]
+            },
+            juridique: {
+                title: 'Juridique & Compliance',
+                subtitle: 'Réseau de 6 agents autonomes interconnectés',
+                color: '#ec4899',
+                agents: [
+                    { name: 'ContractAI', role: 'Contrats' },
+                    { name: 'JurisSearch', role: 'Jurisprudence' },
+                    { name: 'RegWatch', role: 'Veille régl.' },
+                    { name: 'DraftAssist', role: 'Rédaction' },
+                    { name: 'CompliBot', role: 'Compliance' },
+                    { name: 'CasePredict', role: 'Prédiction' }
+                ]
+            }
+        };
+
+        let d3Scene, d3Camera, d3Renderer, d3AnimId;
+        let isDragging = false, prevMouse = { x: 0, y: 0 };
+        let rotX = 0, rotY = 0, targetRotX = 0, targetRotY = 0;
+        let agentGroup;
+
+        function openDomain3D(key) {
+            const data = domainAgentData[key];
+            if (!data) return;
+
+            document.getElementById('domain3dTitle').textContent = data.title;
+            document.getElementById('domain3dSubtitle').textContent = data.subtitle;
+
+            // Legend
+            const legend = document.getElementById('domain3dLegend');
+            legend.innerHTML = '';
+            const roles = data.agents.slice(0, 5);
+            roles.forEach(a => {
+                const item = document.createElement('div');
+                item.className = 'domain-3d-legend-item';
+                item.innerHTML = '<div class="domain-3d-legend-dot" style="background:' + data.color + '"></div>' + a.name + ' — ' + a.role;
+                legend.appendChild(item);
+            });
+            if (data.agents.length > 5) {
+                const more = document.createElement('div');
+                more.className = 'domain-3d-legend-item';
+                more.textContent = '+' + (data.agents.length - 5) + ' agents';
+                legend.appendChild(more);
+            }
+
+            // Setup Three.js
+            if (d3Renderer) {
+                d3Renderer.dispose();
+                cancelAnimationFrame(d3AnimId);
+            }
+
+            d3Scene = new THREE.Scene();
+            d3Camera = new THREE.PerspectiveCamera(60, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+            d3Camera.position.z = 8;
+
+            d3Renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+            d3Renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+            d3Renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            agentGroup = new THREE.Group();
+            d3Scene.add(agentGroup);
+
+            const agentCount = data.agents.length;
+            const nodePositions = [];
+            const colorObj = new THREE.Color(data.color);
+
+            // Create agent nodes in 3D sphere distribution
+            data.agents.forEach((agent, i) => {
+                var phi = Math.acos(-1 + (2 * i + 1) / agentCount);
+                var theta = Math.sqrt(agentCount * Math.PI) * phi;
+                var r = 3;
+                var x = r * Math.cos(theta) * Math.sin(phi);
+                var y = r * Math.sin(theta) * Math.sin(phi);
+                var z = r * Math.cos(phi);
+                nodePositions.push(new THREE.Vector3(x, y, z));
+
+                // Node sphere
+                var geo = new THREE.SphereGeometry(0.18, 16, 16);
+                var mat = new THREE.MeshBasicMaterial({ color: colorObj.clone() });
+                var mesh = new THREE.Mesh(geo, mat);
+                mesh.position.set(x, y, z);
+                agentGroup.add(mesh);
+
+                // Glow
+                var glowGeo = new THREE.SphereGeometry(0.3, 16, 16);
+                var glowMat = new THREE.MeshBasicMaterial({ color: colorObj.clone(), transparent: true, opacity: 0.15 });
+                var glow = new THREE.Mesh(glowGeo, glowMat);
+                glow.position.set(x, y, z);
+                agentGroup.add(glow);
+
+                // Label sprite
+                var labelCanvas = document.createElement('canvas');
+                labelCanvas.width = 256;
+                labelCanvas.height = 64;
+                var ctx = labelCanvas.getContext('2d');
+                ctx.font = 'bold 20px Space Grotesk, sans-serif';
+                ctx.fillStyle = '#ffffff';
+                ctx.textAlign = 'center';
+                ctx.fillText(agent.name, 128, 25);
+                ctx.font = '14px Inter, sans-serif';
+                ctx.fillStyle = 'rgba(255,255,255,0.5)';
+                ctx.fillText(agent.role, 128, 48);
+                var texture = new THREE.CanvasTexture(labelCanvas);
+                var spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true });
+                var sprite = new THREE.Sprite(spriteMat);
+                sprite.position.set(x, y + 0.45, z);
+                sprite.scale.set(1.2, 0.3, 1);
+                agentGroup.add(sprite);
+            });
+
+            // Connection lines between nearby agents
+            var lineMat = new THREE.LineBasicMaterial({ color: colorObj.clone(), transparent: true, opacity: 0.15 });
+            for (var i = 0; i < nodePositions.length; i++) {
+                for (var j = i + 1; j < nodePositions.length; j++) {
+                    if (nodePositions[i].distanceTo(nodePositions[j]) < 4) {
+                        var lineGeo = new THREE.BufferGeometry().setFromPoints([nodePositions[i], nodePositions[j]]);
+                        agentGroup.add(new THREE.Line(lineGeo, lineMat));
+                    }
+                }
+            }
+
+            // Central hub
+            var hubGeo = new THREE.SphereGeometry(0.35, 32, 32);
+            var hubMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+            var hub = new THREE.Mesh(hubGeo, hubMat);
+            agentGroup.add(hub);
+            var hubGlow = new THREE.SphereGeometry(0.6, 32, 32);
+            var hubGlowMat = new THREE.MeshBasicMaterial({ color: colorObj.clone(), transparent: true, opacity: 0.1 });
+            agentGroup.add(new THREE.Mesh(hubGlow, hubGlowMat));
+
+            // Connect all to center
+            nodePositions.forEach(function(pos) {
+                var lg = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0), pos]);
+                var lm = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.06 });
+                agentGroup.add(new THREE.Line(lg, lm));
+            });
+
+            rotX = 0; rotY = 0; targetRotX = 0; targetRotY = 0;
+
+            function animate() {
+                d3AnimId = requestAnimationFrame(animate);
+                targetRotY += 0.003;
+                rotX += (targetRotX - rotX) * 0.05;
+                rotY += (targetRotY - rotY) * 0.05;
+                agentGroup.rotation.x = rotX;
+                agentGroup.rotation.y = rotY;
+                d3Renderer.render(d3Scene, d3Camera);
+            }
+            animate();
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDomain3D() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            if (d3AnimId) cancelAnimationFrame(d3AnimId);
+        }
+
+        // Mouse drag rotation
+        canvas.addEventListener('mousedown', function(e) {
+            isDragging = true;
+            prevMouse = { x: e.clientX, y: e.clientY };
+        });
+        canvas.addEventListener('mousemove', function(e) {
+            if (!isDragging) return;
+            var dx = e.clientX - prevMouse.x;
+            var dy = e.clientY - prevMouse.y;
+            targetRotY += dx * 0.008;
+            targetRotX += dy * 0.008;
+            prevMouse = { x: e.clientX, y: e.clientY };
+        });
+        canvas.addEventListener('mouseup', function() { isDragging = false; });
+        canvas.addEventListener('mouseleave', function() { isDragging = false; });
+
+        // Touch drag
+        canvas.addEventListener('touchstart', function(e) {
+            isDragging = true;
+            prevMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        });
+        canvas.addEventListener('touchmove', function(e) {
+            if (!isDragging) return;
+            var dx = e.touches[0].clientX - prevMouse.x;
+            var dy = e.touches[0].clientY - prevMouse.y;
+            targetRotY += dx * 0.008;
+            targetRotX += dy * 0.008;
+            prevMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        });
+        canvas.addEventListener('touchend', function() { isDragging = false; });
+
+        document.getElementById('domain3dClose').addEventListener('click', closeDomain3D);
+        document.getElementById('domain3dBackdrop').addEventListener('click', closeDomain3D);
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeDomain3D();
+        });
+
+        // Click handlers on domain cards
+        document.querySelectorAll('.domain-card[data-domain-key]').forEach(function(card) {
+            card.addEventListener('click', function() {
+                openDomain3D(card.dataset.domainKey);
+            });
+        });
+
+        // Resize handler
+        window.addEventListener('resize', function() {
+            if (d3Renderer && modal.classList.contains('active')) {
+                d3Camera.aspect = canvas.clientWidth / canvas.clientHeight;
+                d3Camera.updateProjectionMatrix();
+                d3Renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+            }
+        });
+    })();
+
+    // ════════════════════════════════════════════════
+    // ── STEP 4: Tech Stack Orbit — Click to expand ──
+    // ════════════════════════════════════════════════
+    (function() {
+        var panel = document.getElementById('orbitDetailPanel');
+        var backdrop = document.getElementById('orbitDetailBackdrop');
+        if (!panel) return;
+
+        var stackData = {
+            'LLM': {
+                full: 'Large Language Models',
+                desc: "Modèles de langage de grande taille capables de comprendre et générer du texte avec une fluidité quasi-humaine. Nous orchestrons GPT-4, Claude, Mistral et Llama selon les besoins spécifiques de chaque agent.",
+                tags: ['GPT-4', 'Claude', 'Mistral', 'Llama', 'Fine-tuning']
+            },
+            'RAG': {
+                full: 'Retrieval Augmented Generation',
+                desc: "Architecture hybride qui combine la puissance des LLM avec vos données propriétaires. Les agents interrogent vos bases de connaissances en temps réel pour des réponses précises et contextualisées.",
+                tags: ['Embeddings', 'Chunking', 'Semantic Search', 'Re-ranking']
+            },
+            'NLP': {
+                full: 'Natural Language Processing',
+                desc: "Traitement du langage naturel avancé pour l'analyse de sentiment, l'extraction d'entités, la classification de texte et la compréhension sémantique multi-langues.",
+                tags: ['Sentiment', 'NER', 'Classification', 'Multilingue']
+            },
+            'CV': {
+                full: 'Computer Vision',
+                desc: "Vision par ordinateur de pointe pour la détection d'objets, la segmentation, l'OCR intelligent et l'analyse d'images médicales ou industrielles.",
+                tags: ['YOLO', 'SAM', 'Détection', 'Segmentation']
+            },
+            'Vec DB': {
+                full: 'Vector Databases',
+                desc: "Bases de données vectorielles optimisées pour la recherche sémantique à haute vitesse. Stockage et interrogation de millions d'embeddings en millisecondes.",
+                tags: ['Pinecone', 'Weaviate', 'Chroma', 'FAISS']
+            },
+            'API': {
+                full: 'REST & GraphQL Endpoints',
+                desc: "Interfaces API robustes et sécurisées connectant vos agents IA à vos systèmes existants. Documentation auto-générée, rate limiting, et monitoring intégré.",
+                tags: ['REST', 'GraphQL', 'WebSocket', 'OAuth2']
+            },
+            'ETL': {
+                full: 'Extract, Transform, Load',
+                desc: "Pipelines de données automatisés qui collectent, nettoient et transforment vos données brutes en inputs exploitables par les agents IA, en temps réel ou par batch.",
+                tags: ['Airflow', 'dbt', 'Streaming', 'Batch']
+            },
+            'ML': {
+                full: 'Machine Learning',
+                desc: "Modèles de machine learning sur-mesure entraînés sur vos données : prédiction, classification, clustering et détection d'anomalies avec explicabilité intégrée.",
+                tags: ['PyTorch', 'TensorFlow', 'XGBoost', 'MLOps']
+            },
+            'K8s': {
+                full: 'Kubernetes Orchestration',
+                desc: "Infrastructure cloud-native auto-scalable. Vos agents se déploient, scalent et se réparent automatiquement grâce à l'orchestration Kubernetes.",
+                tags: ['Auto-scaling', 'Docker', 'Helm', 'Cloud-native']
+            },
+            'OCR': {
+                full: 'Optical Character Recognition',
+                desc: "Reconnaissance optique de caractères augmentée par l'IA. Extraction intelligente de données depuis documents scannés, factures, contrats et formulaires manuscrits.",
+                tags: ['Tesseract', 'Document AI', 'Handwriting', 'PDF']
+            },
+            'TTS': {
+                full: 'Text-to-Speech & Speech-to-Text',
+                desc: "Synthèse et reconnaissance vocale multi-langues. Interfaces conversationnelles naturelles pour vos agents, avec détection d'émotion et adaptation de ton.",
+                tags: ['Whisper', 'ElevenLabs', 'Multi-langue', 'Emotion']
+            },
+            'Auto': {
+                full: 'Agents Autonomes',
+                desc: "Framework d'agents autonomes capables de planifier, exécuter et itérer sur des tâches complexes. Chaînes de raisonnement multi-étapes avec mémoire persistante.",
+                tags: ['CrewAI', 'AutoGPT', 'LangChain', 'Memory']
+            }
+        };
+
+        function openDetail(key) {
+            var info = stackData[key];
+            if (!info) return;
+            document.getElementById('orbitDetailLabel').textContent = 'Stack Technique';
+            document.getElementById('orbitDetailTitle').textContent = info.full;
+            document.getElementById('orbitDetailAcronym').textContent = key;
+            document.getElementById('orbitDetailDesc').textContent = info.desc;
+            var tagsEl = document.getElementById('orbitDetailTags');
+            tagsEl.innerHTML = '';
+            info.tags.forEach(function(t) {
+                var tag = document.createElement('span');
+                tag.className = 'detail-tag';
+                tag.textContent = t;
+                tagsEl.appendChild(tag);
+            });
+            panel.classList.add('active');
+            backdrop.classList.add('active');
+        }
+
+        function closeDetail() {
+            panel.classList.remove('active');
+            backdrop.classList.remove('active');
+        }
+
+        document.getElementById('orbitDetailClose').addEventListener('click', closeDetail);
+        backdrop.addEventListener('click', closeDetail);
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeDetail();
+        });
+
+        document.querySelectorAll('.orbit-item').forEach(function(item) {
+            item.addEventListener('click', function(e) {
+                e.stopPropagation();
+                var text = item.childNodes[0].textContent.trim();
+                openDetail(text);
+            });
+        });
+    })();
+
+    // ════════════════════════════════════════════════
+    // ── STEP 5: Process timeline animation ──
+    // ════════════════════════════════════════════════
+    (function() {
+        var processSection = document.getElementById('processus');
+        if (!processSection) return;
+
+        var progressBar = processSection.querySelector('.process-timeline-progress');
+        if (progressBar) {
+            var obs = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        progressBar.classList.add('animated');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+            obs.observe(processSection);
+        }
+
+        // Particle background for process section
+        var bgCanvas = processSection.querySelector('.process-bg-canvas');
+        if (bgCanvas) {
+            var ctx = bgCanvas.getContext('2d');
+            var particles = [];
+            var particleCount = 40;
+
+            function resizeBg() {
+                bgCanvas.width = processSection.offsetWidth;
+                bgCanvas.height = processSection.offsetHeight;
+            }
+            resizeBg();
+            window.addEventListener('resize', resizeBg);
+
+            for (var i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * bgCanvas.width,
+                    y: Math.random() * bgCanvas.height,
+                    r: Math.random() * 2 + 0.5,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.3,
+                    alpha: Math.random() * 0.15 + 0.03
+                });
+            }
+
+            function drawParticles() {
+                ctx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+                particles.forEach(function(p) {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0) p.x = bgCanvas.width;
+                    if (p.x > bgCanvas.width) p.x = 0;
+                    if (p.y < 0) p.y = bgCanvas.height;
+                    if (p.y > bgCanvas.height) p.y = 0;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(99,102,241,' + p.alpha + ')';
+                    ctx.fill();
+                });
+                // Draw faint connections
+                for (var i = 0; i < particles.length; i++) {
+                    for (var j = i + 1; j < particles.length; j++) {
+                        var dx = particles[i].x - particles[j].x;
+                        var dy = particles[i].y - particles[j].y;
+                        var dist = Math.sqrt(dx*dx + dy*dy);
+                        if (dist < 120) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = 'rgba(99,102,241,' + (0.04 * (1 - dist/120)) + ')';
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(drawParticles);
+            }
+            drawParticles();
+        }
     })();
     </script>
 
