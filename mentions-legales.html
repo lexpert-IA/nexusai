@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusAI — Mentions Légales</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%236366f1'/%3E%3Cstop offset='100%25' stop-color='%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='%23030108'/%3E%3Ccircle cx='16' cy='16' r='6' fill='url(%23g)'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23030108'/%3E%3Ccircle cx='16' cy='16' r='1.5' fill='url(%23g)'/%3E%3C/svg%3E">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #030108;
+            --text: #f0f0f5;
+            --text-secondary: #9ca3af;
+            --gradient-1: #6366f1;
+            --gradient-2: #8b5cf6;
+            --border: rgba(255,255,255,0.08);
+        }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+        }
+        .legal-nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.2rem 3rem;
+            border-bottom: 1px solid var(--border);
+            background: rgba(3,1,8,0.9);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .legal-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .legal-logo-dot { width: 8px; height: 8px; background: var(--gradient-1); border-radius: 50%; }
+        .legal-back {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .legal-back:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+        .legal-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 2rem 5rem;
+        }
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .legal-updated {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+        h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-top: 2.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--text);
+        }
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 1em;
+            background: linear-gradient(to bottom, var(--gradient-1), var(--gradient-2));
+            border-radius: 2px;
+            margin-right: 0.6rem;
+            vertical-align: middle;
+        }
+        p, li {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+        }
+        ul { padding-left: 1.5rem; margin-bottom: 1rem; }
+        li { margin-bottom: 0.4rem; }
+        a { color: var(--gradient-1); }
+        strong { color: var(--text); font-weight: 600; }
+        .legal-section {
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            background: rgba(255,255,255,0.02);
+        }
+        .legal-section h2 { margin-top: 0; }
+        .legal-toc {
+            background: rgba(99,102,241,0.05);
+            border: 1px solid rgba(99,102,241,0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .legal-toc h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--text);
+        }
+        .legal-toc a {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.3rem 0;
+            transition: color 0.2s;
+        }
+        .legal-toc a:hover { color: var(--gradient-1); }
+    </style>
+</head>
+<body>
+    <nav class="legal-nav">
+        <a href="index.html" class="legal-logo">
+            <div class="legal-logo-dot"></div>
+            NexusAI
+        </a>
+        <a href="index.html" class="legal-back">← Retour au site</a>
+    </nav>
+
+    <div class="legal-container">
+        <h1>Mentions Légales & CGV</h1>
+        <p class="legal-updated">Dernière mise à jour : 19 mars 2026</p>
+
+        <div class="legal-toc">
+            <h3>Sommaire</h3>
+            <a href="#editeur">1. Éditeur du site</a>
+            <a href="#hebergement">2. Hébergement</a>
+            <a href="#propriete">3. Propriété intellectuelle</a>
+            <a href="#cgv">4. Conditions Générales de Vente</a>
+            <a href="#garantie">5. Garantie et remboursement</a>
+            <a href="#confidentialite">6. Politique de confidentialité</a>
+            <a href="#rgpd">7. Protection des données (RGPD)</a>
+            <a href="#cookies">8. Cookies</a>
+            <a href="#responsabilite">9. Limitation de responsabilité</a>
+            <a href="#litiges">10. Litiges</a>
+        </div>
+
+        <div class="legal-section" id="editeur">
+            <h2>1. Éditeur du site</h2>
+            <p>Le site <strong>NexusAI</strong> est édité par :</p>
+            <ul>
+                <li><strong>Raison sociale :</strong> [Votre raison sociale]</li>
+                <li><strong>Forme juridique :</strong> [SAS / SARL / Auto-entrepreneur]</li>
+                <li><strong>SIRET :</strong> [Votre numéro SIRET]</li>
+                <li><strong>Adresse :</strong> [Votre adresse professionnelle]</li>
+                <li><strong>Email :</strong> contact@nexusai.fr</li>
+                <li><strong>Directeur de la publication :</strong> [Votre nom]</li>
+            </ul>
+        </div>
+
+        <div class="legal-section" id="hebergement">
+            <h2>2. Hébergement</h2>
+            <p>Le site est hébergé par :</p>
+            <ul>
+                <li><strong>GitHub, Inc.</strong></li>
+                <li>88 Colin P Kelly Jr St, San Francisco, CA 94107, USA</li>
+                <li>Site : <a href="https://github.com" target="_blank">github.com</a></li>
+            </ul>
+        </div>
+
+        <div class="legal-section" id="propriete">
+            <h2>3. Propriété intellectuelle</h2>
+            <p>L'ensemble du contenu du site (textes, images, graphismes, logo, icônes, logiciels, code source) est la propriété exclusive de NexusAI ou de ses partenaires et est protégé par les lois françaises et internationales relatives à la propriété intellectuelle.</p>
+            <p>Toute reproduction, représentation, modification ou adaptation de tout ou partie du site sans autorisation écrite préalable est strictement interdite.</p>
+        </div>
+
+        <div class="legal-section" id="cgv">
+            <h2>4. Conditions Générales de Vente</h2>
+            <p><strong>Prestations proposées :</strong></p>
+            <ul>
+                <li><strong>Plan Créateur</strong> — 990€ (setup) + 199€/mois — Jusqu'à 3 agents IA</li>
+                <li><strong>Plan Business</strong> — 1 990€ (setup) + 349€/mois — Jusqu'à 12 agents IA</li>
+                <li><strong>Plan Sur Mesure</strong> — À partir de 3 500€ — Sur devis, agents illimités</li>
+            </ul>
+            <p><strong>Paiement :</strong> Les paiements sont sécurisés par <strong>Stripe</strong>. Les prix sont indiqués en euros TTC. Le paiement du setup est dû à la commande. Les mensualités sont prélevées automatiquement.</p>
+            <p><strong>Livraison :</strong> Les délais de déploiement varient de 4 à 8 semaines selon le plan choisi. Un calendrier précis est communiqué après l'audit initial.</p>
+            <p><strong>Code source :</strong> Le code source des agents IA déployés est la propriété du client. Il est livré avec documentation complète.</p>
+        </div>
+
+        <div class="legal-section" id="garantie">
+            <h2>5. Garantie et remboursement</h2>
+            <p><strong>Productivité garantie ou remboursé — 30 jours.</strong></p>
+            <ul>
+                <li><strong>Jour 1</strong> — Déploiement de vos agents IA</li>
+                <li><strong>Jour 14</strong> — Mesure de productivité avec votre architecte dédié</li>
+                <li><strong>Jour 30</strong> — Si aucun gain de productivité mesurable n'est constaté, remboursement intégral à 100% du montant du setup</li>
+            </ul>
+            <p>Le client conserve dans tous les cas le code source, la documentation et les formations dispensées.</p>
+            <p><strong>Droit de rétractation :</strong> Conformément à l'article L221-28 du Code de la consommation, le droit de rétractation ne s'applique pas aux prestations de services pleinement exécutées avant la fin du délai de rétractation. Toutefois, notre garantie 30 jours offre une protection supérieure.</p>
+        </div>
+
+        <div class="legal-section" id="confidentialite">
+            <h2>6. Politique de confidentialité</h2>
+            <p>NexusAI s'engage à protéger la vie privée de ses utilisateurs. Les données personnelles collectées sont :</p>
+            <ul>
+                <li><strong>Formulaire de contact :</strong> nom, email professionnel, domaine d'intérêt, message</li>
+                <li><strong>Authentification :</strong> nom et email via Google Sign-In (Firebase Auth)</li>
+                <li><strong>Paiement :</strong> données de paiement traitées exclusivement par Stripe (nous ne stockons aucune donnée bancaire)</li>
+            </ul>
+            <p><strong>Finalité :</strong> Les données sont collectées uniquement pour le traitement des demandes, la fourniture des services et la communication commerciale (avec consentement).</p>
+            <p><strong>Conservation :</strong> Les données sont conservées pendant la durée de la relation commerciale et 3 ans après le dernier contact.</p>
+        </div>
+
+        <div class="legal-section" id="rgpd">
+            <h2>7. Protection des données (RGPD)</h2>
+            <p>Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés, vous disposez des droits suivants :</p>
+            <ul>
+                <li><strong>Droit d'accès</strong> — Obtenir une copie de vos données personnelles</li>
+                <li><strong>Droit de rectification</strong> — Corriger des données inexactes</li>
+                <li><strong>Droit à l'effacement</strong> — Demander la suppression de vos données</li>
+                <li><strong>Droit à la portabilité</strong> — Recevoir vos données dans un format structuré</li>
+                <li><strong>Droit d'opposition</strong> — Vous opposer au traitement de vos données</li>
+            </ul>
+            <p>Pour exercer ces droits, contactez-nous à : <strong>contact@nexusai.fr</strong></p>
+            <p>En cas de litige, vous pouvez saisir la <strong>CNIL</strong> (Commission Nationale de l'Informatique et des Libertés) : <a href="https://www.cnil.fr" target="_blank">www.cnil.fr</a></p>
+        </div>
+
+        <div class="legal-section" id="cookies">
+            <h2>8. Cookies</h2>
+            <p>Le site utilise des cookies strictement nécessaires au fonctionnement :</p>
+            <ul>
+                <li><strong>Préférence de thème</strong> (localStorage) — Mode Galaxie / Mode Pro</li>
+                <li><strong>Authentification</strong> — Session Firebase Auth</li>
+            </ul>
+            <p>Aucun cookie de tracking, d'analytics ou publicitaire n'est utilisé. Aucune donnée n'est transmise à des tiers à des fins de profilage.</p>
+        </div>
+
+        <div class="legal-section" id="responsabilite">
+            <h2>9. Limitation de responsabilité</h2>
+            <p>NexusAI s'efforce de fournir des informations exactes et à jour. Toutefois, NexusAI ne saurait être tenue responsable des erreurs, omissions ou résultats obtenus suite à l'utilisation de ces informations.</p>
+            <p>Les liens hypertextes présents sur le site peuvent renvoyer vers des sites tiers. NexusAI décline toute responsabilité quant au contenu de ces sites.</p>
+        </div>
+
+        <div class="legal-section" id="litiges">
+            <h2>10. Litiges</h2>
+            <p>Les présentes conditions sont régies par le droit français. En cas de litige, les parties s'engagent à rechercher une solution amiable. À défaut, les tribunaux compétents de Paris seront seuls compétents.</p>
+            <p><strong>Médiation :</strong> Conformément à l'article L612-1 du Code de la consommation, tout consommateur a le droit de recourir gratuitement à un médiateur de la consommation en vue de la résolution amiable du litige.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -4,6 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NexusAI — Écosystèmes IA Complets</title>
+    <meta name="description" content="NexusAI conçoit des écosystèmes d'agents IA sur-mesure pour votre entreprise. 33 agents spécialisés, déploiement en 6 semaines, productivité garantie ou remboursé.">
+    <meta name="theme-color" content="#030108">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="NexusAI — Écosystèmes IA Complets">
+    <meta property="og:description" content="Un système d'agents IA productif dans votre secteur. 33 agents, 6 domaines d'expertise, garantie 30 jours.">
+    <meta property="og:url" content="https://pipidersa-ctrl.github.io/nexusai/">
+    <meta property="og:image" content="https://pipidersa-ctrl.github.io/nexusai/og-image.png">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="NexusAI — Écosystèmes IA Complets">
+    <meta name="twitter:description" content="Un système d'agents IA productif dans votre secteur. Garantie 30 jours.">
+    <!-- Favicon SVG -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%236366f1'/%3E%3Cstop offset='100%25' stop-color='%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='%23030108'/%3E%3Ccircle cx='16' cy='16' r='6' fill='url(%23g)'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23030108'/%3E%3Ccircle cx='16' cy='16' r='1.5' fill='url(%23g)'/%3E%3C/svg%3E">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -3391,6 +3405,8 @@
             transition: all 0.2s;
         }
         .nxa-quick-btn:hover { background: rgba(99,102,241,0.1); transform: translateY(-1px); }
+        .nxa-cursor { animation: nxa-blink 0.6s step-end infinite; color: var(--gradient-1); font-weight: 300; }
+        @keyframes nxa-blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
         .nxa-chat-footer {
             padding: 0.8rem;
@@ -4952,10 +4968,10 @@
             <div class="footer-col">
                 <h4>Légal</h4>
                 <ul>
-                    <li><a href="#">CGV</a></li>
-                    <li><a href="#">Confidentialité</a></li>
-                    <li><a href="#">Mentions légales</a></li>
-                    <li><a href="#">RGPD</a></li>
+                    <li><a href="mentions-legales.html">CGV</a></li>
+                    <li><a href="mentions-legales.html#confidentialite">Confidentialité</a></li>
+                    <li><a href="mentions-legales.html">Mentions légales</a></li>
+                    <li><a href="mentions-legales.html#rgpd">RGPD</a></li>
                 </ul>
             </div>
         </div>
@@ -6547,22 +6563,7 @@
             });
         })();
     </script>
-    <!-- ══════════════════════════════════════ -->
-    <!-- TAWK.TO LIVE CHAT (gratuit, pas de compte requis pour le widget par défaut)  -->
-    <!-- Pour personnaliser: créer un compte sur tawk.to et remplacer le propertyId + widgetId -->
-    <!-- ══════════════════════════════════════ -->
-    <script type="text/javascript">
-        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-        (function(){
-            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-            s1.async=true;
-            // PLACEHOLDER: Remplace par ton propertyId/widgetId depuis tawk.to
-            s1.src='https://embed.tawk.to/YOUR_TAWK_PROPERTY_ID/YOUR_TAWK_WIDGET_ID';
-            s1.charset='UTF-8';
-            s1.setAttribute('crossorigin','*');
-            s0.parentNode.insertBefore(s1,s0);
-        })();
-    </script>
+    <!-- Tawk.to removed — using built-in NexusAI chat widget instead -->
 
     <!-- Scroll Depth Indicator -->
     <div class="scroll-depth-indicator" id="scrollDepthIndicator">
@@ -6668,10 +6669,34 @@
             { regex: /s[eé]curit|rgpd|donn[eé]e|confiden|nda|ssl/i, key: 'security' }
         ];
 
-        function addMsg(text, type) {
+        function addMsg(text, type, typewriter) {
             var el = document.createElement('div');
             el.className = 'nxa-msg ' + type;
-            el.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+            var formatted = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+            if (typewriter && type === 'bot') {
+                el.innerHTML = '';
+                body.appendChild(el);
+                body.scrollTop = body.scrollHeight;
+                // Typewriter effect — reveal char by char
+                var chars = formatted.split('');
+                var i = 0;
+                var buffer = '';
+                var speed = 12;
+                function typeNext() {
+                    if (i >= chars.length) return;
+                    buffer += chars[i];
+                    el.innerHTML = buffer + '<span class="nxa-cursor">|</span>';
+                    body.scrollTop = body.scrollHeight;
+                    i++;
+                    setTimeout(typeNext, chars[i-1] === '<' ? 0 : speed);
+                }
+                typeNext();
+                setTimeout(function() {
+                    el.innerHTML = formatted;
+                }, chars.length * speed + 200);
+                return;
+            }
+            el.innerHTML = formatted;
             body.appendChild(el);
             body.scrollTop = body.scrollHeight;
         }
@@ -6728,14 +6753,8 @@
             showTyping();
             setTimeout(function() {
                 removeTyping();
-                addMsg(kb[key] || 'Je n\'ai pas cette info.', 'bot');
+                addMsg(kb[key] || 'Je n\'ai pas cette info.', 'bot', true);
                 updateQuickReplies(key);
-                // Auto-redirect for demo
-                if (key === 'demo') {
-                    setTimeout(function() {
-                        addMsg('Je vous ouvre la God View...', 'bot');
-                    }, 1500);
-                }
             }, 800 + Math.random() * 600);
         }
 
@@ -6754,7 +6773,7 @@
 
             setTimeout(function() {
                 removeTyping();
-                addMsg(response, 'bot');
+                addMsg(response, 'bot', true);
                 if (matchedKey) updateQuickReplies(matchedKey);
             }, 800 + Math.random() * 800);
         }
