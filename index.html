@@ -1094,9 +1094,11 @@
             font-size: 3rem;
             font-weight: 800;
             letter-spacing: -2px;
-            background: linear-gradient(135deg, #818cf8, #c084fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #818cf8;
+        }
+        .stat-item h3 .odometer-digit-inner span,
+        .stat-item h3 .stat-suffix {
+            color: #818cf8;
         }
 
         .stat-item p {
@@ -4800,7 +4802,7 @@
             <div class="pricing-card" data-plan="surmesure">
                 <div class="pricing-badge unique">Sur devis</div>
                 <div class="pricing-label">Sur Mesure</div>
-                <div class="pricing-price">À partir de 3 500€</div>
+                <div class="pricing-price">Sur mesure</div>
 
                 <div style="display:inline-flex;align-items:center;gap:0.4rem;background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.15);padding:0.3rem 0.8rem;border-radius:100px;font-size:0.72rem;font-weight:600;color:#a855f7;margin:0.5rem 0;">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
@@ -5707,7 +5709,7 @@
                     descEl.textContent = count + ' agents sélectionnés — L\'écosystème complet pour scaler.';
                 } else {
                     planEl.textContent = 'Plan Sur Mesure';
-                    priceEl.textContent = 'À partir de 3 500€';
+                    priceEl.textContent = 'Sur mesure';
                     descEl.textContent = count + ' agents sélectionnés — Architecture enterprise dédiée.';
                 }
                 ctaEl.style.display = count > 0 ? 'inline-flex' : 'none';
@@ -6860,7 +6862,7 @@
 
         // Knowledge base
         var kb = {
-            pricing: 'Nous proposons 3 plans :\n\n• **Créateur** — 497€ + 99€/mois (jusqu\'à 3 agents) — Déploiement instantané\n• **Business** — 1 990€ + 349€/mois (jusqu\'à 12 agents) — Déployé sous 7 jours\n• **Sur Mesure** — À partir de 3 500€ (agents illimités) — Sur devis\n\nTous incluent le code source et la garantie 30 jours. -40% sur le plan Créateur en ce moment.',
+            pricing: 'Nous proposons 3 plans :\n\n• **Créateur** — 497€ + 99€/mois (jusqu\'à 3 agents) — Déploiement instantané\n• **Business** — 1 990€ + 349€/mois (jusqu\'à 12 agents) — Déployé sous 7 jours\n• **Sur Mesure** — Sur devis (agents illimités)\n\nTous incluent le code source et la garantie 30 jours. -40% sur le plan Créateur en ce moment.',
             guarantee: 'Notre garantie est simple :\n\n• **Jour 1** — Déploiement de vos agents IA\n• **Jour 14** — Mesure de productivité avec votre architecte\n• **Jour 30** — Aucun gain mesurable ? Remboursement intégral à 100%\n\nVous gardez le code, la documentation et la formation.',
             demo: 'Découvrez NexusAI en action :\n\n• **God View** — Dashboard 3D avec nos 33 agents en temps réel\n• **Simulateur** — Calculez vos économies employés → agents IA\n• **Appel stratégique** — 30 min gratuites avec un architecte IA',
             delay: 'Les délais varient selon le plan :\n\n• **Créateur** — Instantané (déploiement le jour même)\n• **Business** — Sous 7 jours\n• **Sur Mesure** — Planning personnalisé après audit\n\nChaque déploiement inclut configuration, tests et formation.',
