@@ -4697,168 +4697,387 @@
     </section>
 
     <!-- Pricing -->
-    <section id="tarifs">
-        <div class="reveal" style="text-align: center;">
-            <div class="section-label">Investissement</div>
-            <h2 class="section-title" style="margin: 0 auto;">Votre écosystème IA clé en main.</h2>
-            <p class="section-desc" style="margin: 1rem auto 0;">Déploiement one-shot + maintenance mensuelle optionnelle pour garder votre IA au sommet.
-                <span class="help-tooltip" data-help="pricing">
-                    <span class="help-icon">?</span> Quel plan choisir ?
-                    <div class="help-popup">
-                        <div class="help-popup-title"><svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg> Comment choisir ?</div>
-                        <div class="help-popup-text"><strong>Créateur</strong> : idéal pour tester l'IA sur 1 cas d'usage (1-3 agents).<br><strong>Business</strong> : pour automatiser plusieurs processus (jusqu'à 12 agents, le plus choisi).<br><strong>Sur Mesure</strong> : pour une transformation complète avec agents illimités.<br><br>Tous incluent la <strong>garantie 30 jours</strong> et le code source.</div>
-                        <a href="#roi" class="help-popup-cta">Calculer mon ROI →</a>
-                    </div>
-                </span>
-            </p>
-            <div class="animated-line" style="margin: 1.5rem auto 0;"></div>
+    <style>
+        /* ── Enterprise Contact Section ── */
+        .enterprise-hero {
+            text-align: center;
+            max-width: 680px;
+            margin: 0 auto 4rem;
+        }
+        .enterprise-hero .section-label {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(168,85,247,0.12));
+            border: 1px solid rgba(168,85,247,0.2);
+            color: #c4b5fd;
+            padding: 0.3rem 1rem;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.4rem;
+        }
+        .enterprise-card-wrap {
+            position: relative;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .enterprise-card-wrap::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 28px;
+            background: linear-gradient(135deg, rgba(99,102,241,0.4), rgba(168,85,247,0.3), rgba(99,102,241,0.15));
+            z-index: 0;
+        }
+        .enterprise-card {
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(145deg, #08080f, #0d0d1a);
+            border-radius: 27px;
+            padding: 3.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+        @media (max-width: 860px) {
+            .enterprise-card { grid-template-columns: 1fr; gap: 2.5rem; padding: 2rem; }
+        }
+        .enterprise-left .enterprise-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(251,191,36,0.08);
+            border: 1px solid rgba(251,191,36,0.18);
+            color: #fbbf24;
+            padding: 0.3rem 0.9rem;
+            border-radius: 100px;
+            font-size: 0.62rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 1.4rem;
+        }
+        .enterprise-left h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.8rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1;
+            background: linear-gradient(135deg, #fff 30%, #c4b5fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        .enterprise-left .sub {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 2rem;
+            letter-spacing: 0.02em;
+        }
+        .enterprise-features-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .enterprise-features-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.65);
+        }
+        .enterprise-features-list li::before {
+            content: '';
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            flex-shrink: 0;
+        }
+        .enterprise-trust-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 0.5rem;
+        }
+        .enterprise-trust-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 8px;
+            padding: 0.35rem 0.75rem;
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.45);
+        }
+        .enterprise-trust-item svg { opacity: 0.5; flex-shrink: 0; }
 
-            <!-- Amélioration 3: Cost Comparison Toggle -->
-            <div class="cost-toggle-wrap">
-                <span class="cost-toggle-label">Combien ça coûterait sans nous ?</span>
-                <button class="cost-toggle" id="costToggle" aria-label="Comparer les coûts"></button>
-            </div>
+        /* Right side: contact options */
+        .enterprise-right {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .enterprise-right-title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.3);
+            margin-bottom: 0.4rem;
+        }
+        .contact-option {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 16px;
+            padding: 1.4rem 1.6rem;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.16,1,0.3,1);
+            position: relative;
+            overflow: hidden;
+        }
+        .contact-option::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .contact-option.primary::before {
+            background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(168,85,247,0.05));
+        }
+        .contact-option.calendly::before {
+            background: rgba(99,102,241,0.06);
+        }
+        .contact-option.phone::before {
+            background: rgba(34,197,94,0.05);
+        }
+        .contact-option:hover {
+            transform: translateX(4px);
+            border-color: rgba(255,255,255,0.14);
+        }
+        .contact-option.primary:hover { border-color: rgba(99,102,241,0.35); box-shadow: 0 8px 30px rgba(99,102,241,0.12); }
+        .contact-option.calendly:hover { border-color: rgba(99,102,241,0.25); }
+        .contact-option.phone:hover { border-color: rgba(34,197,94,0.2); }
+        .contact-option:hover::before { opacity: 1; }
+        .contact-option-icon {
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .contact-option.primary .contact-option-icon {
+            background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(168,85,247,0.15));
+            border: 1px solid rgba(99,102,241,0.2);
+        }
+        .contact-option.calendly .contact-option-icon {
+            background: rgba(99,102,241,0.1);
+            border: 1px solid rgba(99,102,241,0.15);
+        }
+        .contact-option.phone .contact-option-icon {
+            background: rgba(34,197,94,0.08);
+            border: 1px solid rgba(34,197,94,0.12);
+        }
+        .contact-option-body { flex: 1; min-width: 0; }
+        .contact-option-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 0.2rem;
+        }
+        .contact-option-desc {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.38);
+            line-height: 1.4;
+        }
+        .contact-option-arrow {
+            color: rgba(255,255,255,0.2);
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .contact-option:hover .contact-option-arrow {
+            color: rgba(255,255,255,0.6);
+            transform: translateX(3px);
+        }
+        .contact-option.primary .contact-option-label { color: #fff; }
+        .contact-option.primary .contact-option-arrow { color: rgba(168,85,247,0.5); }
+        .contact-option.primary:hover .contact-option-arrow { color: #a855f7; }
+
+        .contact-option-tag {
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.15rem 0.5rem;
+            border-radius: 6px;
+            margin-left: 0.4rem;
+        }
+        .tag-recommended {
+            background: rgba(99,102,241,0.15);
+            color: #818cf8;
+            border: 1px solid rgba(99,102,241,0.2);
+        }
+        .tag-free {
+            background: rgba(34,197,94,0.08);
+            color: #4ade80;
+            border: 1px solid rgba(34,197,94,0.12);
+        }
+        .enterprise-divider {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin: 0.2rem 0;
+            color: rgba(255,255,255,0.12);
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+        .enterprise-divider::before,
+        .enterprise-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.06);
+        }
+        .enterprise-response-time {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.28);
+            margin-top: 0.6rem;
+        }
+        .enterprise-response-time span {
+            display: inline-block;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 6px rgba(34,197,94,0.6);
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+        @keyframes pulse-dot {
+            0%,100%{box-shadow:0 0 6px rgba(34,197,94,0.5)}
+            50%{box-shadow:0 0 12px rgba(34,197,94,0.9)}
+        }
+    </style>
+
+    <section id="tarifs">
+        <div class="enterprise-hero reveal">
+            <div class="section-label">Solutions Enterprise</div>
+            <h2 class="section-title" style="margin: 0 auto;">Une architecture IA<br><span class="gradient-text">taillée pour vous.</span></h2>
+            <p class="section-desc" style="margin: 1.2rem auto 0; max-width: 520px;">Chaque transformation est unique. Nos architectes IA conçoivent une solution entièrement adaptée à vos enjeux, votre secteur et votre échelle.</p>
+            <div class="animated-line" style="margin: 1.5rem auto 0;"></div>
         </div>
 
-        <div class="pricing-grid" id="pricingGrid">
-            <div class="pricing-spotlight" id="pricingSpotlight"></div>
-            <!-- CRÉATEUR -->
-            <div class="pricing-card" data-plan="createur">
-                <div class="pricing-badge unique">-40% Offre de lancement</div>
-                <div class="pricing-label">Créateur</div>
-                <div class="pricing-old-price">829€</div>
-                <div class="pricing-price">497€ <span style="font-size:0.5em;font-weight:400;color:var(--text-light);cursor:help;" title="Maintenance, mises à jour et support inclus">+ 99€/mois <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;opacity:0.5;"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span></div>
-
-                <div style="display:inline-flex;align-items:center;gap:0.4rem;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.15);padding:0.3rem 0.8rem;border-radius:100px;font-size:0.72rem;font-weight:600;color:#22c55e;margin:0.5rem 0;">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                    Déployé et opérationnel en 24h
-                </div>
-
-                <div style="background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:14px;padding:1.2rem 1.4rem;margin:0.8rem 0;text-align:left;">
-                    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gradient-1);margin-bottom:0.5rem;">Exemple concret</div>
-                    <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.6;margin:0;">Agent Email (tri, réponses automatiques) + Agent Relances clients (suivi impayés, relances automatisées) + Agent Reporting (synthèse hebdomadaire envoyée automatiquement). Déployés en une journée, opérationnels immédiatement.</p>
-                </div>
-
-                <!-- Amélioration 4: Mini 3D Preview -->
-                <div class="mini-preview" id="miniPreview1">
-                    <span class="mini-preview-label">3 agents</span>
-                </div>
-
-                <ul class="pricing-features">
-                    <li>Jusqu'à 3 agents IA <span class="cost-alt">~1 dev : 3 500€/mois</span></li>
-                    <li>1 modèle IA inclus (GPT / Claude) <span class="cost-alt">API : ~800€/mois</span></li>
-                    <li>1 domaine métier</li>
-                    <li>Dashboard analytique <span class="cost-alt">SaaS : ~200€/mois</span></li>
-                    <li>Support email 6 mois</li>
-                    <li>Mises à jour continues</li>
-                    <li>Formation initiale (2h) <span class="cost-alt">Consultant : 400€</span></li>
-                    <li>Documentation technique</li>
-                    <li>Code source livré</li>
-                </ul>
-                <div class="cost-total">Équivalent interne : <strong>~54 000€/an</strong></div>
-
-                <a href="https://buy.stripe.com/test_28E8wP9BZfrZ0fp9Vz4sE00" target="_blank" class="btn-secondary magnetic-btn" style="width: 100%; justify-content: center;">Commencer maintenant →</a>
-                <div class="pricing-guarantee">🔒 Productivité garantie ou remboursé — 30 jours</div>
-
-                <div class="social-proof-strip">
-                    <div class="avatar-stack">
-                        <span style="background:#6366f1;">T</span>
-                        <span style="background:#8b5cf6;">M</span>
-                        <span style="background:#a78bfa;">S</span>
+        <div class="enterprise-card-wrap reveal">
+            <div class="enterprise-card">
+                <!-- LEFT: features -->
+                <div class="enterprise-left">
+                    <div class="enterprise-badge">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        Enterprise
                     </div>
-                    <span class="proof-text">23 déployés ce mois</span>
-                    <span class="spots-left">Accès immédiat</span>
-                </div>
-            </div>
+                    <h3>Sur devis</h3>
+                    <p class="sub">Proposition personnalisée sous 48h</p>
 
-            <!-- BUSINESS -->
-            <div class="pricing-card featured" data-plan="business">
-                <div class="pricing-badge popular">Le plus choisi</div>
-                <div class="pricing-label">Business</div>
-                <div class="pricing-price">1 990€ <span style="font-size:0.5em;font-weight:400;color:rgba(255,255,255,0.6);">+ 349€/mois</span></div>
+                    <ul class="enterprise-features-list">
+                        <li>Agents IA illimités</li>
+                        <li>Tous modèles IA du marché</li>
+                        <li>Infrastructure dédiée</li>
+                        <li>Architecte IA senior dédié</li>
+                        <li>SLA garanti 99,9%</li>
+                        <li>Audit de sécurité complet</li>
+                        <li>Intégrations & APIs custom</li>
+                        <li>Support dédié 24 mois</li>
+                        <li>Formation équipes sur-site</li>
+                        <li>Maintenance évolutive incluse</li>
+                        <li>Tous domaines métier</li>
+                        <li>Propriété totale du code</li>
+                    </ul>
 
-                <div style="display:inline-flex;align-items:center;gap:0.4rem;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.15);padding:0.3rem 0.8rem;border-radius:100px;font-size:0.72rem;font-weight:600;color:#818cf8;margin:0.5rem 0;">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                    Déploiement sous 7 jours
-                </div>
-
-                <div class="mini-preview" id="miniPreview2">
-                    <span class="mini-preview-label">12 agents</span>
-                </div>
-
-                <ul class="pricing-features">
-                    <li>Jusqu'à 12 agents IA <span class="cost-alt">~3 devs : 10 500€/mois</span></li>
-                    <li>3 modèles IA (GPT, Claude, Mistral) <span class="cost-alt">APIs : ~2 400€/mois</span></li>
-                    <li>Assets spécialisés par domaine <span class="cost-alt">Designer : 4 000€/mois</span></li>
-                    <li>3 domaines métier</li>
-                    <li>API & intégrations custom <span class="cost-alt">Dev intégration : 5 000€</span></li>
-                    <li>Support prioritaire 12 mois</li>
-                    <li>Mises à jour continues + évolutives</li>
-                    <li>Formation équipes (8h) <span class="cost-alt">Formation : 1 600€</span></li>
-                    <li>Architecture sur-mesure <span class="cost-alt">Architecte : 800€/jour</span></li>
-                    <li>Code source + documentation</li>
-                    <li>Appel stratégique mensuel</li>
-                    <li>Optimisation trimestrielle</li>
-                </ul>
-                <div class="cost-total">Équivalent interne : <strong>~210 000€/an</strong></div>
-
-                <a href="https://buy.stripe.com/bJefZh8zZa942VB4YG00001" target="_blank" class="btn-primary magnetic-btn">Choisir Business →</a>
-                <a href="#" onclick="openCalendly(); return false;" style="display:block;text-align:center;font-size:0.78rem;color:rgba(255,255,255,0.45);margin-top:0.5rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#818cf8'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">ou réserver un appel avant de décider →</a>
-                <div class="pricing-guarantee">🔒 Productivité garantie ou remboursé — 30 jours</div>
-
-                <div class="social-proof-strip">
-                    <div class="avatar-stack">
-                        <span style="background:#6366f1;">A</span>
-                        <span style="background:#818cf8;">L</span>
-                        <span style="background:#a78bfa;">D</span>
-                        <span style="background:#c4b5fd;">R</span>
+                    <div class="enterprise-trust-row">
+                        <div class="enterprise-trust-item">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                            NDA sur demande
+                        </div>
+                        <div class="enterprise-trust-item">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            RGPD conforme
+                        </div>
+                        <div class="enterprise-trust-item">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Contrat personnalisé
+                        </div>
+                        <div class="enterprise-trust-item">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            Code source livré
+                        </div>
                     </div>
-                    <span class="proof-text">7 en cours</span>
-                    <span class="spots-left">2 places ce trimestre</span>
-                </div>
-            </div>
-
-            <!-- SUR MESURE -->
-            <div class="pricing-card" data-plan="surmesure">
-                <div class="pricing-badge unique">Enterprise</div>
-                <div class="pricing-label">Sur Mesure</div>
-                <div class="pricing-price" style="font-size:2.5rem;">Sur devis</div>
-
-                <div style="display:inline-flex;align-items:center;gap:0.4rem;background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.15);padding:0.3rem 0.8rem;border-radius:100px;font-size:0.72rem;font-weight:600;color:#a855f7;margin:0.5rem 0;">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                    Planning personnalisé
                 </div>
 
-                <div class="mini-preview" id="miniPreview3">
-                    <span class="mini-preview-label">Réseau complet</span>
-                </div>
+                <!-- RIGHT: contact options -->
+                <div class="enterprise-right">
+                    <div class="enterprise-right-title">Choisissez comment avancer</div>
 
-                <ul class="pricing-features">
-                    <li>Agents IA illimités <span class="cost-alt">Équipe IA : 25 000€/mois</span></li>
-                    <li>Tous modèles IA du marché <span class="cost-alt">Licences : ~5 000€/mois</span></li>
-                    <li>Assets spécialisés illimités</li>
-                    <li>Tous domaines métier</li>
-                    <li>Infrastructure dédiée <span class="cost-alt">Infra cloud : 3 000€/mois</span></li>
-                    <li>Architecte IA dédié <span class="cost-alt">Senior : 800€/jour</span></li>
-                    <li>SLA garanti 99.9%</li>
-                    <li>Audit de sécurité complet <span class="cost-alt">Audit : 15 000€</span></li>
-                    <li>Support dédié 24 mois</li>
-                    <li>Formation sur-site <span class="cost-alt">Formation : 5 000€</span></li>
-                    <li>Maintenance évolutive incluse</li>
-                    <li>Propriété totale du code</li>
-                </ul>
-                <div class="cost-total">Équivalent interne : <strong>~420 000€/an</strong></div>
+                    <!-- Option 1: Calendly -->
+                    <a href="#" class="contact-option primary" onclick="openCalendly(); return false;">
+                        <div class="contact-option-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        </div>
+                        <div class="contact-option-body">
+                            <div class="contact-option-label">
+                                Réserver un appel stratégique
+                                <span class="contact-option-tag tag-recommended">Recommandé</span>
+                            </div>
+                            <div class="contact-option-desc">30 min avec un architecte IA — audit gratuit de vos besoins</div>
+                        </div>
+                        <svg class="contact-option-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
 
-                <a href="#contact-form" class="btn-secondary magnetic-btn" style="width: 100%; justify-content: center;" onclick="setTimeout(function(){var m=document.getElementById('formMessage');if(m){m.value='Demande de devis — Plan Sur Mesure\n\nBonjour, je souhaite obtenir un devis personnalisé pour le plan Sur Mesure.';m.focus();}},300);">Demander un devis</a>
-                <a href="#" onclick="openCalendly(); return false;" style="display:block;text-align:center;font-size:0.78rem;color:var(--text-secondary);opacity:0.6;margin-top:0.5rem;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.opacity='1';this.style.color='#a855f7'" onmouseout="this.style.opacity='0.6';this.style.color=''">ou discuter avec un architecte IA →</a>
-                <div class="pricing-guarantee">🔒 NDA + Contrat personnalisé</div>
+                    <div class="enterprise-divider">ou</div>
 
-                <div class="social-proof-strip">
-                    <div class="avatar-stack">
-                        <span style="background:#6366f1;">F</span>
-                        <span style="background:#8b5cf6;">C</span>
+                    <!-- Option 2: Form/Email -->
+                    <a href="#contact-form" class="contact-option calendly" onclick="setTimeout(function(){var m=document.getElementById('formMessage');if(m){m.value='Bonjour, je souhaite obtenir un devis personnalisé pour une solution NexusAI.\n\nMon projet : ';m.focus();}},300);">
+                        <div class="contact-option-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        </div>
+                        <div class="contact-option-body">
+                            <div class="contact-option-label">Décrire mon projet par écrit</div>
+                            <div class="contact-option-desc">Formulaire confidentiel — réponse sous 24h avec une proposition initiale</div>
+                        </div>
+                        <svg class="contact-option-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
+
+                    <!-- Option 3: Phone / WhatsApp -->
+                    <a href="tel:+33XXXXXXXXX" class="contact-option phone">
+                        <div class="contact-option-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 015.13 12.79a19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                        </div>
+                        <div class="contact-option-body">
+                            <div class="contact-option-label">
+                                Parler à un commercial
+                                <span class="contact-option-tag tag-free">Gratuit</span>
+                            </div>
+                            <div class="contact-option-desc">Échange informel, sans engagement — disponible du lun. au ven.</div>
+                        </div>
+                        <svg class="contact-option-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
+
+                    <div class="enterprise-response-time">
+                        <span></span>
+                        Équipe disponible — réponse moyenne en moins de 2h
                     </div>
-                    <span class="proof-text">2 en production</span>
                 </div>
             </div>
         </div>
