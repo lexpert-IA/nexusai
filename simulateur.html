@@ -146,53 +146,226 @@
         .sim-loading-text { font-size:1.1rem; font-weight:600; color:var(--text2); }
         .sim-agent-feed { font-size:0.78rem; color:var(--accent); height:20px; overflow:hidden; }
 
-        /* Results */
+        /* ── Results ── */
         .results-wrap { display:none; }
         .results-wrap.visible { display:block; animation:fadeUp 0.5s ease; }
 
-        /* Hero number */
-        .res-hero {
-            text-align:center; padding:3rem 2rem;
-            background:linear-gradient(145deg,var(--surface),var(--surface2));
-            border:1px solid var(--border); border-radius:24px;
-            margin-bottom:1.5rem; position:relative; overflow:hidden;
+        /* KPI Split Hero */
+        .res-kpi-hero {
+            padding: 2.5rem 2.5rem 2rem;
+            background: linear-gradient(145deg, var(--surface), #0f0f1e);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            margin-bottom: 1.2rem;
+            position: relative;
+            overflow: hidden;
         }
-        .res-hero::before {
-            content:''; position:absolute; top:-40%; left:50%; transform:translateX(-50%);
-            width:400px; height:400px; border-radius:50%;
-            background:radial-gradient(circle,rgba(99,102,241,0.12),transparent 70%);
-            pointer-events:none;
+        .res-kpi-hero::before {
+            content: '';
+            position: absolute;
+            top: -60px; left: 50%;
+            transform: translateX(-50%);
+            width: 600px; height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(ellipse, rgba(99,102,241,0.08) 0%, transparent 70%);
+            pointer-events: none;
         }
-        .res-hero-label { font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:var(--accent); margin-bottom:0.8rem; }
-        .res-hero-amount { font-family:'Space Grotesk',sans-serif; font-size:4.5rem; font-weight:800; letter-spacing:-3px; line-height:1; color:var(--green); }
-        .res-hero-sub { font-size:0.9rem; color:var(--text2); margin-top:0.5rem; }
-        .res-hero-badges { display:flex; justify-content:center; flex-wrap:wrap; gap:0.6rem; margin-top:1.5rem; }
+        .res-kpi-eyebrow {
+            text-align: center;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .res-kpi-eyebrow::before,
+        .res-kpi-eyebrow::after {
+            content: '';
+            flex: 1;
+            max-width: 80px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(99,102,241,0.3));
+        }
+        .res-kpi-eyebrow::after { transform: scaleX(-1); }
+        .res-kpi-split {
+            display: grid;
+            grid-template-columns: 1fr 1px 1fr;
+            gap: 0;
+            margin-bottom: 2rem;
+        }
+        @media(max-width:600px) {
+            .res-kpi-split { grid-template-columns: 1fr; }
+            .res-kpi-divider { display: none; }
+        }
+        .res-kpi-divider { background: var(--border); align-self: stretch; margin: 0; }
+        .res-kpi-card { text-align: center; padding: 0.5rem 2rem 1.5rem; }
+        .res-kpi-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.62rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text2);
+            margin-bottom: 1rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            padding: 0.3rem 0.8rem;
+            border-radius: 100px;
+        }
+        .res-kpi-pct {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 800;
+            letter-spacing: -4px;
+            line-height: 1;
+            margin-bottom: 0.6rem;
+        }
+        .res-kpi-pct.green { color: var(--green); }
+        .res-kpi-pct.purple {
+            background: linear-gradient(135deg, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .res-kpi-meta {
+            font-size: 0.72rem;
+            color: var(--text2);
+            line-height: 1.6;
+            max-width: 220px;
+            margin: 0 auto;
+        }
+        .res-kpi-meta strong { color: var(--text); font-weight: 600; }
+        .res-kpi-badges {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
         .res-badge { padding:0.35rem 0.9rem; border-radius:100px; font-size:0.72rem; font-weight:600; display:inline-flex; align-items:center; gap:0.4rem; }
         .res-badge.green { background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.2); color:var(--green); }
         .res-badge.purple { background:rgba(99,102,241,0.1); border:1px solid rgba(99,102,241,0.2); color:#a78bfa; }
         .res-badge.orange { background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.2); color:#fbbf24; }
 
+        /* Impact decomposition */
+        .res-breakdown {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.8rem;
+            margin-bottom: 1.2rem;
+        }
+        .res-breakdown-hdr {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .res-breakdown-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+        .res-breakdown-sub { font-size: 0.65rem; color: var(--text2); }
+        .breakdown-row {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.75rem;
+        }
+        .breakdown-icon { font-size: 0.9rem; width: 22px; flex-shrink: 0; text-align: center; }
+        .breakdown-label {
+            font-size: 0.72rem;
+            color: var(--text2);
+            width: 150px;
+            flex-shrink: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .breakdown-bar-wrap {
+            flex: 1;
+            height: 7px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 100px;
+            overflow: hidden;
+        }
+        .breakdown-bar-fill {
+            height: 100%;
+            border-radius: 100px;
+            transition: width 1.2s cubic-bezier(0.16,1,0.3,1);
+            width: 0;
+        }
+        .breakdown-bar-fill.cost { background: linear-gradient(90deg, #22c55e, #16a34a); }
+        .breakdown-bar-fill.prod { background: linear-gradient(90deg, #818cf8, #c084fc); }
+        .breakdown-pct {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text);
+            min-width: 36px;
+            text-align: right;
+        }
+        .breakdown-tabs {
+            display: flex;
+            gap: 0.4rem;
+            margin-bottom: 1.2rem;
+        }
+        .breakdown-tab {
+            font-size: 0.68rem;
+            font-weight: 600;
+            padding: 0.3rem 0.8rem;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text2);
+            cursor: pointer;
+            transition: all 0.15s;
+            font-family: inherit;
+        }
+        .breakdown-tab.active { background: rgba(99,102,241,0.1); border-color: rgba(99,102,241,0.3); color: var(--text); }
+
         /* Stats grid */
-        .res-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:1.5rem; }
+        .res-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:1.2rem; }
         @media(max-width:600px){ .res-stats{grid-template-columns:1fr 1fr;} }
         .res-stat {
             background:var(--surface); border:1px solid var(--border);
             border-radius:16px; padding:1.4rem 1.2rem; text-align:center;
+            position: relative; overflow: hidden;
         }
+        .res-stat::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 2px;
+            border-radius: 0 0 16px 16px;
+        }
+        .res-stat.s-green::after { background: linear-gradient(90deg, var(--green), transparent); }
+        .res-stat.s-blue::after { background: linear-gradient(90deg, #818cf8, transparent); }
+        .res-stat.s-pink::after { background: linear-gradient(90deg, #f472b6, transparent); }
         .res-stat-val { font-family:'Space Grotesk',sans-serif; font-size:1.8rem; font-weight:800; letter-spacing:-1px; line-height:1; margin-bottom:0.3rem; }
-        .res-stat-lbl { font-size:0.7rem; color:var(--text2); line-height:1.3; }
+        .res-stat-lbl { font-size:0.68rem; color:var(--text2); line-height:1.4; }
+        .res-stat-sub { font-size:0.6rem; color:var(--text3); margin-top:0.25rem; }
 
-        /* Workday timeline — game changer */
+        /* Workday timeline */
         .timeline-section {
             background:var(--surface); border:1px solid var(--border);
-            border-radius:20px; padding:1.8rem; margin-bottom:1.5rem;
+            border-radius:20px; padding:1.8rem; margin-bottom:1.2rem;
         }
         .timeline-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem; flex-wrap:wrap; gap:0.5rem; }
         .timeline-title { font-family:'Space Grotesk',sans-serif; font-size:0.9rem; font-weight:700; }
         .timeline-legend { display:flex; gap:1rem; font-size:0.65rem; color:var(--text2); }
         .timeline-legend span { display:flex; align-items:center; gap:0.3rem; }
         .tl-dot { width:8px; height:8px; border-radius:2px; }
-
         .timeline-row { display:flex; gap:0.5rem; align-items:center; margin-bottom:0.7rem; }
         .timeline-row-lbl { font-size:0.7rem; font-weight:600; color:var(--text2); width:80px; flex-shrink:0; }
         .timeline-bars { display:flex; gap:3px; flex:1; }
@@ -210,7 +383,7 @@
         .tl-hour { flex:1; text-align:center; font-size:0.55rem; color:var(--text3); }
 
         /* Payback gauge */
-        .gauge-section { background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:1.8rem; margin-bottom:1.5rem; text-align:center; }
+        .gauge-section { background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:1.8rem; margin-bottom:1.2rem; text-align:center; }
         .gauge-title { font-family:'Space Grotesk',sans-serif; font-size:0.9rem; font-weight:700; margin-bottom:1.5rem; }
         .gauge-wrap { position:relative; width:180px; height:100px; margin:0 auto 1rem; }
         .gauge-svg { width:100%; }
@@ -223,7 +396,7 @@
         .rec-section {
             background:linear-gradient(135deg,rgba(99,102,241,0.06),rgba(168,85,247,0.04));
             border:1px solid rgba(99,102,241,0.15); border-radius:20px; padding:2rem;
-            margin-bottom:1.5rem; position:relative; overflow:hidden;
+            margin-bottom:1.2rem; position:relative; overflow:hidden;
         }
         .rec-section::before { content:''; position:absolute; top:-60px; right:-60px; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle,rgba(168,85,247,0.08),transparent 70%); }
         .rec-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem; flex-wrap:wrap; gap:0.5rem; }
@@ -238,7 +411,7 @@
         .btn-primary { display:inline-flex; align-items:center; gap:0.5rem; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:white; border:none; border-radius:12px; padding:0.85rem 1.8rem; font-size:0.9rem; font-weight:700; cursor:pointer; text-decoration:none; transition:all 0.2s; }
         .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(99,102,241,0.3); }
         .btn-secondary { display:inline-flex; align-items:center; gap:0.5rem; background:rgba(255,255,255,0.04); color:var(--text); border:1px solid var(--border2); border-radius:12px; padding:0.85rem 1.8rem; font-size:0.9rem; font-weight:600; cursor:pointer; text-decoration:none; transition:all 0.2s; }
-        .btn-secondary:hover { background:rgba(255,255,255,0.07); border-color:var(--border2); }
+        .btn-secondary:hover { background:rgba(255,255,255,0.07); }
 
         /* Nav buttons */
         .nav-row { display:flex; justify-content:space-between; align-items:center; margin-top:2.5rem; gap:1rem; flex-wrap:wrap; }
@@ -249,10 +422,10 @@
         .btn-prev { display:inline-flex; align-items:center; gap:0.4rem; background:transparent; color:var(--text2); border:none; font-size:0.85rem; font-weight:600; cursor:pointer; font-family:inherit; transition:color 0.2s; padding:0.5rem; }
         .btn-prev:hover { color:var(--text); }
 
-        /* ── Live agent feed ── */
+        /* Live agent feed */
         .live-feed {
             background:var(--surface); border:1px solid var(--border); border-radius:16px;
-            padding:1rem 1.2rem; margin-bottom:1.5rem; height:130px; overflow:hidden; position:relative;
+            padding:1rem 1.2rem; margin-bottom:1.2rem; height:130px; overflow:hidden; position:relative;
         }
         .live-feed-title { font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--text3); margin-bottom:0.6rem; display:flex; align-items:center; gap:0.4rem; }
         .live-dot { width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 6px rgba(34,197,94,0.5); animation:pulse-g 1.5s infinite; }
@@ -274,7 +447,7 @@
 <header class="hdr">
     <div style="display:flex;align-items:center;gap:0.8rem;">
         <a href="index.html" class="hdr-logo"><span class="hdr-logo-dot"></span> NexusAI</a>
-        <span class="hdr-badge">Simulateur ROI</span>
+        <span class="hdr-badge">Simulateur Impact</span>
     </div>
     <a href="index.html" class="hdr-back">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
@@ -300,7 +473,7 @@
         <div class="step-connector" id="conn2"></div>
         <div class="step-item" id="stepNav3">
             <div class="step-num">3</div>
-            <span>Simulation</span>
+            <span>Impact</span>
         </div>
     </div>
 
@@ -382,7 +555,7 @@
         <div class="panel-title">
             <span class="step-label">Étape 2 sur 3</span>
             <h2>Quelles tâches automatiser ?</h2>
-            <p>Sélectionnez les tâches répétitives de vos équipes. Plus vous en choisissez, plus le ROI est précis.</p>
+            <p>Sélectionnez les tâches répétitives de vos équipes. Plus vous en choisissez, plus l'impact est précis.</p>
         </div>
 
         <div class="tally-bar">
@@ -399,8 +572,8 @@
                 <div class="tally-lbl">agents IA requis</div>
             </div>
             <div class="tally-item">
-                <div class="tally-val" id="tallySaving" style="color:#fbbf24;">—</div>
-                <div class="tally-lbl">économie estimée / an</div>
+                <div class="tally-val" id="tallySaving" style="color:#818cf8;">—</div>
+                <div class="tally-lbl">% tâches automatisables</div>
             </div>
         </div>
 
@@ -412,7 +585,7 @@
                 Retour
             </button>
             <button class="btn-next" id="toStep3">
-                Lancer la simulation
+                Simuler l'impact
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
             </button>
         </div>
@@ -431,39 +604,82 @@
         <div class="results-wrap" id="resultsWrap">
 
             <div class="panel-title" style="margin-bottom:1.5rem;">
-                <span class="step-label">Résultats — <span id="resSector">votre secteur</span></span>
-                <h2>Voici votre impact IA</h2>
+                <span class="step-label">Impact IA — <span id="resSector">votre secteur</span></span>
+                <h2>Votre potentiel de transformation</h2>
             </div>
 
-            <!-- Hero savings -->
-            <div class="res-hero">
-                <div class="res-hero-label">Économies annuelles estimées</div>
-                <div class="res-hero-amount" id="heroAmount">0€</div>
-                <div class="res-hero-sub" id="heroSub">sur les tâches automatisables de votre équipe</div>
-                <div class="res-hero-badges">
+            <!-- ── KPI Split Hero ── -->
+            <div class="res-kpi-hero">
+                <div class="res-kpi-eyebrow">Analyse sur 12 mois · <span id="resEmpCount">—</span> employés</div>
+                <div class="res-kpi-split">
+
+                    <div class="res-kpi-card">
+                        <div class="res-kpi-tag">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            Réduction des coûts
+                        </div>
+                        <div class="res-kpi-pct green" id="kpiCostReduction">—</div>
+                        <div class="res-kpi-meta">
+                            sur le <strong>temps salarié</strong> consacré aux tâches sélectionnées
+                        </div>
+                    </div>
+
+                    <div class="res-kpi-divider"></div>
+
+                    <div class="res-kpi-card">
+                        <div class="res-kpi-tag">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+                            Gain de productivité
+                        </div>
+                        <div class="res-kpi-pct purple" id="kpiProductivity">—</div>
+                        <div class="res-kpi-meta">
+                            de <strong>capacité libérée</strong> pour missions à haute valeur ajoutée
+                        </div>
+                    </div>
+
+                </div>
+                <div class="res-kpi-badges">
                     <span class="res-badge green" id="badgeHours">⏱ 0h récupérées / semaine</span>
                     <span class="res-badge purple" id="badgeAgents">🤖 0 agents déployés</span>
                     <span class="res-badge orange" id="badgeROI">📈 ROI en X mois</span>
                 </div>
             </div>
 
-            <!-- Stats -->
+            <!-- ── Décomposition de l'impact ── -->
+            <div class="res-breakdown">
+                <div class="res-breakdown-hdr">
+                    <div>
+                        <div class="res-breakdown-title">Décomposition de l'impact</div>
+                        <div class="res-breakdown-sub">contribution de chaque processus automatisé</div>
+                    </div>
+                    <div class="breakdown-tabs">
+                        <button class="breakdown-tab active" id="tabCost" onclick="switchBreakdown('cost')">Coûts réduits</button>
+                        <button class="breakdown-tab" id="tabProd" onclick="switchBreakdown('prod')">Productivité</button>
+                    </div>
+                </div>
+                <div id="breakdownRows"></div>
+            </div>
+
+            <!-- ── Stats ── -->
             <div class="res-stats">
-                <div class="res-stat">
-                    <div class="res-stat-val" id="statMonth" style="color:var(--green);">—</div>
-                    <div class="res-stat-lbl">Économie mensuelle</div>
+                <div class="res-stat s-green">
+                    <div class="res-stat-val" id="statHours" style="color:var(--green);">—</div>
+                    <div class="res-stat-lbl">Heures récupérées</div>
+                    <div class="res-stat-sub">par mois · toute l'équipe</div>
                 </div>
-                <div class="res-stat">
-                    <div class="res-stat-val" id="statHours" style="color:#818cf8;">—</div>
-                    <div class="res-stat-lbl">Heures récupérées / mois</div>
+                <div class="res-stat s-blue">
+                    <div class="res-stat-val" id="statETP" style="color:#818cf8;">—</div>
+                    <div class="res-stat-lbl">ETP libérés</div>
+                    <div class="res-stat-sub">équivalent temps plein</div>
                 </div>
-                <div class="res-stat">
+                <div class="res-stat s-pink">
                     <div class="res-stat-val" id="statAuto" style="color:#f472b6;">—</div>
                     <div class="res-stat-lbl">Taux d'automatisation</div>
+                    <div class="res-stat-sub">des tâches sélectionnées</div>
                 </div>
             </div>
 
-            <!-- GAME CHANGER: Live agent feed -->
+            <!-- ── Live agent feed ── -->
             <div class="live-feed">
                 <div class="live-feed-title">
                     <span class="live-dot"></span>
@@ -472,7 +688,7 @@
                 <div class="live-entries" id="liveFeed"></div>
             </div>
 
-            <!-- GAME CHANGER: Workday timeline -->
+            <!-- ── Workday timeline ── -->
             <div class="timeline-section">
                 <div class="timeline-header">
                     <div class="timeline-title">⏰ Journée type : Avant vs Après NexusAI</div>
@@ -498,7 +714,7 @@
                 </div>
             </div>
 
-            <!-- Payback gauge -->
+            <!-- ── Payback gauge ── -->
             <div class="gauge-section">
                 <div class="gauge-title">Délai de retour sur investissement</div>
                 <div class="gauge-wrap">
@@ -520,7 +736,7 @@
                 <div class="gauge-desc" id="gaugeDesc">Calculez votre simulation pour voir le délai exact de rentabilisation.</div>
             </div>
 
-            <!-- Agent recommendation -->
+            <!-- ── Agent recommendation ── -->
             <div class="rec-section">
                 <div class="rec-header">
                     <div>
@@ -550,109 +766,111 @@
 
 <script>
 (function(){
-// ─── Data ───────────────────────────────────────────────────────────────────
+// ─── Data ─────────────────────────────────────────────────────────────────────
 const SECTORS = {
-    juridique:{ label:'Droit & Juridique', orch:'ARTHUR', orole:'Stratège Juridique' },
-    sante:{ label:'Santé & Médical', orch:'HIPPO', orole:'Coordinateur Médical' },
-    hotel:{ label:'Hôtellerie', orch:'BUTLER', orole:'Directeur Expérience' },
-    finance:{ label:'Finance & Banque', orch:'SIGMA', orole:'Stratège Financier' },
-    marketing:{ label:'Marketing & Growth', orch:'SPARK', orole:'Stratège Growth' },
-    immo:{ label:'Immobilier', orch:'ATLAS', orole:'Directeur Commercial' },
-    rh:{ label:'RH & Recrutement', orch:'HELIA', orole:'DRH Augmenté' },
-    retail:{ label:'Retail & E-Commerce', orch:'NEXO', orole:'Directeur Retail' }
+    juridique:{ label:'Droit & Juridique',     orch:'ARTHUR', orole:'Stratège Juridique' },
+    sante:    { label:'Santé & Médical',        orch:'HIPPO',  orole:'Coordinateur Médical' },
+    hotel:    { label:'Hôtellerie',             orch:'BUTLER', orole:'Directeur Expérience' },
+    finance:  { label:'Finance & Banque',       orch:'SIGMA',  orole:'Stratège Financier' },
+    marketing:{ label:'Marketing & Growth',     orch:'SPARK',  orole:'Stratège Growth' },
+    immo:     { label:'Immobilier',             orch:'ATLAS',  orole:'Directeur Commercial' },
+    rh:       { label:'RH & Recrutement',       orch:'HELIA',  orole:'DRH Augmenté' },
+    retail:   { label:'Retail & E-Commerce',    orch:'NEXO',   orole:'Directeur Retail' }
 };
 
 const TASKS_BY_SECTOR = {
     juridique:[
-        {id:'contrats',icon:'📄',name:'Analyse de contrats',hrs:8,auto:0.82,agent:'LEX',role:'Analyse'},
-        {id:'veille',icon:'🔍',name:'Veille réglementaire',hrs:5,auto:0.90,agent:'CONFORME',role:'Compliance'},
-        {id:'redac',icon:'✍️',name:'Rédaction de clauses',hrs:6,auto:0.70,agent:'CLAUSE',role:'Rédaction'},
-        {id:'dd',icon:'🔎',name:'Due diligence',hrs:7,auto:0.65,agent:'DUE',role:'M&A'},
-        {id:'juris',icon:'⚖️',name:'Recherche jurisprudence',hrs:4,auto:0.88,agent:'VERDICT',role:'Recherche'},
-        {id:'notif',icon:'🔔',name:'Suivi délais & notifications',hrs:3,auto:0.95,agent:'NOTIF',role:'Alertes'},
+        {id:'contrats',icon:'📄',name:'Analyse de contrats',       hrs:8,auto:0.82,agent:'LEX',      role:'Analyse'},
+        {id:'veille',  icon:'🔍',name:'Veille réglementaire',       hrs:5,auto:0.90,agent:'CONFORME', role:'Compliance'},
+        {id:'redac',   icon:'✍️',name:'Rédaction de clauses',       hrs:6,auto:0.70,agent:'CLAUSE',   role:'Rédaction'},
+        {id:'dd',      icon:'🔎',name:'Due diligence',              hrs:7,auto:0.65,agent:'DUE',      role:'M&A'},
+        {id:'juris',   icon:'⚖️',name:'Recherche jurisprudence',    hrs:4,auto:0.88,agent:'VERDICT',  role:'Recherche'},
+        {id:'notif',   icon:'🔔',name:'Suivi délais & notifications',hrs:3,auto:0.95,agent:'NOTIF',   role:'Alertes'},
     ],
     sante:[
-        {id:'dossiers',icon:'📋',name:'Gestion dossiers patients',hrs:9,auto:0.80,agent:'ANAMNESE',role:'Dossiers'},
-        {id:'codif',icon:'🏷️',name:'Codification médicale',hrs:6,auto:0.92,agent:'CODEX',role:'Facturation'},
-        {id:'cr',icon:'🎙️',name:'Comptes-rendus médicaux',hrs:8,auto:0.75,agent:'CR-MED',role:'Rédaction'},
-        {id:'rdv',icon:'📅',name:'Gestion planning & rappels',hrs:4,auto:0.95,agent:'RDVMED',role:'Agenda'},
-        {id:'pharma',icon:'💊',name:'Contrôle interactions méd.',hrs:3,auto:0.88,agent:'PHARMA',role:'Sécurité'},
-        {id:'factmed',icon:'💶',name:'Facturation tiers-payant',hrs:5,auto:0.85,agent:'TIERS',role:'CPAM'},
+        {id:'dossiers',icon:'📋',name:'Gestion dossiers patients',  hrs:9,auto:0.80,agent:'ANAMNESE', role:'Dossiers'},
+        {id:'codif',   icon:'🏷️',name:'Codification médicale',      hrs:6,auto:0.92,agent:'CODEX',    role:'Facturation'},
+        {id:'cr',      icon:'🎙️',name:'Comptes-rendus médicaux',    hrs:8,auto:0.75,agent:'CR-MED',   role:'Rédaction'},
+        {id:'rdv',     icon:'📅',name:'Gestion planning & rappels', hrs:4,auto:0.95,agent:'RDVMED',   role:'Agenda'},
+        {id:'pharma',  icon:'💊',name:'Contrôle interactions méd.', hrs:3,auto:0.88,agent:'PHARMA',   role:'Sécurité'},
+        {id:'factmed', icon:'💶',name:'Facturation tiers-payant',   hrs:5,auto:0.85,agent:'TIERS',    role:'CPAM'},
     ],
     hotel:[
-        {id:'resa',icon:'🛎️',name:'Gestion réservations',hrs:7,auto:0.88,agent:'REZA',role:'Booking'},
-        {id:'rev',icon:'💰',name:'Revenue management',hrs:5,auto:0.80,agent:'REVMAX',role:'Yield'},
-        {id:'avis',icon:'⭐',name:'Réponses aux avis',hrs:4,auto:0.92,agent:'REVIEW',role:'E-rép'},
-        {id:'conc',icon:'🗺️',name:'Recommandations clients',hrs:5,auto:0.85,agent:'CONCIERGE',role:'XP'},
-        {id:'house',icon:'🧹',name:'Planning ménage & staff',hrs:4,auto:0.78,agent:'HOUSEKEEP',role:'Ops'},
-        {id:'upsell',icon:'📈',name:'Upsell & upgrades auto',hrs:3,auto:0.90,agent:'UPSELL',role:'Revenue'},
+        {id:'resa',   icon:'🛎️',name:'Gestion réservations',        hrs:7,auto:0.88,agent:'REZA',       role:'Booking'},
+        {id:'rev',    icon:'💰',name:'Revenue management',           hrs:5,auto:0.80,agent:'REVMAX',     role:'Yield'},
+        {id:'avis',   icon:'⭐',name:'Réponses aux avis',            hrs:4,auto:0.92,agent:'REVIEW',     role:'E-rép'},
+        {id:'conc',   icon:'🗺️',name:'Recommandations clients',      hrs:5,auto:0.85,agent:'CONCIERGE',  role:'XP'},
+        {id:'house',  icon:'🧹',name:'Planning ménage & staff',      hrs:4,auto:0.78,agent:'HOUSEKEEP',  role:'Ops'},
+        {id:'upsell', icon:'📈',name:'Upsell & upgrades auto',       hrs:3,auto:0.90,agent:'UPSELL',     role:'Revenue'},
     ],
     finance:[
-        {id:'kyc',icon:'🪪',name:'KYC / Vérification clients',hrs:8,auto:0.85,agent:'COMPLY',role:'Compliance'},
-        {id:'report',icon:'📊',name:'Reporting réglementaire',hrs:7,auto:0.88,agent:'REPORT',role:'Reporting'},
-        {id:'risk',icon:'⚠️',name:'Analyse de risque',hrs:6,auto:0.72,agent:'RISK',role:'Risk'},
-        {id:'recap',icon:'🧮',name:'Rapprochement comptable',hrs:5,auto:0.90,agent:'LEDGER',role:'Compta'},
-        {id:'fraude',icon:'🚨',name:'Détection anomalies',hrs:4,auto:0.95,agent:'ALERT',role:'Fraude'},
-        {id:'forecast',icon:'📉',name:'Prévision trésorerie',hrs:4,auto:0.75,agent:'FORECAST',role:'Budget'},
+        {id:'kyc',      icon:'🪪',name:'KYC / Vérification clients', hrs:8,auto:0.85,agent:'COMPLY',   role:'Compliance'},
+        {id:'report',   icon:'📊',name:'Reporting réglementaire',    hrs:7,auto:0.88,agent:'REPORT',   role:'Reporting'},
+        {id:'risk',     icon:'⚠️',name:'Analyse de risque',          hrs:6,auto:0.72,agent:'RISK',     role:'Risk'},
+        {id:'recap',    icon:'🧮',name:'Rapprochement comptable',    hrs:5,auto:0.90,agent:'LEDGER',   role:'Compta'},
+        {id:'fraude',   icon:'🚨',name:'Détection anomalies',        hrs:4,auto:0.95,agent:'ALERT',    role:'Fraude'},
+        {id:'forecast', icon:'📉',name:'Prévision trésorerie',       hrs:4,auto:0.75,agent:'FORECAST', role:'Budget'},
     ],
     marketing:[
-        {id:'content',icon:'✍️',name:'Création de contenu',hrs:10,auto:0.75,agent:'CONTENT',role:'Contenu'},
-        {id:'seo',icon:'🔍',name:'Optimisation SEO',hrs:5,auto:0.80,agent:'SERAPH',role:'SEO'},
-        {id:'ads',icon:'📢',name:'Gestion campagnes ads',hrs:6,auto:0.70,agent:'ADS',role:'Paid'},
-        {id:'social',icon:'📱',name:'Social media & scheduling',hrs:7,auto:0.85,agent:'SOCIAL',role:'Social'},
-        {id:'analytics',icon:'📊',name:'Analyse & reporting',hrs:4,auto:0.88,agent:'INSIGHT',role:'Data'},
-        {id:'email',icon:'📧',name:'Email & automation',hrs:5,auto:0.82,agent:'DRIP',role:'Email'},
+        {id:'content',   icon:'✍️',name:'Création de contenu',       hrs:10,auto:0.75,agent:'CONTENT', role:'Contenu'},
+        {id:'seo',       icon:'🔍',name:'Optimisation SEO',          hrs:5, auto:0.80,agent:'SERAPH',  role:'SEO'},
+        {id:'ads',       icon:'📢',name:'Gestion campagnes ads',     hrs:6, auto:0.70,agent:'ADS',     role:'Paid'},
+        {id:'social',    icon:'📱',name:'Social media & scheduling', hrs:7, auto:0.85,agent:'SOCIAL',  role:'Social'},
+        {id:'analytics', icon:'📊',name:'Analyse & reporting',       hrs:4, auto:0.88,agent:'INSIGHT', role:'Data'},
+        {id:'email',     icon:'📧',name:'Email & automation',        hrs:5, auto:0.82,agent:'DRIP',    role:'Email'},
     ],
     immo:[
-        {id:'leads',icon:'🎯',name:'Sourcing & qualification leads',hrs:7,auto:0.80,agent:'SCOUT',role:'Prospection'},
-        {id:'estim',icon:'🏠',name:'Estimation des biens',hrs:5,auto:0.75,agent:'ESTIM',role:'Estimation'},
-        {id:'docs',icon:'📁',name:'Gestion documentaire',hrs:6,auto:0.88,agent:'DOCIMO',role:'Juridique'},
-        {id:'visites',icon:'🗓️',name:'Planification visites',hrs:4,auto:0.92,agent:'VISIT',role:'Agenda'},
-        {id:'gestion',icon:'🔑',name:'Gestion locative',hrs:5,auto:0.82,agent:'RENTAL',role:'Gestion'},
-        {id:'comply_i',icon:'📋',name:'Diagnostics & conformité',hrs:3,auto:0.85,agent:'COMPLY-IMM',role:'DPE'},
+        {id:'leads',    icon:'🎯',name:'Sourcing & qualification leads',hrs:7,auto:0.80,agent:'SCOUT',      role:'Prospection'},
+        {id:'estim',    icon:'🏠',name:'Estimation des biens',         hrs:5,auto:0.75,agent:'ESTIM',      role:'Estimation'},
+        {id:'docs',     icon:'📁',name:'Gestion documentaire',         hrs:6,auto:0.88,agent:'DOCIMO',     role:'Juridique'},
+        {id:'visites',  icon:'🗓️',name:'Planification visites',        hrs:4,auto:0.92,agent:'VISIT',      role:'Agenda'},
+        {id:'gestion',  icon:'🔑',name:'Gestion locative',             hrs:5,auto:0.82,agent:'RENTAL',     role:'Gestion'},
+        {id:'comply_i', icon:'📋',name:'Diagnostics & conformité',     hrs:3,auto:0.85,agent:'COMPLY-IMM', role:'DPE'},
     ],
     rh:[
-        {id:'cv',icon:'📄',name:'Tri CV & pré-qualification',hrs:8,auto:0.88,agent:'SORTER',role:'Recrutement'},
-        {id:'onboard',icon:'🎓',name:'Onboarding collaborateurs',hrs:5,auto:0.80,agent:'ONBOARD',role:'Intégration'},
-        {id:'paie',icon:'💳',name:'Calcul paie & bulletins',hrs:6,auto:0.85,agent:'PAIE',role:'Paie'},
-        {id:'form',icon:'📚',name:'Plans de formation',hrs:4,auto:0.78,agent:'FORM',role:'Formation'},
-        {id:'talent',icon:'💡',name:'Détection talents internes',hrs:3,auto:0.70,agent:'TALENT',role:'Mobilité'},
-        {id:'engage',icon:'❤️',name:'Engagement & satisfaction',hrs:3,auto:0.75,agent:'WELLBEING',role:'Culture'},
+        {id:'cv',      icon:'📄',name:'Tri CV & pré-qualification',   hrs:8,auto:0.88,agent:'SORTER',   role:'Recrutement'},
+        {id:'onboard', icon:'🎓',name:'Onboarding collaborateurs',    hrs:5,auto:0.80,agent:'ONBOARD',  role:'Intégration'},
+        {id:'paie',    icon:'💳',name:'Calcul paie & bulletins',      hrs:6,auto:0.85,agent:'PAIE',     role:'Paie'},
+        {id:'form',    icon:'📚',name:'Plans de formation',           hrs:4,auto:0.78,agent:'FORM',     role:'Formation'},
+        {id:'talent',  icon:'💡',name:'Détection talents internes',   hrs:3,auto:0.70,agent:'TALENT',   role:'Mobilité'},
+        {id:'engage',  icon:'❤️',name:'Engagement & satisfaction',    hrs:3,auto:0.75,agent:'WELLBEING',role:'Culture'},
     ],
     retail:[
-        {id:'catalog',icon:'🗃️',name:'Gestion catalogue produits',hrs:7,auto:0.85,agent:'CATALOG',role:'Catalogue'},
-        {id:'pricing',icon:'🏷️',name:'Pricing dynamique',hrs:4,auto:0.88,agent:'PRICER',role:'Pricing'},
-        {id:'sav_r',icon:'🎧',name:'Service client / SAV',hrs:8,auto:0.80,agent:'SAV',role:'Support'},
-        {id:'stock',icon:'📦',name:'Gestion des stocks',hrs:5,auto:0.82,agent:'STOCK',role:'Logistique'},
-        {id:'cross',icon:'🔄',name:'Cross-sell & recommandations',hrs:3,auto:0.78,agent:'CROSS',role:'Conversion'},
-        {id:'retours',icon:'↩️',name:'Gestion retours & litiges',hrs:4,auto:0.75,agent:'RETURN',role:'Après-vente'},
+        {id:'catalog', icon:'🗃️',name:'Gestion catalogue produits', hrs:7,auto:0.85,agent:'CATALOG', role:'Catalogue'},
+        {id:'pricing', icon:'🏷️',name:'Pricing dynamique',          hrs:4,auto:0.88,agent:'PRICER',  role:'Pricing'},
+        {id:'sav_r',   icon:'🎧',name:'Service client / SAV',       hrs:8,auto:0.80,agent:'SAV',     role:'Support'},
+        {id:'stock',   icon:'📦',name:'Gestion des stocks',         hrs:5,auto:0.82,agent:'STOCK',   role:'Logistique'},
+        {id:'cross',   icon:'🔄',name:'Cross-sell & recommandations',hrs:3,auto:0.78,agent:'CROSS',  role:'Conversion'},
+        {id:'retours', icon:'↩️',name:'Gestion retours & litiges',  hrs:4,auto:0.75,agent:'RETURN',  role:'Après-vente'},
     ]
 };
 
 const SALARY_BY_SECTOR = {
     juridique:4200, sante:3200, hotel:2800, finance:4800,
-    marketing:3400, immo:3000, rh:3200, retail:2600
+    marketing:3400, immo:3000,  rh:3200,   retail:2600
 };
 
 const FEED_MESSAGES = [
-    ['LEX', 'a analysé 12 contrats', '+4h20'],
-    ['CONFORME', 'a scanné 3 nouvelles directives EU', '+1h45'],
-    ['SORTER', 'a traité 47 candidatures', '+6h10'],
-    ['SIGMA', 'a généré le rapport mensuel', '+2h30'],
-    ['CONTENT', 'a rédigé 8 articles SEO', '+9h00'],
-    ['REZA', 'a traité 23 réservations', '+3h15'],
-    ['CODEX', 'a codifié 34 actes médicaux', '+2h50'],
-    ['ALERT', 'a détecté 2 anomalies', '+0h45'],
-    ['SCOUT', 'a qualifié 18 leads entrants', '+5h20'],
-    ['DRIP', 'a envoyé 1 200 emails personnalisés', '+4h00'],
-    ['REVIEW', 'a répondu à 15 avis Google', '+2h10'],
-    ['PAIE', 'a calculé 28 bulletins de paie', '+7h30'],
+    ['LEX',      'a analysé 12 contrats',                 '+4h20'],
+    ['CONFORME', 'a scanné 3 nouvelles directives EU',    '+1h45'],
+    ['SORTER',   'a traité 47 candidatures',              '+6h10'],
+    ['SIGMA',    'a généré le rapport mensuel',           '+2h30'],
+    ['CONTENT',  'a rédigé 8 articles SEO',               '+9h00'],
+    ['REZA',     'a traité 23 réservations',              '+3h15'],
+    ['CODEX',    'a codifié 34 actes médicaux',           '+2h50'],
+    ['ALERT',    'a détecté 2 anomalies de facturation',  '+0h45'],
+    ['SCOUT',    'a qualifié 18 leads entrants',          '+5h20'],
+    ['DRIP',     'a envoyé 1 200 emails personnalisés',   '+4h00'],
+    ['REVIEW',   'a répondu à 15 avis Google',            '+2h10'],
+    ['PAIE',     'a calculé 28 bulletins de paie',        '+7h30'],
 ];
 
-// ─── State ───────────────────────────────────────────────────────────────────
+// ─── State ─────────────────────────────────────────────────────────────────────
 let state = { sector:'juridique', employees:8, selectedTasks:[] };
+let _breakdownData = { cost:[], prod:[] };
+let _activeBreakdown = 'cost';
 
-// ─── Step 1 ───────────────────────────────────────────────────────────────────
+// ─── Step 1 ─────────────────────────────────────────────────────────────────────
 document.querySelectorAll('.sector-card').forEach(c => {
     c.addEventListener('click', () => {
         document.querySelectorAll('.sector-card').forEach(x => x.classList.remove('selected'));
@@ -671,15 +889,10 @@ document.getElementById('empPlus').addEventListener('click', () => {
     empVal = Math.min(500, empVal + 1);
     empDisplay.textContent = empVal;
 });
-// Long press
 ['empMinus','empPlus'].forEach(id => {
     let interval;
     const btn = document.getElementById(id);
-    btn.addEventListener('mousedown', () => {
-        interval = setInterval(() => {
-            btn.click();
-        }, 80);
-    });
+    btn.addEventListener('mousedown', () => { interval = setInterval(() => btn.click(), 80); });
     btn.addEventListener('mouseup', () => clearInterval(interval));
     btn.addEventListener('mouseleave', () => clearInterval(interval));
 });
@@ -690,7 +903,7 @@ document.getElementById('toStep2').addEventListener('click', () => {
     goToStep(2);
 });
 
-// ─── Step 2 ───────────────────────────────────────────────────────────────────
+// ─── Step 2 ─────────────────────────────────────────────────────────────────────
 function buildTasksGrid() {
     const tasks = TASKS_BY_SECTOR[state.sector];
     const grid = document.getElementById('tasksGrid');
@@ -704,23 +917,16 @@ function buildTasksGrid() {
         </div>
     `).join('');
     grid.querySelectorAll('.task-card').forEach(c => {
-        c.addEventListener('click', () => {
-            c.classList.toggle('selected');
-            updateTally();
-        });
+        c.addEventListener('click', () => { c.classList.toggle('selected'); updateTally(); });
     });
-    // Pre-select all
     state.selectedTasks = tasks.map(t => t.id);
     updateTally();
 }
 
 function getSelectedTasks() {
     return Array.from(document.querySelectorAll('.task-card.selected')).map(c => ({
-        id: c.dataset.task,
-        hrs: parseFloat(c.dataset.hrs),
-        auto: parseFloat(c.dataset.auto),
-        agent: c.dataset.agent,
-        role: c.dataset.role,
+        id: c.dataset.task, hrs: parseFloat(c.dataset.hrs),
+        auto: parseFloat(c.dataset.auto), agent: c.dataset.agent, role: c.dataset.role,
     }));
 }
 
@@ -728,35 +934,24 @@ function updateTally() {
     const tasks = getSelectedTasks();
     const totalHrs = tasks.reduce((s, t) => s + t.hrs * t.auto * state.employees, 0);
     const agents = Math.max(1, Math.ceil(tasks.length * 0.8));
-    const salary = SALARY_BY_SECTOR[state.sector];
-    const saving = tasks.reduce((s, t) => {
-        const yEmp = t.hrs * t.auto * state.employees * salary / 40 * 52;
-        return s + yEmp * 0.88;
-    }, 0);
+    const avgAuto = tasks.length ? tasks.reduce((s,t) => s + t.auto, 0) / tasks.length : 0;
     document.getElementById('tallyTasks').textContent = tasks.length;
     document.getElementById('tallyHours').textContent = Math.round(totalHrs) + 'h';
     document.getElementById('tallyAgents').textContent = agents;
-    document.getElementById('tallySaving').textContent = formatK(saving);
+    document.getElementById('tallySaving').textContent = tasks.length ? Math.round(avgAuto * 100) + '%' : '—';
     document.getElementById('toStep3').disabled = tasks.length === 0;
 }
 
 document.getElementById('toStep1').addEventListener('click', () => goToStep(1));
-document.getElementById('toStep3').addEventListener('click', () => {
-    goToStep(3);
-    runSimulation();
-});
+document.getElementById('toStep3').addEventListener('click', () => { goToStep(3); runSimulation(); });
 
-// ─── Step 3 ───────────────────────────────────────────────────────────────────
+// ─── Step 3 ─────────────────────────────────────────────────────────────────────
 function runSimulation() {
     document.getElementById('loadingScreen').style.display = 'flex';
     document.getElementById('resultsWrap').classList.remove('visible');
     document.getElementById('resultNav').style.display = 'none';
 
-    const tasks = getSelectedTasks();
     const sector = SECTORS[state.sector];
-    const salary = SALARY_BY_SECTOR[state.sector];
-
-    // Loading messages
     const loadMsgs = [
         'Déploiement de ' + sector.orch + '…',
         'Analyse de vos processus…',
@@ -768,50 +963,82 @@ function runSimulation() {
     ];
     const feedEl = document.getElementById('agentFeed');
     let mi = 0;
-    const msgInterval = setInterval(() => {
-        feedEl.textContent = loadMsgs[mi % loadMsgs.length];
-        mi++;
-    }, 380);
-
+    const msgInterval = setInterval(() => { feedEl.textContent = loadMsgs[mi % loadMsgs.length]; mi++; }, 380);
     setTimeout(() => {
         clearInterval(msgInterval);
         document.getElementById('loadingScreen').style.display = 'none';
-        showResults(tasks, sector, salary);
+        showResults(getSelectedTasks(), sector, SALARY_BY_SECTOR[state.sector]);
     }, 2700);
 }
 
 function showResults(tasks, sector, salary) {
     const emp = state.employees;
 
-    // Calculations
-    const totalHrsWeek = tasks.reduce((s, t) => s + t.hrs * t.auto * emp, 0);
-    const totalHrsMon = totalHrsWeek * 4.33;
-    const totalSavingYear = tasks.reduce((s, t) => {
-        return s + t.hrs * t.auto * emp * (salary / 40 * 52) * 0.88;
-    }, 0);
-    const totalSavingMon = totalSavingYear / 12;
-    const agentCount = Math.max(1, Math.ceil(tasks.length * 0.8));
-    const autoRate = tasks.reduce((s, t) => s + t.auto, 0) / Math.max(tasks.length, 1);
+    // ── Core calculations
+    const totalHrsWeek   = tasks.reduce((s, t) => s + t.hrs * t.auto * emp, 0);
+    const totalHrsMon    = Math.round(totalHrsWeek * 4.33);
+    const autoRate       = tasks.reduce((s, t) => s + t.auto, 0) / Math.max(tasks.length, 1);
+    const agentCount     = Math.max(1, Math.ceil(tasks.length * 0.8));
 
-    // Plan
-    let payback, deployPrice;
-    if (agentCount <= 3) { deployPrice = 990; payback = deployPrice / totalSavingMon; }
-    else if (agentCount <= 8) { deployPrice = 1990; payback = deployPrice / totalSavingMon; }
-    else { deployPrice = 3500; payback = deployPrice / totalSavingMon; }
-    payback = Math.max(0.5, Math.min(payback, 12));
+    // ── % Metrics (honest, per-person basis)
+    // Assume a professional devotes ~40h/week, selected tasks occupy a subset
+    // We measure freed time as % of the total automatable hours identified
+    const totalHrsPerPersonPerWeek = tasks.reduce((s, t) => s + t.hrs, 0); // raw hours before automation
+    const freedHrsPerPersonPerWeek = tasks.reduce((s, t) => s + t.hrs * t.auto, 0); // hours actually freed
+    const pctFreed = Math.min(0.60, freedHrsPerPersonPerWeek / Math.max(totalHrsPerPersonPerWeek, 1));
 
-    // ── Hero
+    // Cost reduction: freed hours / total selected hours = % of selected work cost eliminated
+    const costReductionPct = Math.round(pctFreed * 100 * 0.88); // 0.88 = partial automation efficiency factor
+
+    // Productivity gain: freed capacity redirected to high-value work (+30% multiplier for focus quality)
+    const productivityGainPct = Math.min(68, Math.round(pctFreed * 100 * 1.30));
+
+    // ETP (equivalent full-time employees freed)
+    const etpFreed = (totalHrsMon / 173).toFixed(1); // 173h = 1 FTE month
+
+    // Payback estimate (based on agent count → deployment cost)
+    const deployPrice = agentCount <= 3 ? 990 : agentCount <= 8 ? 1990 : 3500;
+    // Monthly value = freed ETP * monthly salary rough equivalent
+    const monthlySavingProxy = parseFloat(etpFreed) * salary * 0.7;
+    const payback = Math.max(0.5, Math.min(12, deployPrice / Math.max(monthlySavingProxy, 1)));
+
+    // ── Breakdown data (per task contribution)
+    const totalFreedHrs = tasks.reduce((s, t) => s + t.hrs * t.auto, 0);
+    _breakdownData.cost = tasks.map(t => ({
+        icon: TASKS_BY_SECTOR[state.sector].find(x => x.agent === t.agent)?.icon || '⚙️',
+        name: t.agent,
+        fullName: TASKS_BY_SECTOR[state.sector].find(x => x.agent === t.agent)?.name || t.role,
+        pct: totalFreedHrs > 0 ? Math.round((t.hrs * t.auto / totalFreedHrs) * costReductionPct) : 0,
+        type: 'cost'
+    })).sort((a,b) => b.pct - a.pct);
+    _breakdownData.prod = tasks.map(t => ({
+        icon: TASKS_BY_SECTOR[state.sector].find(x => x.agent === t.agent)?.icon || '⚙️',
+        name: t.agent,
+        fullName: TASKS_BY_SECTOR[state.sector].find(x => x.agent === t.agent)?.name || t.role,
+        pct: totalFreedHrs > 0 ? Math.round((t.hrs * t.auto / totalFreedHrs) * productivityGainPct) : 0,
+        type: 'prod'
+    })).sort((a,b) => b.pct - a.pct);
+
+    // ── Hero KPIs
     document.getElementById('resSector').textContent = sector.label;
-    animCount('heroAmount', 0, totalSavingYear, 1800, v => formatK(v) + '/an', 'var(--green)');
-    document.getElementById('heroSub').textContent = `Basé sur ${emp} employés et ${tasks.length} processus automatisables`;
-    document.getElementById('badgeHours').textContent = '⏱ ' + Math.round(totalHrsWeek) + 'h récupérées / semaine';
-    document.getElementById('badgeAgents').textContent = '🤖 ' + agentCount + ' agents déployés';
-    document.getElementById('badgeROI').textContent = '📈 ROI en ' + (payback < 1 ? Math.round(payback*30) + ' jours' : payback.toFixed(1) + ' mois');
+    document.getElementById('resEmpCount').textContent = emp + ' employé' + (emp > 1 ? 's' : '');
+    animCount('kpiCostReduction', 0, costReductionPct, 1600, v => '−' + Math.round(v) + '%', null);
+    animCount('kpiProductivity',  0, productivityGainPct, 1800, v => '+' + Math.round(v) + '%', null);
+
+    document.getElementById('badgeHours').textContent   = '⏱ ' + Math.round(totalHrsWeek) + 'h récupérées / semaine';
+    document.getElementById('badgeAgents').textContent  = '🤖 ' + agentCount + ' agents déployés';
+    document.getElementById('badgeROI').textContent     = '📈 ROI en ' + (payback < 1 ? Math.round(payback*30) + ' jours' : payback.toFixed(1) + ' mois');
 
     // ── Stats
-    animCount('statMonth', 0, totalSavingMon, 1400, v => formatK(v), 'var(--green)');
-    animCount('statHours', 0, totalHrsMon, 1200, v => Math.round(v) + 'h', '#818cf8');
-    animCount('statAuto', 0, autoRate * 100, 1000, v => Math.round(v) + '%', '#f472b6');
+    animCount('statHours', 0, totalHrsMon, 1200, v => Math.round(v) + 'h', 'var(--green)');
+    animCount('statETP',   0, parseFloat(etpFreed), 1400, v => v.toFixed(1), '#818cf8');
+    animCount('statAuto',  0, autoRate * 100, 1000, v => Math.round(v) + '%', '#f472b6');
+
+    // ── Breakdown
+    _activeBreakdown = 'cost';
+    document.getElementById('tabCost').classList.add('active');
+    document.getElementById('tabProd').classList.remove('active');
+    renderBreakdown('cost');
 
     // ── Live feed
     startLiveFeed();
@@ -822,19 +1049,16 @@ function showResults(tasks, sector, salary) {
     // ── Gauge
     setTimeout(() => {
         const pct = Math.max(0.1, Math.min(1, 1 - (payback / 12)));
-        const offset = 220 - (220 * pct);
-        document.getElementById('gaugePath').style.strokeDashoffset = offset;
+        document.getElementById('gaugePath').style.strokeDashoffset = 220 - (220 * pct);
         document.getElementById('gaugeVal').textContent = payback < 1 ? '<1' : payback.toFixed(1);
         document.getElementById('gaugeDesc').textContent =
-            `À ce rythme, votre investissement NexusAI est rentabilisé en ${payback < 1 ? 'moins d\'1 mois' : payback.toFixed(1) + ' mois'}, puis votre équipe IA génère un profit net en continu.`;
+            `À ce rythme, votre investissement NexusAI est amorti en ${payback < 1 ? 'moins d\'1 mois' : payback.toFixed(1) + ' mois'}, puis chaque mois suivant représente un gain net continu.`;
     }, 600);
 
-    // ── Agents recommendation
+    // ── Agents
     document.getElementById('recTeamName').textContent = sector.label + ' — ' + agentCount + ' agents';
-    const recAgentsEl = document.getElementById('recAgents');
-    // Orchestrator first
-    const agents = [{ name: sector.orch, role: sector.orole }, ...tasks.slice(0, agentCount - 1).map(t => ({ name: t.agent, role: t.role }))];
-    recAgentsEl.innerHTML = agents.map(a => `
+    const agentsList = [{ name: sector.orch, role: sector.orole }, ...tasks.slice(0, agentCount - 1).map(t => ({ name: t.agent, role: t.role }))];
+    document.getElementById('recAgents').innerHTML = agentsList.map(a => `
         <div class="rec-agent">
             <div class="rec-agent-avatar">${a.name.slice(0,2)}</div>
             <div class="rec-agent-info">
@@ -848,31 +1072,50 @@ function showResults(tasks, sector, salary) {
     document.getElementById('resultNav').style.display = 'flex';
 }
 
-function buildTimeline(tasks) {
-    const hours = ['9h','10h','11h','12h','14h','15h','16h','17h'];
-    const before = document.getElementById('timelineBefore');
-    const after = document.getElementById('timelineAfter');
+function renderBreakdown(type) {
+    const data = _breakdownData[type];
+    const maxPct = Math.max(...data.map(d => d.pct), 1);
+    const container = document.getElementById('breakdownRows');
+    container.innerHTML = data.map(d => `
+        <div class="breakdown-row">
+            <div class="breakdown-icon">${d.icon}</div>
+            <div class="breakdown-label">${d.fullName}</div>
+            <div class="breakdown-bar-wrap">
+                <div class="breakdown-bar-fill ${type}" style="width:0%" data-target="${Math.round(d.pct / maxPct * 100)}%"></div>
+            </div>
+            <div class="breakdown-pct">${d.pct}%</div>
+        </div>
+    `).join('');
+    // Animate bars
+    requestAnimationFrame(() => {
+        container.querySelectorAll('.breakdown-bar-fill').forEach(bar => {
+            requestAnimationFrame(() => { bar.style.width = bar.dataset.target; });
+        });
+    });
+}
 
-    // Before: mostly manual (red), some free
+window.switchBreakdown = function(type) {
+    _activeBreakdown = type;
+    document.getElementById('tabCost').classList.toggle('active', type === 'cost');
+    document.getElementById('tabProd').classList.toggle('active', type === 'prod');
+    renderBreakdown(type);
+};
+
+function buildTimeline(tasks) {
+    const before = document.getElementById('timelineBefore');
+    const after  = document.getElementById('timelineAfter');
     const beforeBlocks = tasks.slice(0, 8).map((t, i) => ({
         type: i < 6 ? 'manual' : 'free',
         label: i < 6 ? t.agent.split('-')[0] : '—'
     }));
-    while (beforeBlocks.length < 8) beforeBlocks.push({ type: 'free', label: '—' });
-
-    // After: mostly AI (green), some free
+    while (beforeBlocks.length < 8) beforeBlocks.push({ type:'free', label:'—' });
     const afterBlocks = tasks.slice(0, 8).map((t, i) => ({
         type: i < 5 ? 'ai' : 'free',
         label: i < 5 ? t.agent.split('-')[0] : 'Libre'
     }));
-    while (afterBlocks.length < 8) afterBlocks.push({ type: 'free', label: 'Libre' });
-
-    before.innerHTML = beforeBlocks.map(b =>
-        `<div class="tl-block ${b.type}" style="animation-delay:${Math.random()*0.3}s">${b.label}</div>`
-    ).join('');
-    after.innerHTML = afterBlocks.map(b =>
-        `<div class="tl-block ${b.type}" style="animation-delay:${Math.random()*0.3}s">${b.label}</div>`
-    ).join('');
+    while (afterBlocks.length < 8) afterBlocks.push({ type:'free', label:'Libre' });
+    before.innerHTML = beforeBlocks.map(b => `<div class="tl-block ${b.type}">${b.label}</div>`).join('');
+    after.innerHTML  = afterBlocks.map(b => `<div class="tl-block ${b.type}">${b.label}</div>`).join('');
 }
 
 let feedInterval = null;
@@ -896,18 +1139,15 @@ function startLiveFeed() {
 
 // ─── Navigation ───────────────────────────────────────────────────────────────
 function goToStep(n) {
-    document.querySelectorAll('.panel').forEach((p, i) => {
-        p.classList.toggle('active', i + 1 === n);
-    });
+    document.querySelectorAll('.panel').forEach((p, i) => p.classList.toggle('active', i + 1 === n));
     document.getElementById('progressFill').style.width = (n / 3 * 100) + '%';
-    // Update step nav
     for (let i = 1; i <= 3; i++) {
-        const nav = document.getElementById('stepNav' + i);
+        const nav  = document.getElementById('stepNav' + i);
         const conn = document.getElementById('conn' + (i - 1));
         nav.classList.remove('active', 'done');
-        if (i < n) { nav.classList.add('done'); nav.querySelector('.step-num').textContent = '✓'; }
-        else if (i === n) { nav.classList.add('active'); nav.querySelector('.step-num').textContent = i; }
-        else { nav.querySelector('.step-num').textContent = i; }
+        if (i < n)      { nav.classList.add('done');   nav.querySelector('.step-num').textContent = '✓'; }
+        else if (i === n){ nav.classList.add('active'); nav.querySelector('.step-num').textContent = i; }
+        else             { nav.querySelector('.step-num').textContent = i; }
         if (conn) conn.classList.toggle('done', n > i);
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -918,20 +1158,14 @@ window.resetSim = function() {
     goToStep(1);
 };
 
-// ─── Helpers ───────────────────────────────────────────────────────────────────
-function formatK(n) {
-    if (n >= 1000000) return (n/1000000).toFixed(1).replace('.0','') + 'M€';
-    if (n >= 1000) return Math.round(n/1000) + 'K€';
-    return Math.round(n) + '€';
-}
-
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 function animCount(id, from, to, dur, fmt, color) {
     const el = document.getElementById(id);
     if (!el) return;
     if (color) el.style.color = color;
     const start = performance.now();
     function tick(now) {
-        const pct = Math.min((now - start) / dur, 1);
+        const pct  = Math.min((now - start) / dur, 1);
         const ease = 1 - Math.pow(1 - pct, 3);
         el.textContent = fmt(from + (to - from) * ease);
         if (pct < 1) requestAnimationFrame(tick);
