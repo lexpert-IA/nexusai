@@ -6140,6 +6140,176 @@
         }
     </style>
 
+    <!-- ──────────────── OBJECTIONS / FAQ ──────────────── -->
+    <section id="faq" style="padding: 6rem 2rem; position: relative; z-index: 2; max-width: 860px; margin: 0 auto;">
+        <style>
+        .faq-eyebrow { text-align:center; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:3px; color:#6366f1; margin-bottom:0.8rem; }
+        .faq-title { font-family:'Space Grotesk',sans-serif; font-size:clamp(1.8rem,4vw,2.6rem); font-weight:800; letter-spacing:-1.5px; text-align:center; margin-bottom:0.6rem; }
+        .faq-sub { text-align:center; color:#9ca3af; font-size:0.9rem; max-width:480px; margin:0 auto 3rem; }
+
+        .faq-list { display:flex; flex-direction:column; gap:0.6rem; }
+        .faq-item {
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-item:hover { border-color: rgba(99,102,241,0.2); }
+        .faq-item.open { border-color: rgba(99,102,241,0.25); background: rgba(99,102,241,0.03); }
+        .faq-question {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1.1rem 1.5rem; cursor: pointer; gap: 1rem;
+            user-select: none;
+        }
+        .faq-q-left { display:flex; align-items:center; gap:0.9rem; }
+        .faq-q-icon {
+            width:32px; height:32px; border-radius:10px; flex-shrink:0;
+            display:flex; align-items:center; justify-content:center;
+            background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.12);
+            font-size:0.9rem;
+        }
+        .faq-q-text { font-size:0.9rem; font-weight:700; color:#f0f0f5; }
+        .faq-q-arrow {
+            width:20px; height:20px; border-radius:6px;
+            background: rgba(255,255,255,0.05);
+            display:flex; align-items:center; justify-content:center;
+            flex-shrink:0; transition:transform 0.3s, background 0.2s;
+        }
+        .faq-item.open .faq-q-arrow { transform:rotate(180deg); background:rgba(99,102,241,0.12); }
+        .faq-answer {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.16,1,0.3,1), padding 0.3s;
+            padding: 0 1.5rem;
+        }
+        .faq-item.open .faq-answer { max-height: 400px; padding: 0 1.5rem 1.4rem; }
+        .faq-answer-inner { font-size:0.84rem; color:rgba(255,255,255,0.65); line-height:1.75; border-top:1px solid rgba(255,255,255,0.06); padding-top:1rem; }
+        .faq-answer-inner strong { color:#f0f0f5; font-weight:600; }
+        .faq-answer-inner .faq-tag {
+            display:inline-flex; align-items:center; gap:0.3rem;
+            font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.8px;
+            padding:0.15rem 0.5rem; border-radius:6px; margin-right:0.3rem;
+        }
+        .faq-tag.green { background:rgba(34,197,94,0.1); color:#4ade80; border:1px solid rgba(34,197,94,0.15); }
+        .faq-tag.purple { background:rgba(99,102,241,0.1); color:#a78bfa; border:1px solid rgba(99,102,241,0.15); }
+        </style>
+
+        <div class="faq-eyebrow">Questions fréquentes</div>
+        <h2 class="faq-title">On répond franchement.</h2>
+        <p class="faq-sub">Les vraies questions que se posent les dirigeants avant de signer — avec des réponses directes.</p>
+
+        <div class="faq-list">
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <div class="faq-q-left">
+                        <div class="faq-q-icon">🔒</div>
+                        <div class="faq-q-text">Que deviennent nos données ? On est soumis au RGPD.</div>
+                    </div>
+                    <div class="faq-q-arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div>
+                </div>
+                <div class="faq-answer"><div class="faq-answer-inner">
+                    <span class="faq-tag green">✓ RGPD</span><br><br>
+                    Vos données ne quittent pas votre infrastructure. Les agents sont déployés <strong>dans votre environnement</strong> — serveur dédié, VPN, ou cloud privé selon votre choix. Aucune donnée client ne transite par nos serveurs après le déploiement.<br><br>
+                    Nous signons un <strong>DPA (Data Processing Agreement)</strong> en bonne et due forme, et un NDA si souhaité. Tous nos déploiements incluent un audit de conformité RGPD initial. Nos clients dans la santé et le juridique ont des exigences particulièrement strictes — nous les respectons.
+                </div></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <div class="faq-q-left">
+                        <div class="faq-q-icon">🔗</div>
+                        <div class="faq-q-text">Ça s'intègre avec notre CRM, ERP ou logiciel métier ?</div>
+                    </div>
+                    <div class="faq-q-arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div>
+                </div>
+                <div class="faq-answer"><div class="faq-answer-inner">
+                    <span class="faq-tag green">✓ API-first</span><br><br>
+                    Oui — à condition que votre outil expose une API ou un webhook. En pratique ça couvre Salesforce, HubSpot, Notion, Airtable, Google Workspace, SAP, Sage, Pennylane, et la plupart des logiciels métier du marché.<br><br>
+                    Si votre outil n'a pas d'API, notre architecte évalue les alternatives (export fichier automatisé, RPA, connecteur natif). On a intégré des logiciels très spécifiques, y compris des systèmes legacy en cabinet médical ou en juridique.<br><br>
+                    <strong>La phase d'audit initiale sert précisément à mapper vos outils</strong> et à confirmer la faisabilité avant tout engagement.
+                </div></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <div class="faq-q-left">
+                        <div class="faq-q-icon">🛠️</div>
+                        <div class="faq-q-text">Qui s'occupe de la maintenance si quelque chose tombe en panne ?</div>
+                    </div>
+                    <div class="faq-q-arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div>
+                </div>
+                <div class="faq-answer"><div class="faq-answer-inner">
+                    <span class="faq-tag purple">SLA inclus</span><br><br>
+                    Nous. Pas votre équipe IT, pas un prestataire externe. L'accompagnement mensuel couvre la <strong>surveillance continue, les corrections et les évolutions</strong> de vos agents.<br><br>
+                    Concrètement : monitoring 24/7 avec alertes automatiques, SLA d'intervention sous 4h ouvrées pour les incidents critiques, et mises à jour proactives quand un modèle IA sous-jacent évolue. Vous êtes notifié mais vous n'avez rien à faire.<br><br>
+                    <strong>Votre équipe n'a pas besoin de compétences IA.</strong> C'est exactement pour ça que nous existons.
+                </div></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <div class="faq-q-left">
+                        <div class="faq-q-icon">🤖</div>
+                        <div class="faq-q-text">C'est pas juste ChatGPT avec un beau habillage ?</div>
+                    </div>
+                    <div class="faq-q-arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div>
+                </div>
+                <div class="faq-answer"><div class="faq-answer-inner">
+                    <span class="faq-tag green">Bonne question</span><br><br>
+                    Non — et la différence est structurelle. ChatGPT est un outil de chat généraliste. Un agent NexusAI est un <strong>programme autonome</strong> qui : lit vos données en temps réel, prend des décisions, déclenche des actions dans vos outils (envoyer un email, mettre à jour un CRM, générer un fichier), et recommence sans que vous ayez rien à faire.<br><br>
+                    C'est la différence entre un calculatrice et un comptable. L'un répond quand on lui parle. L'autre travaille en permanence dans votre organisation.<br><br>
+                    <strong>Nos agents utilisent plusieurs modèles IA</strong> (GPT-4o, Claude 3.5, Mistral selon les besoins) combinés avec votre contexte métier, vos données, et une logique d'orchestration sur mesure.
+                </div></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <div class="faq-q-left">
+                        <div class="faq-q-icon">📅</div>
+                        <div class="faq-q-text">Combien de temps entre le premier appel et les premiers résultats ?</div>
+                    </div>
+                    <div class="faq-q-arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div>
+                </div>
+                <div class="faq-answer"><div class="faq-answer-inner">
+                    <span class="faq-tag purple">7 jours</span><br><br>
+                    Le premier agent en production en <strong>7 jours ouvrés</strong> dans la majorité des cas. Voici comment :<br><br>
+                    J1–J2 : Audit de vos processus et de votre stack technique<br>
+                    J3–J4 : Architecture de la solution et validation avec vous<br>
+                    J5–J6 : Développement et tests en environnement de staging<br>
+                    J7 : Mise en production du premier agent, avec vous<br><br>
+                    Le déploiement complet d'un écosystème multi-agents prend généralement 3 à 6 semaines. Mais vous commencez à voir des résultats dès la première semaine.
+                </div></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <div class="faq-q-left">
+                        <div class="faq-q-icon">💸</div>
+                        <div class="faq-q-text">Et si ça ne donne pas les résultats attendus ?</div>
+                    </div>
+                    <div class="faq-q-arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div>
+                </div>
+                <div class="faq-answer"><div class="faq-answer-inner">
+                    <span class="faq-tag green">Garantie 30 jours</span><br><br>
+                    Chaque déploiement inclut une <strong>garantie de résultat sur 30 jours</strong>. On définit ensemble des KPIs mesurables avant de commencer (temps économisé, taux d'automatisation, délais de traitement).<br><br>
+                    Si à J30 les résultats ne sont pas au rendez-vous, nous itérons à nos frais jusqu'à ce qu'ils le soient — ou nous remboursons intégralement. Nous avons intérêt à ce que ça marche autant que vous.<br><br>
+                    <strong>Notre taux de renouvellement client est de 98%.</strong> Ce chiffre ne tient que si le produit tient ses promesses.
+                </div></div>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+    function toggleFaq(el) {
+        const item = el.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+    }
+    </script>
+
     <section id="tarifs">
         <div class="enterprise-hero reveal">
             <div class="section-label">Solutions Enterprise</div>
