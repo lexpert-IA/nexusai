@@ -4278,14 +4278,13 @@
     <section class="hero">
         <div class="hero-badge">
             <span class="badge-dot"></span>
-            Pour les dirigeants de PME qui veulent passer à l'IA sans friction
+            Déployé en 7 jours · Garanti ou remboursé
         </div>
         <h1 class="hero-title" id="heroTitle">
-            <span class="title-line" data-line="0">On déploie des</span>
-            <span class="title-line" data-line="1">agents IA qui</span>
-            <span class="title-line gradient-text" data-line="2">travaillent à votre place — en 24h, clé en main.</span>
+            <span class="title-line" data-line="0">Des agents IA qui bossent</span>
+            <span class="title-line gradient-text" data-line="1">pendant que vous dirigez.</span>
         </h1>
-        <p class="hero-subtitle" id="heroSubtitle">Vos équipes perdent en moyenne 40 % de leur temps sur des tâches répétitives. Nos agents s'en chargent en autonomie — vous récupérez du temps, vos clients voient la différence.</p>
+        <p class="hero-subtitle" id="heroSubtitle">Automatisez les tâches répétitives. Mesurez les gains à J+30. Ou on vous rembourse.</p>
         <div class="hero-buttons">
             <a href="javascript:void(0)" onclick="openCalendly()" class="btn-primary magnetic-btn">Prendre un appel gratuit →</a>
         </div>
@@ -5149,25 +5148,46 @@
             <div class="animated-line"></div>
         </div>
 
-        <!-- Game Changer: Live satisfaction counter -->
-        <div class="testimonial-live-bar reveal" style="display:flex; align-items:center; justify-content:center; gap:2rem; flex-wrap:wrap; margin-bottom:2rem; padding:1rem 2rem; background:rgba(99,102,241,0.04); border:1px solid rgba(99,102,241,0.08); border-radius:100px;">
-            <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.85rem;">
-                <span style="width:8px;height:8px;background:#22c55e;border-radius:50%;animation:pulse-dot 2s infinite;"></span>
-                <strong id="liveClients" style="font-family:'Space Grotesk',sans-serif; font-size:1.1rem; color:var(--gradient-1);">347</strong>
-                <span style="color:var(--text-secondary);">clients actifs</span>
+        <!-- Garanties dirigeant -->
+        <div class="testi-guarantees reveal">
+            <div class="testi-guarantee-item">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                <span>Opérationnel en <strong>7 jours</strong></span>
             </div>
-            <div style="width:1px;height:20px;background:var(--border);"></div>
-            <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.85rem;">
-                <span style="font-family:'Space Grotesk',sans-serif; font-size:1.1rem; font-weight:700; color:#22c55e;">4.9/5</span>
-                <span style="color:#f59e0b;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-                <span style="color:var(--text-secondary);">satisfaction</span>
+            <div class="testi-guarantee-sep"></div>
+            <div class="testi-guarantee-item">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/></svg>
+                <span><strong>Code source</strong> livré, vous êtes propriétaire</span>
             </div>
-            <div style="width:1px;height:20px;background:var(--border);"></div>
-            <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.85rem;">
-                <strong style="font-family:'Space Grotesk',sans-serif; font-size:1.1rem; color:var(--gradient-1);">98%</strong>
-                <span style="color:var(--text-secondary);">renouvellent</span>
+            <div class="testi-guarantee-sep"></div>
+            <div class="testi-guarantee-item">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>Remboursé à <strong>J+30</strong> si aucun gain mesuré</span>
             </div>
         </div>
+        <style>
+        .testi-guarantees {
+            display: flex; align-items: center; justify-content: center;
+            gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem;
+            padding: 0.85rem 1.8rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 100px;
+        }
+        .testi-guarantee-item {
+            display: flex; align-items: center; gap: 0.45rem;
+            font-size: 0.82rem; color: rgba(255,255,255,0.65);
+        }
+        .testi-guarantee-item strong { color: #f0f0f5; }
+        .testi-guarantee-sep {
+            width: 1px; height: 18px;
+            background: rgba(255,255,255,0.1);
+        }
+        @media (max-width: 640px) {
+            .testi-guarantees { border-radius: 16px; }
+            .testi-guarantee-sep { display: none; }
+        }
+        </style>
 
         <div class="testimonials-track-wrapper" id="testimonialsWrapper">
             <div class="testimonials-track" id="testimonialsTrack">
