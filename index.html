@@ -4996,40 +4996,243 @@
             <div class="animated-line"></div>
         </div>
 
-        <div class="process-timeline">
-            <div class="process-timeline-progress"></div>
-            <div class="process-grid">
-                <div class="process-card">
-                    <div class="process-dot"></div>
-                    <div class="process-number">01</div>
-                    <h3>Audit & Cartographie</h3>
-                    <p>Analyse complète de vos processus, données et infrastructure pour identifier les cas d'usage à fort impact.</p>
-                    <div class="process-duration">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                        24-48h
-                    </div>
+        <style>
+        /* ── Deployment Timeline ── */
+        .deploy-timeline {
+            max-width: 900px;
+            margin: 3rem auto 0;
+            position: relative;
+        }
+        .deploy-spine {
+            position: absolute;
+            left: 52px;
+            top: 24px;
+            bottom: 24px;
+            width: 2px;
+            background: linear-gradient(to bottom, #6366f1, rgba(99,102,241,0.1));
+            z-index: 0;
+        }
+        @media(max-width:600px){ .deploy-spine { left: 36px; } }
+
+        .deploy-step {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 0;
+            position: relative;
+            z-index: 1;
+        }
+        .deploy-step + .deploy-step { margin-top: 0; }
+
+        .deploy-step-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-shrink: 0;
+            width: 104px;
+        }
+        @media(max-width:600px){ .deploy-step-left { width: 72px; } }
+
+        .deploy-day-pill {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            padding: 0.3rem 0.7rem;
+            border-radius: 100px;
+            border: 1.5px solid rgba(99,102,241,0.3);
+            color: #a78bfa;
+            background: rgba(99,102,241,0.08);
+            white-space: nowrap;
+            margin-bottom: 0.5rem;
+        }
+        .deploy-day-pill.milestone { border-color: rgba(34,197,94,0.4); color: #4ade80; background: rgba(34,197,94,0.07); }
+        .deploy-dot {
+            width: 10px; height: 10px; border-radius: 50%;
+            background: #6366f1; flex-shrink: 0;
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.15), 0 0 12px rgba(99,102,241,0.3);
+        }
+        .deploy-dot.milestone {
+            width: 14px; height: 14px;
+            background: #22c55e;
+            box-shadow: 0 0 0 4px rgba(34,197,94,0.15), 0 0 16px rgba(34,197,94,0.4);
+        }
+        .deploy-connector {
+            flex: 1;
+            width: 2px;
+            min-height: 32px;
+            background: linear-gradient(to bottom, rgba(99,102,241,0.25), rgba(99,102,241,0.08));
+            margin: 4px 0;
+        }
+
+        .deploy-card {
+            flex: 1;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 16px;
+            padding: 1.2rem 1.4rem;
+            margin-bottom: 1rem;
+            transition: border-color 0.2s;
+        }
+        .deploy-card:hover { border-color: rgba(99,102,241,0.2); }
+        .deploy-card.milestone-card {
+            border-color: rgba(34,197,94,0.15);
+            background: rgba(34,197,94,0.03);
+        }
+        .deploy-card-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:0.5rem; gap:0.5rem; flex-wrap:wrap; }
+        .deploy-card-title { font-family:'Space Grotesk',sans-serif; font-size:0.95rem; font-weight:700; }
+        .deploy-card-tag {
+            font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;
+            padding:0.15rem 0.55rem; border-radius:6px;
+        }
+        .tag-nexus { background:rgba(99,102,241,0.1); color:#818cf8; border:1px solid rgba(99,102,241,0.15); }
+        .tag-vous { background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.4); border:1px solid rgba(255,255,255,0.08); }
+        .tag-live { background:rgba(34,197,94,0.1); color:#4ade80; border:1px solid rgba(34,197,94,0.15); }
+        .deploy-card-desc { font-size:0.8rem; color:rgba(255,255,255,0.5); line-height:1.65; }
+        .deploy-card-desc strong { color:rgba(255,255,255,0.8); font-weight:600; }
+        .deploy-deliverable {
+            margin-top:0.7rem; padding:0.6rem 0.9rem;
+            background:rgba(255,255,255,0.03); border-radius:10px;
+            font-size:0.72rem; color:rgba(255,255,255,0.45);
+            display:flex; align-items:center; gap:0.5rem;
+        }
+        .deploy-deliverable svg { opacity:0.4; flex-shrink:0; }
+
+        .deploy-milestone-banner {
+            display: flex; align-items: center; gap: 1rem;
+            background: linear-gradient(135deg, rgba(34,197,94,0.07), rgba(99,102,241,0.05));
+            border: 1px solid rgba(34,197,94,0.2);
+            border-radius: 14px; padding: 1rem 1.4rem;
+            margin-bottom: 1rem;
+        }
+        .deploy-milestone-icon { font-size:1.4rem; flex-shrink:0; }
+        .deploy-milestone-text { font-size:0.82rem; color:rgba(255,255,255,0.75); line-height:1.5; }
+        .deploy-milestone-text strong { color:#4ade80; }
+        </style>
+
+        <div class="deploy-timeline reveal">
+            <div class="deploy-spine"></div>
+
+            <!-- J0 -->
+            <div class="deploy-step">
+                <div class="deploy-step-left">
+                    <div class="deploy-day-pill">J 0</div>
+                    <div class="deploy-dot"></div>
+                    <div class="deploy-connector"></div>
                 </div>
-                <div class="process-card">
-                    <div class="process-dot"></div>
-                    <div class="process-number">02</div>
-                    <h3>Architecture & Build</h3>
-                    <p>Conception et développement de votre écosystème IA sur-mesure avec agents, modèles et interfaces intégrés.</p>
-                    <div class="process-duration">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                        2-5 jours
+                <div class="deploy-card">
+                    <div class="deploy-card-header">
+                        <div class="deploy-card-title">Appel stratégique</div>
+                        <span class="deploy-card-tag tag-nexus">NexusAI</span>
                     </div>
-                </div>
-                <div class="process-card">
-                    <div class="process-dot"></div>
-                    <div class="process-number">03</div>
-                    <h3>Déploiement & Scale</h3>
-                    <p>Mise en production, formation des équipes, monitoring continu et optimisation itérative des performances.</p>
-                    <div class="process-duration">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                        24-48h
+                    <div class="deploy-card-desc">30 minutes avec un architecte IA. <strong>Audit flash de vos processus</strong>, identification des 3 cas d'usage à fort ROI, première estimation de l'impact. Aucun engagement requis.</div>
+                    <div class="deploy-deliverable">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        Livrable : synthèse des opportunités + estimation ROI, envoyée sous 24h
                     </div>
                 </div>
             </div>
+
+            <!-- J1-J2 -->
+            <div class="deploy-step">
+                <div class="deploy-step-left">
+                    <div class="deploy-day-pill">J 1–2</div>
+                    <div class="deploy-dot"></div>
+                    <div class="deploy-connector"></div>
+                </div>
+                <div class="deploy-card">
+                    <div class="deploy-card-header">
+                        <div class="deploy-card-title">Audit technique & architecture</div>
+                        <span class="deploy-card-tag tag-nexus">NexusAI</span>
+                    </div>
+                    <div class="deploy-card-desc">Cartographie de votre stack (CRM, ERP, outils métier), validation des intégrations, choix des modèles IA adaptés à votre secteur. <strong>Votre équipe IT fournit les accès</strong>, on s'occupe du reste.</div>
+                    <div class="deploy-deliverable">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        Livrable : plan d'architecture validé + liste des agents à déployer
+                    </div>
+                </div>
+            </div>
+
+            <!-- J3-J6 -->
+            <div class="deploy-step">
+                <div class="deploy-step-left">
+                    <div class="deploy-day-pill">J 3–6</div>
+                    <div class="deploy-dot"></div>
+                    <div class="deploy-connector"></div>
+                </div>
+                <div class="deploy-card">
+                    <div class="deploy-card-header">
+                        <div class="deploy-card-title">Build, intégration & tests</div>
+                        <span class="deploy-card-tag tag-nexus">NexusAI</span>
+                    </div>
+                    <div class="deploy-card-desc">Développement des agents, connexion à vos outils, tests sur vos vraies données en environnement de staging. <strong>Votre référent métier valide les sorties</strong> — c'est son expertise qui calibre les agents.</div>
+                    <div class="deploy-deliverable">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        Livrable : agents validés en staging, rapport de tests
+                    </div>
+                </div>
+            </div>
+
+            <!-- J7 — Milestone -->
+            <div class="deploy-step">
+                <div class="deploy-step-left">
+                    <div class="deploy-day-pill milestone">J 7 ✓</div>
+                    <div class="deploy-dot milestone"></div>
+                    <div class="deploy-connector"></div>
+                </div>
+                <div>
+                    <div class="deploy-milestone-banner">
+                        <div class="deploy-milestone-icon">🚀</div>
+                        <div class="deploy-milestone-text"><strong>Premier agent en production.</strong> Vos processus sont automatisés. L'équipe est formée. Les KPIs de référence sont posés pour mesurer l'impact à J30.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- J8-J30 -->
+            <div class="deploy-step">
+                <div class="deploy-step-left">
+                    <div class="deploy-day-pill">J 8–30</div>
+                    <div class="deploy-dot"></div>
+                    <div class="deploy-connector"></div>
+                </div>
+                <div class="deploy-card">
+                    <div class="deploy-card-header">
+                        <div class="deploy-card-title">Optimisation & extension</div>
+                        <span class="deploy-card-tag tag-nexus">NexusAI</span>
+                    </div>
+                    <div class="deploy-card-desc">Affinement des réponses, déploiement des agents suivants, monitoring continu. Chaque semaine, un rapport automatique vous indique les heures économisées et le taux d'automatisation. <strong>Vous ne gérez rien.</strong></div>
+                </div>
+            </div>
+
+            <!-- J30 — Milestone -->
+            <div class="deploy-step">
+                <div class="deploy-step-left">
+                    <div class="deploy-day-pill milestone">J 30 ✓</div>
+                    <div class="deploy-dot milestone"></div>
+                    <div class="deploy-connector"></div>
+                </div>
+                <div>
+                    <div class="deploy-milestone-banner">
+                        <div class="deploy-milestone-icon">📊</div>
+                        <div class="deploy-milestone-text"><strong>Bilan ROI quantifié.</strong> Temps économisé, taux d'automatisation, impact sur vos délais clients — tout est mesuré. Si les résultats ne sont pas là : on itère à nos frais ou on rembourse. <strong>Garantie contractuelle.</strong></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- J90 -->
+            <div class="deploy-step">
+                <div class="deploy-step-left">
+                    <div class="deploy-day-pill milestone">J 90+</div>
+                    <div class="deploy-dot milestone"></div>
+                </div>
+                <div class="deploy-card milestone-card">
+                    <div class="deploy-card-header">
+                        <div class="deploy-card-title">Écosystème complet en autonomie</div>
+                        <span class="deploy-card-tag tag-live">En continu</span>
+                    </div>
+                    <div class="deploy-card-desc">L'écosystème multi-agents tourne de façon autonome. <strong>Vous récupérez vos heures, vos équipes travaillent sur ce qui compte.</strong> L'accompagnement mensuel couvre les évolutions, la maintenance et le support dédié — sans rien avoir à gérer.</div>
+                </div>
+            </div>
+
         </div>
     </section>
 
