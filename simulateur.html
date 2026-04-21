@@ -737,6 +737,7 @@
             </div>
 
             <!-- ── Agent recommendation ── -->
+            <!-- Agent recommendation -->
             <div class="rec-section">
                 <div class="rec-header">
                     <div>
@@ -746,12 +747,154 @@
                     <button class="btn-reset" onclick="resetSim()">↩ Refaire la simulation</button>
                 </div>
                 <div class="rec-agents" id="recAgents"></div>
-                <div class="rec-cta">
-                    <a href="index.html#contact" class="btn-primary" onclick="(window.openCalendly||function(){window.location='index.html#contact'})(); return false;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                        Déployer cette équipe →
-                    </a>
-                    <a href="index.html#tarifs" class="btn-secondary">Voir les offres</a>
+            </div>
+
+            <!-- ── Handoff RDV ── -->
+            <div class="handoff-section" id="handoffSection">
+                <style>
+                .handoff-section {
+                    background: linear-gradient(145deg, #0d0d1e, #111128);
+                    border: 1px solid rgba(99,102,241,0.2);
+                    border-radius: 24px;
+                    overflow: hidden;
+                    margin-bottom: 1.5rem;
+                    box-shadow: 0 0 0 1px rgba(99,102,241,0.06), 0 30px 80px rgba(0,0,0,0.3);
+                }
+                .handoff-top {
+                    padding: 1.8rem 2rem 1.4rem;
+                    border-bottom: 1px solid rgba(255,255,255,0.05);
+                    position: relative;
+                    overflow: hidden;
+                }
+                .handoff-top::before {
+                    content: '';
+                    position: absolute; top: -60px; right: -40px;
+                    width: 200px; height: 200px; border-radius: 50%;
+                    background: radial-gradient(circle, rgba(99,102,241,0.1), transparent 70%);
+                    pointer-events: none;
+                }
+                .handoff-eyebrow {
+                    font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+                    letter-spacing: 2.5px; color: var(--accent); margin-bottom: 0.6rem;
+                }
+                .handoff-title {
+                    font-family: 'Space Grotesk', sans-serif;
+                    font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px;
+                    margin-bottom: 0.4rem;
+                }
+                .handoff-sub { font-size: 0.8rem; color: var(--text2); line-height: 1.5; }
+
+                /* Context summary strip */
+                .handoff-summary {
+                    display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1rem;
+                }
+                .handoff-pill {
+                    display: inline-flex; align-items: center; gap: 0.4rem;
+                    padding: 0.3rem 0.8rem; border-radius: 100px;
+                    background: rgba(255,255,255,0.04);
+                    border: 1px solid rgba(255,255,255,0.08);
+                    font-size: 0.68rem; color: rgba(255,255,255,0.65);
+                }
+                .handoff-pill.accent { background: rgba(99,102,241,0.08); border-color: rgba(99,102,241,0.2); color: #a78bfa; }
+                .handoff-pill.green  { background: rgba(34,197,94,0.07);  border-color: rgba(34,197,94,0.2);  color: #4ade80; }
+
+                /* Form */
+                .handoff-form {
+                    padding: 1.6rem 2rem;
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 0.9rem;
+                }
+                @media(max-width:600px){ .handoff-form { grid-template-columns: 1fr; } }
+                .handoff-field { display: flex; flex-direction: column; gap: 0.4rem; }
+                .handoff-field.full { grid-column: 1 / -1; }
+                .handoff-label {
+                    font-size: 0.68rem; font-weight: 600;
+                    color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.8px;
+                }
+                .handoff-input, .handoff-textarea {
+                    background: rgba(255,255,255,0.04);
+                    border: 1px solid rgba(255,255,255,0.09);
+                    border-radius: 10px; padding: 0.75rem 1rem;
+                    color: var(--text); font-family: inherit; font-size: 0.85rem;
+                    outline: none; transition: border-color 0.2s;
+                }
+                .handoff-input:focus, .handoff-textarea:focus { border-color: rgba(99,102,241,0.4); }
+                .handoff-input::placeholder, .handoff-textarea::placeholder { color: rgba(255,255,255,0.2); }
+                .handoff-textarea { resize: none; line-height: 1.6; }
+                .handoff-form-footer {
+                    grid-column: 1 / -1;
+                    display: flex; align-items: center; justify-content: space-between;
+                    flex-wrap: wrap; gap: 0.8rem;
+                }
+                .handoff-privacy { font-size: 0.65rem; color: var(--text2); display: flex; align-items: center; gap: 0.4rem; }
+                .handoff-submit {
+                    display: inline-flex; align-items: center; gap: 0.6rem;
+                    background: linear-gradient(135deg, var(--accent), var(--accent2));
+                    color: white; border: none; border-radius: 12px;
+                    padding: 0.9rem 2rem; font-size: 0.9rem; font-weight: 800;
+                    cursor: pointer; font-family: inherit; transition: all 0.2s;
+                }
+                .handoff-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(99,102,241,0.35); }
+                .handoff-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+                .handoff-success {
+                    display: none; padding: 2rem; text-align: center;
+                    animation: fadeUp 0.4s ease;
+                }
+                .handoff-success.show { display: block; }
+                .handoff-success-icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+                .handoff-success-title { font-family:'Space Grotesk',sans-serif; font-size:1.1rem; font-weight:800; margin-bottom:0.4rem; }
+                .handoff-success-sub { font-size:0.82rem; color:var(--text2); }
+                </style>
+
+                <div class="handoff-top">
+                    <div class="handoff-eyebrow">Prochaine étape</div>
+                    <div class="handoff-title">Envoyez ces résultats à un architecte IA</div>
+                    <div class="handoff-sub">Votre simulation est pré-remplie dans le message. Un expert vous rappelle sous 24h avec une proposition concrète.</div>
+                    <div class="handoff-summary" id="handoffSummary">
+                        <!-- filled by JS -->
+                    </div>
+                </div>
+
+                <div id="handoffFormWrap">
+                    <form class="handoff-form" id="handoffForm" onsubmit="submitHandoff(event)">
+                        <div class="handoff-field">
+                            <label class="handoff-label">Prénom & Nom</label>
+                            <input class="handoff-input" type="text" placeholder="Sophie Martin" required id="hfName">
+                        </div>
+                        <div class="handoff-field">
+                            <label class="handoff-label">Email professionnel</label>
+                            <input class="handoff-input" type="email" placeholder="s.martin@entreprise.fr" required id="hfEmail">
+                        </div>
+                        <div class="handoff-field">
+                            <label class="handoff-label">Société</label>
+                            <input class="handoff-input" type="text" placeholder="Nom de votre entreprise" id="hfCompany">
+                        </div>
+                        <div class="handoff-field">
+                            <label class="handoff-label">Téléphone (optionnel)</label>
+                            <input class="handoff-input" type="tel" placeholder="+33 6 …" id="hfPhone">
+                        </div>
+                        <div class="handoff-field full">
+                            <label class="handoff-label">Résultats de simulation + contexte</label>
+                            <textarea class="handoff-textarea" rows="4" id="hfMessage" required></textarea>
+                        </div>
+                        <div class="handoff-form-footer">
+                            <div class="handoff-privacy">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                                Données confidentielles · RGPD · Jamais revendues
+                            </div>
+                            <button class="handoff-submit" type="submit" id="handoffSubmitBtn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                Prendre RDV avec ces résultats
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="handoff-success" id="handoffSuccess">
+                    <div class="handoff-success-icon">✅</div>
+                    <div class="handoff-success-title">Demande envoyée !</div>
+                    <div class="handoff-success-sub">Un architecte NexusAI vous contacte sous 24h ouvrées avec une proposition adaptée à votre simulation.<br><br>En attendant, consultez nos <a href="index.html#faq" style="color:var(--accent);">réponses aux questions fréquentes →</a></div>
                 </div>
             </div>
 
@@ -1070,7 +1213,69 @@ function showResults(tasks, sector, salary) {
 
     document.getElementById('resultsWrap').classList.add('visible');
     document.getElementById('resultNav').style.display = 'flex';
+
+    // ── Handoff form pre-fill
+    _prefillHandoff({
+        sector: sector.label,
+        employees: emp,
+        tasks: tasks.map(t => t.agent + ' (' + t.role + ')'),
+        costReductionPct,
+        productivityGainPct,
+        hoursMonth: totalHrsMon,
+        etpFreed,
+        agentCount,
+        payback
+    });
 }
+
+function _prefillHandoff(d) {
+    const taskList = d.tasks.slice(0, 6).join(', ');
+    const paybackStr = d.payback < 1 ? 'moins d\'1 mois' : d.payback.toFixed(1) + ' mois';
+    const msg = `Bonjour,
+
+Je viens de simuler l'impact NexusAI pour mon entreprise. Voici mon contexte :
+
+Secteur : ${d.sector}
+Équipe concernée : ${d.employees} employé(s)
+Processus ciblés : ${taskList}
+
+Résultats de simulation :
+— Réduction des coûts : −${d.costReductionPct}%
+— Gain de productivité : +${d.productivityGainPct}%
+— Heures récupérées : ${d.hoursMonth}h / mois
+— ETP libérés : ${d.etpFreed}
+— Agents requis : ${d.agentCount}
+— ROI estimé en : ${paybackStr}
+
+Je souhaite en discuter avec un architecte IA pour voir comment déployer cette équipe concrètement.`;
+
+    const msgEl = document.getElementById('hfMessage');
+    if (msgEl) msgEl.value = msg;
+
+    // Summary pills
+    const summary = document.getElementById('handoffSummary');
+    if (summary) {
+        summary.innerHTML = `
+            <span class="handoff-pill accent">📊 ${d.sector}</span>
+            <span class="handoff-pill">👥 ${d.employees} employés</span>
+            <span class="handoff-pill green">−${d.costReductionPct}% coûts · +${d.productivityGainPct}% productivité</span>
+            <span class="handoff-pill">🤖 ${d.agentCount} agents · ROI ${paybackStr}</span>
+        `;
+    }
+}
+
+window.submitHandoff = function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('handoffSubmitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Envoi en cours…';
+
+    // Simulate sending (replace with real EmailJS / API call if needed)
+    setTimeout(() => {
+        document.getElementById('handoffFormWrap').style.display = 'none';
+        document.getElementById('handoffSuccess').classList.add('show');
+    }, 1200);
+};
 
 function renderBreakdown(type) {
     const data = _breakdownData[type];
